@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', [LoginController::class, 'index'])->name('login');
+Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom');
+Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', [AdminController::class, 'index'])->middleware('user_access');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('user_access');
 });

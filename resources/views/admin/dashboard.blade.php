@@ -1,6 +1,6 @@
 @extends('layout.layout_admin.index')
 @section('title')
-    Selamat Datang di DPMPTSP
+    Dashboard
 @endsection
 @section('content')
 <div id="content" class="app-content">
@@ -17,13 +17,7 @@
             <div class="card border-0">
                 <div class="card-body">
                     <div class=" d-flex">
-                        
-                        <div  style="margin: left 5px; justify-content:center; margin-left:20px;">
-                        <h1>Hallo, <b>{{ Auth::user()->name }}  </b> 
-                    <!-- weather widget start -->
-                    
-                        </h1><br><h4>Welcome to DPMPTSP</h4>
-                        <p>Sistem Pengaduan DPMPTSP </p></div>
+                        <h4>Dashboard</h4>
                     </div>  
                 </div>  
                 </div>  
