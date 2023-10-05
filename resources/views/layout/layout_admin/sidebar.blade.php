@@ -22,34 +22,34 @@
             </div>
             
             <div class="menu-header">Navigation</div>
-            <div class="menu-item {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}">
+            <div class="menu-item {{ ($data['module'] == 'DASHBOARD') ? 'active' : '' }}">
                 <a href="/dashboard" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-chart-pie"></i>
                     </div>
                     <div class="menu-text">Dashboard</div>
                 </a>
             </div>
-            <div class="menu-item {{ (request()->segment(1) == 'artikel') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
+            <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
+                <a href="/artikel" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-newspaper"></i>
                     </div>
                     <div class="menu-text">Artikel</div>
                 </a>
             </div>
-            <div class="menu-item {{ (request()->segment(1) == 'pengaduan') ? 'active' : '' }}">
+            <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
                 <a href="index.html" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-paper-plane"></i>
                     </div>
                     <div class="menu-text">Pengaduan</div>
                 </a>
             </div>
-            <div class="menu-item">
-                <a href="index.html" class="menu-link">
+            <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
+                <a href="/pegawai" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-users"></i>
                     </div>
                     <div class="menu-text">Pegawai</div>
                 </a>
@@ -57,7 +57,7 @@
             <div class="menu-item">
                 <a href="index.html" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Visi Misi</div>
                 </a>
@@ -73,7 +73,7 @@
             <div class="menu-item">
                 <a href="index.html" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-sitemap"></i>
+                        <i class="fa fa-bank"></i>
                     </div>
                     <div class="menu-text">Profil Dinas</div>
                 </a>

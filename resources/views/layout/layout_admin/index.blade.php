@@ -32,6 +32,6 @@
 	<!-- END #app -->
 	@include('layout.layout_admin.footer')
 	
-	
+	@yield('js')
 </body>
 </html>
