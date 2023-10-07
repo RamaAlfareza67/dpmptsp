@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Home;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,12 @@ use App\Http\Controllers\LoginController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/home', [Home::class, 'home']);
+Route::get('/berita', [Home::class, 'berita']);
+Route::get('/struktur_organisasi', [Home::class, 'struktur_organisasi']);
+Route::get('/visi_misi', [Home::class, 'visi_misi']);
+Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
+
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom');
