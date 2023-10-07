@@ -77,7 +77,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Foto</label>
-                                            <input type="file" name="foto" id="foto" accept=".jpg" class="form-control form-control-sm">
+                                            <input type="file" name="foto" id="foto"  accept="image/*" class="form-control form-control-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -134,7 +134,7 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/artikel_',
+                url: '/user/artikel_',
                 method: 'POST',
                 data: function(d){
 
@@ -145,7 +145,7 @@ $(document).ready(function() {
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 {data: 'img', name: 'img'},
                 {data: 'judul', name: 'judul'},
-                {data: 'isi', name: 'isi'},
+                {data: 'desc', name: 'desc'},
                 {data: 'penulis', name: 'penulis'},
                 {data: 'status', name: 'status'},       
                 {
@@ -189,44 +189,7 @@ $(document).ready(function() {
                 }] 
 
         });
-        // table.button( 0 ).nodes().css('height', '35px')
-
-        // $(document).on('click', '.status', function(){
-        //     var id = $(this).data('id');
-        //     Swal.fire({
-        //         title: 'Apakah Anda Yakin?',
-        //         icon: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         confirmButtonText: 'Ya!',
-        //         cancelButtonText: 'Tidak',
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             $.ajax({
-        //                 url: "/status_project",
-        //                 type: "POST",
-        //                 data: {
-        //                     id: id
-        //                 },
-        //                 dataType: "JSON",
-        //                 success: function(data) {
-        //                     table.ajax.reload();
-        //                     Swal.fire({
-        //                         title: data.title,
-        //                         text:  data.status,
-        //                         icon: data.icon,
-        //                         showCancelButton: false,
-        //                         showConfirmButton: true,
-        //                         // buttons: false,
-        //                     });
-        //                 },
-        //                 error: function(jqXHR, textStatus, errorThrown) {
-        //                     alert('Error');
-        //                 }
-        //             });
-        //         }
-        //     })
-        // })
+       
 
         $(document).on('click', '.edit', function() {
             $('#add-form')[0].reset();
@@ -235,7 +198,8 @@ $(document).ready(function() {
             $('#hidden_status').val('edit');
             $('#hidden_id').val($(this).data('id'));
             $('#judul').val($(this).data('judul'));
-            $('#isi').val($(this).data('isi'));
+            // $('#isi').val();
+            $(".summernote").summernote('code', $(this).data('isi'));
             $('#penulis').val($(this).data('penulis'));
             $('#status').val($(this).data('status'));
 
@@ -254,7 +218,7 @@ $(document).ready(function() {
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/delete_artikel",
+                        url: "/user/delete_artikel",
                         type: "POST",
                         data: {
                             id: id
@@ -308,9 +272,9 @@ $(document).ready(function() {
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_artikel';
+                    url = '/user/create_artikel';
                 } else {
-                    url = '/update_artikel';
+                    url = '/user/update_artikel';
                 }
 
                 var form_data = new FormData(document.getElementById("add-form"));

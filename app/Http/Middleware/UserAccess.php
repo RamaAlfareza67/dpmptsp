@@ -25,7 +25,7 @@ class UserAccess
             return $next($request);
         }
 
-        return redirect('login')->with('error', "Only admin can access!");
+        return redirect('login')->with('error', "Only User can access!");
         /* return response()->view('errors.check-permission'); */
     }
 }

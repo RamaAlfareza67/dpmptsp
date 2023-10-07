@@ -7,7 +7,12 @@
                 <div class="menu-profile-link" >
                     <div class="menu-profile-cover with-shadow"></div>
                     <div class="menu-profile-image menu-profile-image-icon bg-gray-900 text-gray-600">
-                        <i class="fa fa-user"></i>
+                        <?php if(Auth::user()->foto != null) {
+                            $foto = asset(Auth::user()->foto);
+                        } else {
+                            $foto = asset('uploads/noimage.jpg');
+                        }?>
+                        <img src="{{$foto}}" alt=""/>
                     </div>
                     <div class="menu-profile-info">
                         <div class="d-flex align-items-center">
@@ -23,7 +28,7 @@
             
             <div class="menu-header">Navigation</div>
             <div class="menu-item {{ ($data['module'] == 'DASHBOARD') ? 'active' : '' }}">
-                <a href="/dashboard" class="menu-link">
+                <a href="/user/dashboard" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-chart-pie"></i>
                     </div>
@@ -31,7 +36,7 @@
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
-                <a href="/artikel" class="menu-link">
+                <a href="/user/artikel" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-newspaper"></i>
                     </div>
@@ -47,31 +52,39 @@
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
-                <a href="/pegawai" class="menu-link">
+                <a href="/user/pegawai" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-users"></i>
                     </div>
                     <div class="menu-text">Pegawai</div>
                 </a>
             </div>
-            <div class="menu-item">
-                <a href="index.html" class="menu-link">
+            <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">
+                <a href="/user/layanan_dinas" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Layanan Dinas</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'VISI_MISI') ? 'active' : '' }}">
+                <a href="/user/visi_misi" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Visi Misi</div>
                 </a>
             </div>
-            <div class="menu-item">
-                <a href="index.html" class="menu-link">
+            <div class="menu-item {{ ($data['module'] == 'STRUKTUR_ORGANISASI') ? 'active' : '' }}">
+                <a href="/user/struktur_organisasi" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-sitemap"></i>
                     </div>
                     <div class="menu-text">Struktur Organisasi</div>
                 </a>
             </div>
-            <div class="menu-item">
-                <a href="index.html" class="menu-link">
+            <div class="menu-item {{ ($data['module'] == 'PROFIL_DINAS') ? 'active' : '' }}">
+                <a href="/user/profil_dinas" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-bank"></i>
                     </div>

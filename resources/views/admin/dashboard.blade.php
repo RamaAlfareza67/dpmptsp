@@ -31,7 +31,7 @@
 
 function get_count(){
     $.ajax({
-        url: "/get_count",
+        url: "/user/get_count",
         method: "GET",
         success:function(res){
             $('.artikel').html(res.artikel);

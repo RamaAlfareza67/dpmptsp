@@ -1,5 +1,5 @@
 <div class="navbar-header">
-    <a href="index.html" class="navbar-brand"><i class="fab fa-facebook-square fa-lg"></i> <b>Color</b> Admin <small>social</small></a>
+    <a href="/" class="navbar-brand"><img src="{{asset((Session::get('logo') == null) ? '/uploads/logo/no-logo.png' : Session::get('logo'))}}"  style="margin-right:10px;"  alt=""></a>
     <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -31,13 +31,18 @@
     </div>
     <div class="navbar-item navbar-user dropdown">
         <a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-            <div class="image image-icon bg-gray-800 text-gray-600">
-                <i class="fa fa-user"></i>
+            <div class="me-2 avatar-sm rounded-circle">
+                <?php if(Auth::user()->foto != null) {
+                    $foto = asset(Auth::user()->foto);
+                } else {
+                    $foto = asset('uploads/noimage.jpg');
+                }?>
+                <img style="object-fit: cover;" src="{{$foto}}" alt="" class="mr-2" width="15%"/>
             </div>
             <span class="d-none d-md-inline">{{ auth()->user()->name }}</span> <b class="caret ms-6px"></b>
         </a>
         <div class="dropdown-menu dropdown-menu-end me-1">
-            <a href="javascript:;" class="dropdown-item">Edit Profile</a>
+            <a href="/user/profil" class="dropdown-item">Edit Profile</a>
             <div class="dropdown-divider"></div>
             <a href="{{ route('signout') }}" class="dropdown-item">
                 Logout

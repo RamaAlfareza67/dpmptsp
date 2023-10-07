@@ -1,18 +1,18 @@
 @extends('layout.layout_admin.index')
 @section('title')
-    Pegawai
+    Layanan Dinas
 @endsection
 @section('content')
 <div id="content" class="app-content">
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Pegawai</li>
+        <li class="breadcrumb-item active">Layanan Dinas</li>
     </ol>
     {{-- <h1 class="page-header">Data Artikel</h1> --}}
     <div class="panel">
         <div class="panel-heading bg-blue-700 text-white">
-            <h4 class="panel-title">Data Pegawai</h4>
+            <h4 class="panel-title">Data Layanan Dinas</h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -25,12 +25,9 @@
                         <tr>
                             <th width="5%">No</th>
                             <th width="10%">Foto</th>
-                            <th>NIK</th>
                             <th>Nama</th>
-                            <th>Jabatan</th>
-                            <th>E-Mail</th>
-                            <th>No Hp</th>
-                            <th>Role</th>
+                            <th>Deskripsi</th>
+                            <th width="30%">Link</th>
                             <th width="5%">Aksi</th>
                         </tr>
                     </thead>
@@ -53,72 +50,44 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <form id="add-form">
                                 <!--  -->
                                 <input type="hidden" name="hidden_status" id="hidden_status"  value="add">
                                 <input type="hidden" name="hidden_id" id="hidden_id" >
                                 <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>NIK</label>
-                                            <input type="text" id="nik" name="nik" class="form-control" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" id="name" name="name" class="form-control" >
+                                            <input type="text" id="nama" name="nama" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Deskripsi</label>
+                                            <textarea name="deskripsi" id="deskripsi" class="form-control summernote" rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>E-mail</label>
-                                            <input type="email" id="email" name="email" class="form-control" >
+                                            <label>Foto</label>
+                                            <input type="file" name="foto" id="foto"  accept="image/*" class="form-control form-control-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>No Hp</label>
-                                            <input type="text" id="phone" name="phone" class="form-control" >
+                                            <label>Link</label>
+                                            <input type="text" id="link" name="link" class="form-control" >
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Jabatan</label>
-                                            <input type="text" id="jabatan" name="jabatan" class="form-control" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Role</label>
-                                            <select name="roles" id="roles" class="form-control">
-                                                <option value="">- Pilih Role -</option>
-                                                <option value="ADMIN">Admin</option>
-                                                <option value="PEGAWAI">Pegawai</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input type="password" name="password" id="password"  class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Retype Password</label>
-                                            <input type="password" name="repassword" id="repassword"  class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,7 +121,7 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/user/pegawai_',
+                url: '/user/layanan_dinas_',
                 method: 'POST',
                 data: function(d){
 
@@ -162,12 +131,9 @@ $(document).ready(function() {
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                 {data: 'img', name: 'img'},
-                {data: 'nik', name: 'nik'},
-                {data: 'name', name: 'name'},
-                {data: 'jabatan', name: 'jabatan'},
-                {data: 'email', name: 'email'},       
-                {data: 'phone', name: 'phone'},       
-                {data: 'roles', name: 'roles'},       
+                {data: 'nama', name: 'nama'},
+                {data: 'deskripsi', name: 'deskripsi'},
+                {data: 'link', name: 'link'},   
                 {
                     data: 'action', 
                     name: 'action', 
@@ -177,7 +143,12 @@ $(document).ready(function() {
             ],
             columnDefs: [
                 {
-                    targets: [1,7,8],
+                    targets: [2,3],
+                    className: 'text-wrap width-200'
+                    
+                },
+                {
+                    targets: [1,5],
                     className: 'text-center'
                     
                 },
@@ -188,13 +159,13 @@ $(document).ready(function() {
                     action: function(e, dt, node, config) {
                         $('#add-form')[0].reset();
                         $('#Modal').modal('show');
-                        $('.judul-modal').text('Tambah Pegawai');
+                        $('.judul-modal').text('Tambah Layanan Dinas');
                         $('#hidden_status').val('add');
                     }
                 }, 
                 {
                     extend: 'excel',
-                    title: 'Pegawai',
+                    title: 'Layanan Dinas',
                     className: 'btn',
                     text: '<i class="far fa-file-code"></i> Excel',
                     titleAttr: 'Excel',
@@ -209,15 +180,14 @@ $(document).ready(function() {
         $(document).on('click', '.edit', function() {
             $('#add-form')[0].reset();
             $('#Modal').modal('show');
-            $('.judul-modal').text('Edit Pegawai');
+            $('.judul-modal').text('Edit Layanan Dinas');
             $('#hidden_status').val('edit');
             $('#hidden_id').val($(this).data('id'));
-            $('#nik').val($(this).data('nik'));
-            $('#name').val($(this).data('name'));
-            $('#email').val($(this).data('email'));
-            $('#phone').val($(this).data('phone'));
-            $('#jabatan').val($(this).data('jabatan'));
-            $('#roles').val($(this).data('roles'));
+            $('#nama').val($(this).data('nama'));
+            $('#deskripsi').val($(this).data('deskripsi'));
+            // $(".summernote").summernote('code', $(this).data('isi'));
+            $('#link').val($(this).data('link'));
+            // $('#status').val($(this).data('status'));
 
         });
 
@@ -234,7 +204,7 @@ $(document).ready(function() {
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/user/delete_pegawai",
+                        url: "/user/delete_layanan_dinas",
                         type: "POST",
                         data: {
                             id: id
@@ -263,25 +233,13 @@ $(document).ready(function() {
             errorClass: "is-invalid",
             // validClass: "is-valid",
             rules: {
-                nik: {
+                nama: {
                     required: true
                 },
-                name: {
+                deskripsi: {
                     required: true
                 },
-                email: {
-                    required: true
-                },
-                phone: {
-                    required: true
-                },
-                jabatan: {
-                    required: true
-                },
-                roles: {
-                    required: true
-                },
-                password: {
+                foto: {
                     required: function() {
                         if ($('#hidden_status').val() == 'edit') {
                             return false;
@@ -289,26 +247,17 @@ $(document).ready(function() {
                             return true;
                         }
                     },
-                    minlength: 6
                 },
-                repassword: {
-                    required: function() {
-                        if ($('#hidden_status').val() == 'edit') {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    },
-                    minlength: 6,
-                    equalTo: "#password",
+                link: {
+                    required: true
                 },
             },
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/user/create_pegawai';
+                    url = '/user/create_layanan_dinas';
                 } else {
-                    url = '/user/update_pegawai';
+                    url = '/user/update_layanan_dinas';
                 }
 
                 var form_data = new FormData(document.getElementById("add-form"));
@@ -339,7 +288,7 @@ $(document).ready(function() {
                         if (data.result != true) {
                             Swal.fire({
                                 title: 'Gagal',
-                                text: "Gagal Tambah / Edit Artikel",
+                                text: "Gagal Tambah / Edit Layanan Dinas",
                                 icon: 'error',
                                 showCancelButton: false,
                                 showConfirmButton: true,

@@ -8,6 +8,7 @@ use Session;
 use App\Models\LoginModel;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -35,7 +36,9 @@ class LoginController extends Controller
                 ->with('error', 'Maaf E-mail / Password Anda Salah !!');
         }
 
-        return redirect('/');
+        $dinas = DB::table('profil')->first();
+        $request->session()->put('logo', $dinas->logo);
+        return redirect('/user');
     }
 
 
