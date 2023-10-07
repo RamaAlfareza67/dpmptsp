@@ -3,7 +3,7 @@
 <div id="navbar" class="header navbar navbar-default navbar-expand-lg navbar-fixed-top">
     <!-- begin container -->
     <div class="container"><!-- begin navbar-brand -->
-        <a href="/home" class="navbar-brand">
+        <a href="/" class="navbar-brand">
             <img src="{{asset('assets/img/logo1.png')}}" class="img-fluid">
         </a>
         <!-- end navbar-brand -->

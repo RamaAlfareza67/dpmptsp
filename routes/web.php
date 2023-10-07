@@ -15,7 +15,8 @@ use App\Http\Controllers\Home;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/home', [Home::class, 'home']);
+
+Route::get('/', [Home::class, 'home']);
 Route::get('/berita', [Home::class, 'berita']);
 Route::get('/struktur_organisasi', [Home::class, 'struktur_organisasi']);
 Route::get('/visi_misi', [Home::class, 'visi_misi']);

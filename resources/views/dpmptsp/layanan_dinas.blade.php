@@ -19,25 +19,45 @@
             <!-- BEGIN col-4 -->
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
                     
-                </div>
-                <p class="fs-18px mb-5"></p>
+            </div>
+            <p class="fs-18px mb-5"></p>
+            <?php
+                if(count($data['layanan']) > 0){
+                    foreach ($data['layanan'] as $val) {
+            ?>
             <div class="col-lg-4">
                 <!-- BEGIN card -->
                 <div class="card shadow border-0 mb-5" >
                     <div class="card-body p-6">
                         <div class="mb-3 w-50px h-50px rounded-3 bg-indigo text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fab fa-globe fs-28px"></i>
+                            <img src="{{asset($val->image)}}" alt="{{$val->nama}}" width="10%">
                         </div>
-                        <h2>SIMPAN-AYU</h2>
+                        <h2>{{$val->nama}}</h2>
                         <p class="fw-bold text-gray-600 mb-0">
-                        Penanaman 
+                        {{$val->deskripsi}}
                         </p>
-                        <a href="#" class="stretched-link"></a>
+                        <a href="{{$val->link}}" class="stretched-link" target="_blank"></a>
                     </div>
                 </div>
                 <!-- END card -->
             </div>
-            <!-- END col-4 -->
+            <?php 
+                    } 
+                } else { 
+            ?>
+                <div class="col-lg-12">
+                    <!-- BEGIN card -->
+                    <div class="card shadow border-0 mb-5" >
+                        <div class="card-body p-6">
+                            <p class="fw-bold text-gray-600 mb-0 text-center">
+                            Kosong
+                            </p>
+                        </div>
+                    </div>
+                    <!-- END card -->
+                </div>
+            <?php } ?>
+            {{-- <!-- END col-4 -->
             <!-- BEGIN col-4 -->
             <div class="col-lg-4">
                 <!-- BEGIN card -->
@@ -127,22 +147,22 @@
                 </div>
                 <!-- END card -->
             </div>
-            <!-- END col-4 -->
+            <!-- END col-4 --> --}}
         </div>
     </div>
 </div>
 <div class="area" >
-                <ul class="circles">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                </ul>
-        </div >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+</div >
 @endsection

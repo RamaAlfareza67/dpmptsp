@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Home extends Controller
 {
     public function home()
     {
-         return view('dpmptsp/index');
+        $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->get();
+        // dd($data);
+        return view('dpmptsp/index', compact('data'));
     }
 
     public function berita()
@@ -28,6 +31,7 @@ class Home extends Controller
 
     public function layanan_dinas()
     {
-        return view('dpmptsp/layanan_dinas');
+        $data['layanan'] = DB::table('layanan_dinas')->where('deleted', '!=', 1)->get();
+        return view('dpmptsp/layanan_dinas', compact('data'));
     }
 }

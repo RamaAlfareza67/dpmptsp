@@ -56,77 +56,35 @@
             <!-- BEGIN row -->
             <div class="row">
                 <!-- BEGIN col-3 -->
+                <?php
+                    if(count($data['berita']) > 0){
+                        foreach ($data['berita'] as $val) {
+                ?>
                 <div class="col-lg-3">
                     <!-- BEGIN news -->
                     <div class="news">
                         <div class="news-media">
-                            <div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita1.jpg);"></div>
+                            <div class="news-media-img news-media-img-lg" style="background-image: url({{$val->image}});"></div>
                         </div>
                         <div class="news-content">
-                            
-                            <div class="news-title">Kunjungan Kementrian Pan-RB</div>
-                            <div class="news-date">September 14, 2020</div>
+                            <div class="news-title">{{$val->judul}}</div>
+                            <div class="news-date">{{$val->created_date}}</div>
                         </div>
                         <a href="#" class="stretched-link"></a>
                     </div>
                     <!-- END news -->
                 </div>
-                <!-- END col-3 -->
-                <!-- BEGIN col-3 -->
-                <div class="col-lg-3">
-                    <!-- BEGIN news -->
-                    <div class="news">
-                        <div class="news-media">
-                            <div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita2.jpg);"></div>
-                        </div>
-                        <div class="news-content">
-                            
-                            <div class="news-title">Pemanatuan Bupati Kabupaten Indramayu pada progres Pembangunan MPP</div>
-                            <div class="news-date">September 15, 2020</div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                    <!-- END news -->
+                <div class="text-center">
+                    <a href="/berita" class="section-btn">Berita Lainnya <i class="fa fa-arrow-right mb-5"></i></a>
                 </div>
-                <!-- END col-3 -->
-                <!-- BEGIN col-3 -->
-                <div class="col-lg-3">
-                    <!-- BEGIN news -->
-                    <div class="news">
-                        <div class="news-media">
-                            <div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita3.jpg);"></div>
-                        </div>
-                        <div class="news-content">
-                            
-                            <div class="news-title">Pencegahan Pungli</div>
-                            <div class="news-date">September 16, 2020</div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                    <!-- END news -->
-                </div>
-                <!-- END col-3 -->
-                <!-- BEGIN col-3 -->
-                <div class="col-lg-3">
-                    <!-- BEGIN news -->
-                    <div class="news">
-                        <div class="news-media">
-                            <div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita4.jpeg);"></div>
-                        </div>
-                        <div class="news-content">
-                            
-                            <div class="news-title">Pemberian penghargaan sebagai Pembina Olahraga kepada Bupati Indramayu Nina Agustina</div>
-                            <div class="news-date">September 16, 2020</div>
-                        </div>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                    <!-- END news -->
-                </div>
-                <!-- END col-3 -->
+                <?php 
+                        } 
+                    } else { 
+                ?>
+                    <p class="fs-18px mb-5">Kosong</p>
+                <?php } ?>
             </div>
-            <div class="text-center">
-            <a href="/berita" class="section-btn">Berita Lainnya <i class="fa fa-arrow-right mb-5"></i></a>
-            </div>
+            
         <!-- END row -->
         </div>
         <!-- END section-title -->
