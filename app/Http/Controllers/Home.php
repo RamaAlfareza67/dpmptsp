@@ -34,4 +34,8 @@ class Home extends Controller
         $data['layanan'] = DB::table('layanan_dinas')->where('deleted', '!=', 1)->get();
         return view('dpmptsp/layanan_dinas', compact('data'));
     }
+    public function kontak()
+    {
+        return view('dpmptsp/kontak');
+    }
 }

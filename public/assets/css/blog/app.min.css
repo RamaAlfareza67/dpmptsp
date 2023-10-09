@@ -10296,7 +10296,14 @@ fieldset:disabled .btn {
 }
 .bg-light {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+
+  background: linear-gradient(
+    to right,
+    #931a2c 0%,
+    #931a2c 50%,
+   black 50%,
+    black 100%
+  );
 }
 .bg-dark {
   --bs-bg-opacity: 1;
@@ -22497,21 +22504,21 @@ section .air{
     background-size: 1000px 100px
   }
   section .air.air1{
-    animation: wave 30s linear infinite;
+    animation: wave 100s linear infinite;
     z-index: 1000;
     opacity: 1;
     animation-delay: 0s;
     bottom: 0;
   }
   section .air.air2{
-    animation: wave2 15s linear infinite;
+    animation: wave2 50s linear infinite;
     z-index: 999;
     opacity: 0.5;
     animation-delay: -5s;
     bottom: 10px;
   }
   section .air.air3{
-    animation: wave 30s linear infinite;
+    animation: wave 100s linear infinite;
     z-index: 998;
     opacity: 0.2;
     animation-delay: -2s;
@@ -22539,4 +22546,9 @@ section .air{
     100%{
       background-position-x: -1000px; 
     }
+  }
+
+  .section{
+    position: relative;
+    padding: 5rem 0;
   }

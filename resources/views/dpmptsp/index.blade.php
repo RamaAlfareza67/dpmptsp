@@ -265,6 +265,63 @@
   <div class='air air4'></div>
 </section>
 <!-- END section -->
+<!-- BEGIN section -->
+<div class="section bg-light">
+			<!-- BEGIN container -->
+			<div class="container position-relative">
+				<!-- BEGIN row -->
+				<div class="row gx-5 align-items-center">
+					<!-- BEGIN col-6 -->
+					<div class="col-lg-6">
+						<h1 style="color: aliceblue;">Informasi Layanan Pengaduan</h1>
+						<br>
+                        <div class="header-btn">
+					        <a href="#" class="btn bg-black  fw-bold rounded-pill" style="color:aliceblue;">LAYANAN PENGADUAN</a>
+				        </div>
+					</div>
+					<!-- END col-6 -->
+					<!-- BEGIN col-6 -->
+					<div class="col-lg-6" >
+                    <h1 style="color: aliceblue;">Sudahkah Anda Mengurus Izin?</h1>
+						<br>
+                        <div class="header-btn">
+					        <a href="#" class="btn bg-red fw-bold rounded-pill" style="color:aliceblue;">INFORMASI LAYANAN</a>
+				        </div>
+					</div>
+					<!-- END col-6 -->
+				</div>
+				<!-- END row -->
+			</div>
+			<!-- END container -->
+		</div>
+
+		<!-- END section -->
+	<div class="section">
+        <div class="text-center">
+            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
+            Mengurus izin kini jauh lebih nyaman, cepat, mudah
+            </div>
+            <p class="fs-18px mb-5">5 Alasan pentingnya kita memiliki izin usaha,berikut penjelasannya :</p> 
+		  <div class="container">
+		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
+		      <div class="fs-16px mb-3 fw-bolder line-h-11"> Usaha Yang Memiliki Izin Mendapat Jaminan Hukum dan Perlindungan dari Pemerintah Apabila Terjadi Hal Yang Tidak Diinginkan</div>
+		    </div>
+		    <div class="p-6 position-relative border-end border-5 border-danger mb-2">
+		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Yang Memiliki Izin Lengkap & Sah Akan Mendapat Kemudahan Dalam Hal Pembiayaan Untuk Perkembangan Usaha </div>
+		    </div>
+		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
+		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Yang Memiliki Izin Akan Lebih Mudah Ikut Serta Dalam Tender</div>
+		    </div>
+		    <div class="p-6 position-relative border-end border-5 border-danger mb-2">
+		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Lokal Yang Memilki Izin, Memiliki Kesempatan Untuk Memperluas Usahanya Ke Tingkat Internasional</div>
+		    </div>
+		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
+		      <div class="fs-16px mb-3 fw-bolder line-h-11">Dengan Memiliki Izin Usaha, Maka Kredibilitas Usaha Anda Baik dan Semakin Mudah Untuk Mengikuti Promosi Melalui Pameran Yang Diselenggarakan Pemerintah</div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
 @endsection
 	
 	

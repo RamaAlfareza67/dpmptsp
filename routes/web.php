@@ -21,6 +21,7 @@ Route::get('/berita', [Home::class, 'berita']);
 Route::get('/struktur_organisasi', [Home::class, 'struktur_organisasi']);
 Route::get('/visi_misi', [Home::class, 'visi_misi']);
 Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
+Route::get('/kontak', [Home::class, 'kontak']);
 
 
 Route::get('login', [LoginController::class, 'index'])->name('login');

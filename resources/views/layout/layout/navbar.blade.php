@@ -42,7 +42,7 @@
                 </li>
                 <li><a href="/layanan_dinas">LAYANAN DINAS</a></li>
                 <li><a href="about_me.html">PENGADUAN</a></li>
-                <li><a href="contact_us.html">KONTAK KAMI</a></li>
+                <li><a href="/kontak">KONTAK KAMI</a></li>
             </ul>
         </div>
         <!-- end navbar-collapse -->
