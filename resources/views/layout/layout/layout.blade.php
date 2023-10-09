@@ -17,6 +17,9 @@
 	
 </head>
 <body>
+	<?php 
+		$profil = getProfilDinas();
+	?>
 	
             @include('layout.layout.navbar')
             @yield('content')
@@ -29,11 +32,10 @@
 		<div class="container d-sm-flex">
 			<span class="copyright d-block">&copy; 2023 Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kab.Indramayu</span>
 			<ul class="social-media-list mt-2 mt-sm-0 flex-1">
-				<li><a href="#"><i class="fab fa-facebook"></i></a></li>
-				<li><a href="#"><i class="fab fa-google-plus"></i></a></li>
-				<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-				<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-				<li><a href="#"><i class="fa fa-rss"></i></a></li>
+				<li><a href="{{$profil->facebook}}"><i class="fab fa-facebook"></i></a></li>
+				<li><a href="{{$profil->ig}}"><i class="fab fa-instagram"></i></a></li>
+				<li><a href="{{$profil->twitter}}"><i class="fab fa-twitter"></i></a></li>
+				<li><a href="{{$profil->yt}}"><i class="fa fa-youtube"></i></a></li>
 			</ul>
 		</div>
 		<!-- end container -->

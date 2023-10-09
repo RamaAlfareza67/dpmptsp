@@ -53,7 +53,7 @@ class AdminController extends Controller
                     return $desc;
                 })
                 ->addColumn('img', function ($field) {
-                    $image = '<img src="' . $field->image . '" width="50" alt="" class="rounded" />';
+                    $image = '<img src="' . asset($field->image) . '" width="50" alt="" class="rounded" />';
                     return $image;
                 })
                 ->addColumn('status', function ($field) {
@@ -279,7 +279,7 @@ class AdminController extends Controller
                     return $actionBtn;
                 })
                 ->addColumn('img', function ($field) {
-                    $image = '<img src="' . $field->image . '" width="50" alt="" class="rounded" />';
+                    $image = '<img src="' . asset($field->image) . '" width="50" alt="" class="rounded" />';
                     return $image;
                 })
                 ->rawColumns(['action', 'img'])
@@ -375,7 +375,7 @@ class AdminController extends Controller
                     return $actionBtn;
                 })
                 ->addColumn('img', function ($field) {
-                    $img = ($field->foto != null) ? $field->foto : '/uploads/noimage.jpg';
+                    $img = ($field->foto != null) ? asset($field->foto) : asset('/uploads/noimage.jpg');
                     $image = '<img src="' . $img . '" width="50" alt="" class="rounded" />';
                     return $image;
                 })
@@ -483,6 +483,122 @@ class AdminController extends Controller
         $r['result'] = true;
         if (!$datas) {
             $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function informasi_publik()
+    {
+        $data['module'] = 'INFORMASI_PUBLIK';
+        return view('admin.informasi_publik', compact('data'));
+    }
+
+    public function informasi_publik_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-file="' . $field->file . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->addColumn('cover', function ($field) {
+                    $img = ($field->cover != null) ? asset($field->cover) : asset('/uploads/noimage.jpg');
+                    $cover = '<img src="' . $img . '" width="50" alt="" class="rounded" />';
+                    return $cover;
+                })
+                ->addColumn('file', function ($field) {
+                    $file = '<a href="' . asset($field->file) . '" target="_blank"><span class="badge bg-primary">file</span></a>';
+                    return $file;
+                })
+                ->rawColumns(['action', 'file', 'cover'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_informasi_publik(Request $request)
+    {
+        $data['nama'] = $request->nama;
+        $data['deskripsi'] = $request->deskripsi;
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/informasi_publik', $fileName);
+            $file_path = 'uploads/informasi_publik/' . $fileName;
+            $data['file'] = $file_path;
+        }
+
+        if ($request->file('cover')) {
+            $file = $request->file('cover');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/informasi_publik/cover', $fileName);
+            $file_path = 'uploads/informasi_publik/cover/' . $fileName;
+            $data['cover'] = $file_path;
+        }
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+        // dd($data);
+
+
+        $datas = DB::table('informasi_publik')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_informasi_publik(Request $request)
+    {
+
+        $data['nama'] = $request->nama;
+        $data['deskripsi'] = $request->deskripsi;
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/informasi_publik', $fileName);
+            $file_path = 'uploads/informasi_publik/' . $fileName;
+            $data['file'] = $file_path;
+        }
+
+        if ($request->file('cover')) {
+            $file = $request->file('cover');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/informasi_publik/cover', $fileName);
+            $file_path = 'uploads/informasi_publik/cover/' . $fileName;
+            $data['cover'] = $file_path;
+        }
+
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        // dd($data);
+
+        $datas = DB::table('informasi_publik')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_informasi_publik(Request $request)
+    {
+        $data = DB::table('informasi_publik')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
         }
         return response()->json($r);
     }

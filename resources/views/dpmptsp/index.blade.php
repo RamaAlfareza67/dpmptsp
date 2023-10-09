@@ -103,157 +103,35 @@
         <!-- BEGIN row -->
         <div class="row">
             <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" style="background-image: url(../assets/img/tes.jpg);">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">S.O.P</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
+            <?php
+                if(count($data['informasi_publik']) > 0){
+                    foreach ($data['informasi_publik'] as $val) {
+            ?>
             <div class="col-lg-3">
                 <!-- BEGIN card -->
                 <div class="card shadow border-0 mb-5">
                     <div class="card-body p-4">
                         <div class="work">
 							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
+								<a href="{{asset($val->file)}}" target="_blank"><img src="{{asset($val->cover)}}" alt="Work 1" /></a>
 							</div>
 							<div class="desc">
-								<span class="desc-title">S.O.P OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
+								<span class="desc-title">{{$val->nama}}</span>
+								<span class="desc-text">{{$val->deskripsi}}</span>
 							</div>
 						</div>
 				    </div>
                 </div>
                 <!-- END card -->
             </div>
+            <?php 
+                    } 
+                } else { 
+            ?>
+                <p class="fs-18px mb-5">Kosong</p>
+            <?php } ?>
             <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-             <!-- BEGIN col-4 -->
-             <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-3">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5">
-                    <div class="card-body p-4">
-                        <div class="work">
-							<div class="image">
-								<a href="#"><img src="../assets/img/work/work-img-1.jpg" alt="Work 1" /></a>
-							</div>
-							<div class="desc">
-								<span class="desc-title">STANDAR PELAYANAN OSS</span>
-								<span class="desc-text">Lorem ipsum dolor sit amet</span>
-							</div>
-						</div>
-				    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
+            
         </div>
     </div>
     <!-- END container -->

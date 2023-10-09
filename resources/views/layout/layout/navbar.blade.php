@@ -4,7 +4,7 @@
     <!-- begin container -->
     <div class="container"><!-- begin navbar-brand -->
         <a href="/" class="navbar-brand">
-            <img src="{{asset('assets/img/logo1.png')}}" class="img-fluid">
+            <img src="{{($profil->logo != null) ? asset($profil->logo) : ''}}" class="img-fluid">
         </a>
         <!-- end navbar-brand -->
         <!-- begin navbar-toggle -->

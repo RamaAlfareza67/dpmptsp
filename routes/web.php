@@ -55,4 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/delete_layanan_dinas', [AdminController::class, 'delete_layanan_dinas'])->middleware('user_access');
     Route::get('/user/profil', [AdminController::class, 'profil'])->middleware('user_access');
     Route::post('/user/update_profil', [AdminController::class, 'update_profil'])->middleware('user_access');
+    Route::get('/user/informasi_publik', [AdminController::class, 'informasi_publik'])->middleware('user_access');
+    Route::post('/user/informasi_publik_', [AdminController::class, 'informasi_publik_'])->middleware('user_access');
+    Route::post('/user/create_informasi_publik', [AdminController::class, 'create_informasi_publik'])->middleware('user_access');
+    Route::post('/user/update_informasi_publik', [AdminController::class, 'update_informasi_publik'])->middleware('user_access');
+    Route::post('/user/delete_informasi_publik', [AdminController::class, 'delete_informasi_publik'])->middleware('user_access');
 });

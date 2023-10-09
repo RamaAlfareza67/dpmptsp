@@ -67,6 +67,14 @@
                     <div class="menu-text">Layanan Dinas</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'INFORMASI_PUBLIK') ? 'active' : '' }}">
+                <a href="/user/informasi_publik" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Informasi Publik</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'VISI_MISI') ? 'active' : '' }}">
                 <a href="/user/visi_misi" class="menu-link">
                     <div class="menu-icon">

@@ -1,7 +1,9 @@
 @extends('layout.layout.layout')
 
 @section('content')
-
+<?php 
+	$profil = getProfilDinas();
+?>
 <!-- begin #page-title -->
 <div id="page-title" class="page-title has-bg">
 		<div class="bg-cover" data-paroller="true" data-paroller-factor="0.5" data-paroller-factor-xs="0.2" style="background: url(../assets/img/cover/cover-8.jpg) center 0px / cover no-repeat"></div>
@@ -22,7 +24,7 @@
 					<!-- begin section-container -->
 					<div class="section-container">
 						<div class="ratio ratio-16x9">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3306.9584799260138!2d-118.49437019999998!3d34.019276700000006!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2a4cedd1266ff%3A0x1ffe328381544853!2sGoogle+Inc!5e0!3m2!1sen!2s!4v1435718319426" allowfullscreen></iframe>
+							<iframe src="https://www.google.com/maps?q={{$profil->lat}},{{$profil->long}}&hl=es;17z%3D14&amp&output=embed" allowfullscreen></iframe>
 						</div>
 					</div>
 					<!-- end section-container -->>

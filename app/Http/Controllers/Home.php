@@ -10,6 +10,7 @@ class Home extends Controller
     public function home()
     {
         $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->get();
+        $data['informasi_publik'] = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
         // dd($data);
         return view('dpmptsp/index', compact('data'));
     }
@@ -21,7 +22,8 @@ class Home extends Controller
 
     public function struktur_organisasi()
     {
-        return view('dpmptsp/struktur_organisasi');
+        $data['st_organisasi'] = DB::table('struktur_organisasi')->first();
+        return view('dpmptsp/struktur_organisasi', compact('data'));
     }
 
     public function visi_misi()
