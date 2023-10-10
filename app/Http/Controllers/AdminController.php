@@ -150,6 +150,7 @@ class AdminController extends Controller
         $cek = DB::table('visi_misi')->first();
         $data['judul'] = $request->judul;
         $data['isi'] = $request->isi;
+        // dd($data);
         if ($cek) {
             $data['edited_by'] = auth()->user()->id;
             $data['edited_date'] = date('Y-m-d h:i:s');
@@ -601,5 +602,11 @@ class AdminController extends Controller
             $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
         }
         return response()->json($r);
+    }
+
+    public function pengaduan()
+    {
+        $data['module'] = 'PENGADUAN';
+        return view('admin.pengaduan', compact('data'));
     }
 }

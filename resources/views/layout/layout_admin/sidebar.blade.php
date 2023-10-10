@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
-                <a href="index.html" class="menu-link">
+                <a href="/user/pengaduan" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-paper-plane"></i>
                     </div>

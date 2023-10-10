@@ -7,7 +7,7 @@
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Visi - Misi</li>
+        <li class="breadcrumb-item active">Visi - Misi </li>
     </ol>
     {{-- <h1 class="page-header">Data Artikel</h1> --}}
     <div class="row">
@@ -34,7 +34,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Deskripsi</label>
-                                <textarea name="isi" id="isi" class="form-control summernote" rows="3" ></textarea>
+                                <input type="hidden" id="isi_hidden" value="{{$data['data']->isi}}">
+                                <textarea name="isi" id="isi" class="form-control deskripsi" rows="3" ></textarea>
                             </div>
                         </div>
                     </div>
@@ -62,13 +63,11 @@ $(document).ready(function() {
             }
         });
 
-        $(".summernote").summernote({
+        $(".deskripsi").summernote({
             height: "300"
         });
 
-        var isi_ = "{{($data['data'] == null) ? '' : $data['data']->isi}}";
-
-        $(".summernote").summernote('code', isi_);
+        
 
         $("#add-form").validate({
             errorClass: "is-invalid",
@@ -134,6 +133,10 @@ $(document).ready(function() {
                 });
             }
         });
+
+        var isi_ = $('#isi_hidden').val();
+        $('.deskripsi').summernote('code', isi_);
+        // $(".summernote").summernote('code', isi_);
 
         // $(document).on('click', '#filter', function(){
         //     table.ajax.reload();
