@@ -61,8 +61,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/update_informasi_publik', [AdminController::class, 'update_informasi_publik'])->middleware('user_access');
     Route::post('/user/delete_informasi_publik', [AdminController::class, 'delete_informasi_publik'])->middleware('user_access');
     Route::post('/user/jenis_pengaduan_', [AdminController::class, 'jenis_pengaduan_'])->middleware('user_access');
+    Route::post('/user/get_select_jenis', [AdminController::class, 'get_select_jenis'])->middleware('user_access');
     Route::post('/user/create_jenis_pengaduan', [AdminController::class, 'create_jenis_pengaduan'])->middleware('user_access');
     Route::post('/user/update_jenis_pengaduan', [AdminController::class, 'update_jenis_pengaduan'])->middleware('user_access');
     Route::post('/user/delete_jenis_pengaduan', [AdminController::class, 'delete_jenis_pengaduan'])->middleware('user_access');
     Route::get('/user/pengaduan', [AdminController::class, 'pengaduan'])->middleware('user_access');
+    Route::post('/user/pengaduan_', [AdminController::class, 'pengaduan_'])->middleware('user_access');
+    Route::post('/user/create_pengaduan', [AdminController::class, 'create_pengaduan'])->middleware('user_access');
+    Route::post('/user/accept_rejact_pengaduan', [AdminController::class, 'accept_rejact_pengaduan'])->middleware('user_access');
+    Route::get('/user/detail_pengadu/{id}', [AdminController::class, 'detail_pengadu'])->middleware('user_access');
 });

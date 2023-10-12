@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
+use Mail;
+use App\Mail\DpmptspMail;
 
 class AdminController extends Controller
 {
@@ -608,5 +610,303 @@ class AdminController extends Controller
     {
         $data['module'] = 'PENGADUAN';
         return view('admin.pengaduan', compact('data'));
+    }
+
+    public function pengaduan_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('pengaduan');
+            if ($request->tipe == 'EKSTERNAL') {
+                $data->select(DB::raw('pengaduan.*, jenis_pengaduan.jenis, tanggapan.tanggapan, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_'))
+                    ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+                    ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                    ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
+                    ->where('pengaduan.tipe', 'EKSTERNAL');
+                if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                    $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+                }
+                $data->get();
+            } else if ($request->tipe == 'INTERNAL') {
+                $data->select(DB::raw('pengaduan.id, pengaduan.id_user, pengaduan.isi, pengaduan.file, pengaduan.status, pengaduan.tipe, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_,
+                    pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
+                    ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+                    ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                    ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
+                    ->leftJoin('users', 'pengaduan.id_user', '=', 'users.id')
+                    ->where('pengaduan.tipe', 'INTERNAL');
+                if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                    $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+                }
+                $data->orderBy('created_date', 'DESC')->get();
+            } else {
+                $data = [];
+            }
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    if ($field->status == 'MENUNGGU') {
+                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Dijawab</a>
+                        <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
+                    } else if ($field->status == 'DIJAWAB') {
+                        $actionBtn = '<a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-success detail_jawab" data-id="' . $field->id . '" data-isi="' . $field->isi . '" data-tgl="' . $field->created_date . '" data-isi_jawaban="' . $field->tanggapan . '" data-tgl_jawaban="' . $field->tgl_jawab . '" data-petugas="' . $field->petugas_ . '">Detail</a>';
+                    } else {
+                        $actionBtn = '';
+                    }
+                    return $actionBtn;
+                })
+                ->addColumn('nama', function ($field) use ($request) {
+                    $nama = ($request->tipe == 'EKSTERNAL') ? $field->nama : $field->name;
+                    return $nama . '<span class="popover_ text-primary" style="margin-left:10px"><i class="fas fa-info-circle"></i></span>';
+                })
+                ->addColumn('status', function ($field) {
+                    if ($field->status == 'DIJAWAB') {
+                        $d = '<span class="badge bg-primary">Dijawab</span>';
+                    } else if ($field->status == 'MENUNGGU') {
+                        $d = '<span class="badge bg-warning">Menunggu</span>';
+                    } else if ($field->status == 'DITOLAK') {
+                        $d = '<span class="badge bg-danger">Ditolak</span>';
+                    } else {
+                        $d = '-';
+                    }
+                    return $d;
+                })
+                ->addColumn('file', function ($field) use ($request) {
+                    $file = ($field->file != '') ? '<a href="' . asset($field->file) . '" class="btn btn-xs waves-effect waves-light btn-outline-primary" target="_blank">Lihat File</a>' : '-';
+                    return $file;
+                })
+                ->rawColumns(['action', 'nama', 'file', 'status'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_pengaduan(Request $request)
+    {
+        $data['id_user'] = Auth::user()->id;
+        // $data['nik'] = Auth::user()->nik;
+        // $data['nama'] = Auth::user()->name;
+        // $data['alamat'] = null;
+        // $data['kecamatan'] = null;
+        // $data['kelurahan'] = null;
+        // $data['email'] = Auth::user()->email;
+        // $data['no_hp'] = Auth::user()->phone;
+        $data['isi'] = $request->pengaduan;
+        $data['jenis_pengaduan'] = $request->jenis_pengaduan;
+
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/pengaduan', $fileName);
+            $file_path = 'uploads/pengaduan/' . $fileName;
+            $data['file'] = $file_path;
+        }
+
+        $data['status'] = 'MENUNGGU';
+        $data['tipe'] = 'INTERNAL';
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+        $datas = DB::table('pengaduan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function detail_pengadu($id)
+    {
+        $pengaduan = DB::table('pengaduan')->where('id', $id)->first();
+        if ($pengaduan->tipe == 'EKSTERNAL') {
+            $isi = '<table class="table">
+                    <tr>
+                        <td>NIK</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->nik . '</td>
+                    </tr>
+                    <tr>
+                        <td>Nama</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->nama . '</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->alamat . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kecamatan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kecamatan . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kelurahan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kelurahan . '</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->email . '</td>
+                    </tr>
+                    <tr>
+                        <td>No Hp</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->no_hp . '</td>
+                    </tr>
+                    </table>';
+        } else if ($pengaduan->tipe == 'INTERNAL') {
+            $user = DB::table('users')->where('id', $pengaduan->id_user)->first();
+            $isi = '<table class="table">
+                    <tr>
+                        <td>NIK</td>
+                        <td>:</td>
+                        <td>' . $user->nik . '</td>
+                    </tr>
+                    <tr>
+                        <td>Nama</td>
+                        <td>:</td>
+                        <td>' . $user->name . '</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>:</td>
+                        <td>' . $user->email . '</td>
+                    </tr>
+                    <tr>
+                        <td>No Hp</td>
+                        <td>:</td>
+                        <td>' . $user->phone . '</td>
+                    </tr>
+                    <tr>
+                        <td>Jabatan</td>
+                        <td>:</td>
+                        <td>' . $user->jabatan . '</td>
+                    </tr>
+                    </table>';
+        }
+
+        echo $isi;
+    }
+
+    public function accept_rejact_pengaduan(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            DB::table('pengaduan')->where('id', $request->id)->update([
+                'status' => $request->status,
+            ]);
+
+            if ($request->status == 'DIJAWAB') {
+                $jawab['pengaduan_id'] = $request->id;
+                $jawab['tanggapan'] = $request->jawab;
+                $jawab['petugas_id'] = Auth::user()->id;
+                $jawab['created_date'] = date('Y-m-d h:i:s');
+                DB::table('tanggapan')->insert($jawab);
+            }
+
+            $pengaduan = DB::table('pengaduan')
+                ->select(DB::raw('pengaduan.*, tanggapan.tanggapan, users.name as petugas'))
+                ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+                ->where('pengaduan.id', $request->id)
+                ->first();
+            if ($pengaduan->tipe == 'INTERNAL') {
+                $user = DB::table('users')->where('id', $pengaduan->id_user)->first();
+                $email = $user->email;
+            } else if ($pengaduan->tipe == 'EKSTERNAL') {
+                $email = $pengaduan->email;
+            } else {
+                $email = '';
+            }
+            // dd($pengaduan);
+
+            $mailData = [
+                'title' => 'Pengaduan',
+                'body' => [
+                    'isi' => $pengaduan->isi,
+                    'jawab' => ($request->status == 'DIJAWAB') ? $pengaduan->tanggapan : 'Pengaduan DITOLAK',
+                    'petugas' => ($request->status == 'DIJAWAB') ? $pengaduan->petugas : Auth::user()->name,
+                    'status' => $request->status
+                ]
+            ];
+
+            Mail::to($email)->send(new DpmptspMail($mailData));
+
+            DB::commit();
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil ' . $request->status . '!';
+
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+
+    public function jenis_pengaduan_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('jenis_pengaduan')->where('deleted', '!=', 1)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    // <div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-jenis="' . $field->jenis . '"><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete_jenis " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_jenis_pengaduan(Request $request)
+    {
+        $data['jenis'] = $request->jenis;
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+        $datas = DB::table('jenis_pengaduan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_jenis_pengaduan(Request $request)
+    {
+        $data = DB::table('jenis_pengaduan')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function get_select_jenis(Request $request)
+    {
+        $data = DB::table('jenis_pengaduan')->where('deleted', '!=', 1)->get();
+        $isi = '<option value="">- Pilih Jenis Pengaduan -</option>';
+        foreach ($data as $val) {
+            $isi .= '<option value="' . $val->id . '" data-jenis="' . $val->jenis . '">' . $val->jenis . '</option>';
+        }
+        echo $isi;
+        return;
     }
 }
