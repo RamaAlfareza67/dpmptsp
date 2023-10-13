@@ -616,42 +616,58 @@ class AdminController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('pengaduan');
-            if ($request->tipe == 'EKSTERNAL') {
-                $data->select(DB::raw('pengaduan.*, jenis_pengaduan.jenis, tanggapan.tanggapan, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_'))
-                    ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
-                    ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-                    ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
-                    ->where('pengaduan.tipe', 'EKSTERNAL');
-                if ($request->tanggal_start != '' && $request->tanggal_end != '') {
-                    $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+            if (Auth::user()->roles == 'SUPER_ADMIN') {
+                if ($request->tipe == 'EKSTERNAL') {
+                    $data->select(DB::raw('pengaduan.*, jenis_pengaduan.jenis, tanggapan.tanggapan, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_'))
+                        ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+                        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                        ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
+                        ->where('pengaduan.tipe', 'EKSTERNAL');
+                    if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                        $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+                    }
+                    $data->get();
+                } else if ($request->tipe == 'INTERNAL') {
+                    $data->select(DB::raw('pengaduan.id, pengaduan.id_user, pengaduan.isi, pengaduan.file, pengaduan.status, pengaduan.tipe, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_,
+                        pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
+                        ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+                        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                        ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
+                        ->leftJoin('users', 'pengaduan.id_user', '=', 'users.id')
+                        ->where('pengaduan.tipe', 'INTERNAL');
+                    if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                        $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+                    }
+                    $data->orderBy('created_date', 'DESC')->get();
+                } else {
+                    $data = [];
                 }
-                $data->get();
-            } else if ($request->tipe == 'INTERNAL') {
+            } else {
                 $data->select(DB::raw('pengaduan.id, pengaduan.id_user, pengaduan.isi, pengaduan.file, pengaduan.status, pengaduan.tipe, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_,
-                    pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
+                        pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
                     ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
                     ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
                     ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
                     ->leftJoin('users', 'pengaduan.id_user', '=', 'users.id')
                     ->where('pengaduan.tipe', 'INTERNAL');
-                if ($request->tanggal_start != '' && $request->tanggal_end != '') {
-                    $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
-                }
-                $data->orderBy('created_date', 'DESC')->get();
-            } else {
-                $data = [];
+                $data->where('id_user', Auth::user()->id)->get();
             }
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
                     if ($field->status == 'MENUNGGU') {
-                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Dijawab</a>
-                        <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
+                        if (Auth::user()->roles == 'SUPER_ADMIN') {
+                            $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Dijawab</a>
+                            <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
+                        } else {
+                            $actionBtn = '';
+                        }
                     } else if ($field->status == 'DIJAWAB') {
                         $actionBtn = '<a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-success detail_jawab" data-id="' . $field->id . '" data-isi="' . $field->isi . '" data-tgl="' . $field->created_date . '" data-isi_jawaban="' . $field->tanggapan . '" data-tgl_jawaban="' . $field->tgl_jawab . '" data-petugas="' . $field->petugas_ . '">Detail</a>';
                     } else {
                         $actionBtn = '';
                     }
+
                     return $actionBtn;
                 })
                 ->addColumn('nama', function ($field) use ($request) {

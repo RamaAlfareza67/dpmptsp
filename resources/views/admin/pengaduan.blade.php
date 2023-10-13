@@ -23,7 +23,7 @@
                 <div class="panel-body">
                    <form id="add-form">
                         <div class="row mb-2">
-                            <div class="col-md-10">
+                            <div class="{{(Auth::user()->roles == 'SUPER_ADMIN') ? 'col-md-10' : 'col-md-12'}}">
                                 <div class="form-group">
                                     <label>Jenis Pengaduan</label>
                                     <select name="jenis_pengaduan" id="jenis_pengaduan" class="form-control">
@@ -31,9 +31,11 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php if(Auth::user()->roles == 'SUPER_ADMIN'){ ?>
                             <div class="col-md-2" style="margin-top:18px">
                                 <a class="btn btn-primary" id="btn_jenis_pengaduan"><i class="fas fa-plus"></i></a>
                             </div>
+                            <?php } ?>
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-12">
@@ -62,6 +64,7 @@
             </div>   
         </div>
         <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12 layout-spacing">
+            <?php if(Auth::user()->roles == 'SUPER_ADMIN'){ ?>
             <div class="panel panel-inverse">
                 <div class="accordion" id="accordion">
                     <div class="accordion-item border-0">
@@ -100,6 +103,7 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
              <div class="panel">
                 <div class="panel-heading bg-blue-700 text-white">
                     <h4 class="panel-title">Data Pengaduan</h4>
@@ -131,7 +135,7 @@
     </div>
 </div>
 
-
+<?php if(Auth::user()->roles == 'SUPER_ADMIN'){ ?>
 <div class="modal  fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
@@ -233,6 +237,7 @@
         </div>        
     </div>
 </div>
+<?php } ?>
 @endsection
 
 @section('js')
@@ -312,10 +317,10 @@ $(document).ready(function() {
             dom: '<"dataTables_wrapper dt-bootstrap"<"row"<"col-xl-7 d-block d-sm-flex d-xl-block justify-content-center"<"d-block d-lg-inline-flex me-0 me-md-3"l><"d-block d-lg-inline-flex"B>><"col-xl-5 d-flex d-xl-block justify-content-center"fr>>t<"row"<"col-md-5"i><"col-md-7"p>>>',
             processing: true,
             serverSide: true,
-            deferLoading: 0,
-            language: {
-                "emptyTable": "Data tidak ditemukan - Silahkan Filter Data Pengaduan terlebih dahulu !"
-            },
+            // deferLoading: 0,
+            // language: {
+            //     "emptyTable": "Data tidak ditemukan - Silahkan Filter Data Pengaduan terlebih dahulu !"
+            // },
             "lengthMenu": [
                 [30, 60, 100, 200, -1],
                 [30, 60, 100, 200, "All"]
