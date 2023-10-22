@@ -11,8 +11,8 @@
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-	<link href="../assets/css/blog/vendor.min.css" rel="stylesheet" />
-	<link href="../assets/css/blog/app.min.css" rel="stylesheet" />
+	<link href="{{ asset('assets/css/blog/vendor.min.css')}}" rel="stylesheet" />
+	<link href="{{ asset('assets/css/blog/app.min.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- <link href="../assets/css/corporate/app.min.css" rel="stylesheet" /> -->
 	<!-- ================== END core-css ================== -->

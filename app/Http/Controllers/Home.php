@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 
 class Home extends Controller
@@ -43,9 +44,12 @@ class Home extends Controller
         return view('dpmptsp/kontak');
     }
 
-    public function berita_detail()
+    public function berita_detail($id)
     {
-        return view('dpmptsp/berita_detail');
+        $id_ = Crypt::decrypt($id);
+        $data['berita'] = DB::table('artikel')->where('id', $id_)->first();
+        $data['berita_rand'] = DB::table('artikel')->where('deleted', 0)->inRandomOrder()->take(2)->get();
+        return view('dpmptsp/berita_detail', compact('data'));
     }
 
     public function pengaduan()

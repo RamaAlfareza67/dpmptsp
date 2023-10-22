@@ -18,11 +18,12 @@ use App\Http\Controllers\Home;
 
 Route::get('/', [Home::class, 'home']);
 Route::get('/berita', [Home::class, 'berita']);
+Route::get('/berita/detail/{id}', [Home::class, 'berita_detail']);
 Route::get('/struktur_organisasi', [Home::class, 'struktur_organisasi']);
 Route::get('/visi_misi', [Home::class, 'visi_misi']);
 Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
 Route::get('/kontak', [Home::class, 'kontak']);
-Route::get('/berita_detail', [Home::class, 'berita_detail']);
+// Route::get('/berita_detail', [Home::class, 'berita_detail']);
 Route::get('/pengaduan', [Home::class, 'pengaduan']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 

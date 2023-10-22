@@ -28,14 +28,22 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $data['module'] = 'DASHBOARD';
-        return view('admin.dashboard', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN') {
+            $data['module'] = 'DASHBOARD';
+            return view('admin.dashboard', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function artikel()
     {
-        $data['module'] = 'ARTIKEL';
-        return view('admin.artikel', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'ARTIKEL';
+            return view('admin.artikel', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function artikel_(Request $request)
@@ -141,9 +149,13 @@ class AdminController extends Controller
 
     public function visi_misi()
     {
-        $data['module'] = 'VISI_MISI';
-        $data['data'] = DB::table('visi_misi')->first();
-        return view('admin.visi_misi', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'VISI_MISI';
+            $data['data'] = DB::table('visi_misi')->first();
+            return view('admin.visi_misi', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function create_visi_misi(Request $request)
@@ -174,9 +186,13 @@ class AdminController extends Controller
 
     public function struktur_organisasi()
     {
-        $data['module'] = 'STRUKTUR_ORGANISASI';
-        $data['data'] = DB::table('struktur_organisasi')->first();
-        return view('admin.struktur_organisasi', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'STRUKTUR_ORGANISASI';
+            $data['data'] = DB::table('struktur_organisasi')->first();
+            return view('admin.struktur_organisasi', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function create_st_organisasi(Request $request)
@@ -214,10 +230,14 @@ class AdminController extends Controller
 
     public function profil_dinas()
     {
-        $data['module'] = 'PROFIL_DINAS';
-        $data['data'] = DB::table('profil')->first();
-        // dd($data);
-        return view('admin.profil_dinas', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'PROFIL_DINAS';
+            $data['data'] = DB::table('profil')->first();
+            // dd($data);
+            return view('admin.profil_dinas', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function create_profil_dinas(Request $request)
@@ -266,8 +286,12 @@ class AdminController extends Controller
 
     public function layanan_dinas()
     {
-        $data['module'] = 'LAYANAN_DINAS';
-        return view('admin.layanan_dinas', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'LAYANAN_DINAS';
+            return view('admin.layanan_dinas', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function layanan_dinas_(Request $request)
@@ -362,8 +386,12 @@ class AdminController extends Controller
 
     public function pegawai()
     {
-        $data['module'] = 'PEGAWAI';
-        return view('admin.pegawai', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN') {
+            $data['module'] = 'PEGAWAI';
+            return view('admin.pegawai', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function pegawai_(Request $request)
@@ -480,8 +508,12 @@ class AdminController extends Controller
 
     public function informasi_publik()
     {
-        $data['module'] = 'INFORMASI_PUBLIK';
-        return view('admin.informasi_publik', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'INFORMASI_PUBLIK';
+            return view('admin.informasi_publik', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function informasi_publik_(Request $request)
@@ -596,8 +628,12 @@ class AdminController extends Controller
 
     public function pengaduan()
     {
-        $data['module'] = 'PENGADUAN';
-        return view('admin.pengaduan', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_PENGADUAN') {
+            $data['module'] = 'PENGADUAN';
+            return view('admin.pengaduan', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function pengaduan_(Request $request)
@@ -761,8 +797,12 @@ class AdminController extends Controller
 
     public function jenis_pengaduan()
     {
-        $data['module'] = 'JENIS_PENGADUAN';
-        return view('admin.jenis_pengaduan', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_PENGADUAN') {
+            $data['module'] = 'JENIS_PENGADUAN';
+            return view('admin.jenis_pengaduan', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function jenis_pengaduan_(Request $request)
@@ -843,8 +883,12 @@ class AdminController extends Controller
 
     public function user_management()
     {
-        $data['module'] = 'USERMANAGEMENT';
-        return view('admin.usermanagement', compact('data'));
+        if (Auth::user()->roles == 'SUPER_ADMIN') {
+            $data['module'] = 'USERMANAGEMENT';
+            return view('admin.usermanagement', compact('data'));
+        } else {
+            return abort('404');
+        }
     }
 
     public function user_management_(Request $request)

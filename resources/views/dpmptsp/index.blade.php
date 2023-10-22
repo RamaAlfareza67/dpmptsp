@@ -50,7 +50,7 @@
                             <div class="news-title">{{$val->judul}}</div>
                             <div class="news-date">{{$val->created_date}}</div>
                         </div>
-                        <a href="#" class="stretched-link"></a>
+                        <a href="/berita/detail/{{Crypt::encrypt($val->id)}}" class="stretched-link"></a>
                     </div>
                     <!-- END news -->
                 </div>

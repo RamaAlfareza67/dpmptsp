@@ -14,7 +14,7 @@
     <div class="container"  data-aos="fade-up">
         <h1 class="post-title">{{$data['vis_mis']->judul}}</h1>
         <p class="about-me-desc">
-        {{$data['vis_mis']->isi}}
+        {!!$data['vis_mis']->isi!!}
         </p>
     </div>
 </div>

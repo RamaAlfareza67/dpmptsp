@@ -27,7 +27,7 @@
             </div>
             
             <div class="menu-header">Navigation</div>
-            
+            <?php if(Auth::user()->roles == 'SUPER_ADMIN'){ ?>
             <div class="menu-item {{ ($data['module'] == 'DASHBOARD') ? 'active' : '' }}">
                 <a href="/user/dashboard" class="menu-link">
                     <div class="menu-icon">
@@ -116,6 +116,75 @@
                     <div class="menu-text">User Management</div>
                 </a>
             </div>
+            <?php } ?>
+            <?php if(Auth::user()->roles == 'ADMIN_PENGADUAN'){ ?>
+            <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
+                <a href="/user/pengaduan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="menu-text">Pengaduan</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">
+                <a href="/user/jenis_pengaduan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="menu-text">Jenis Pengaduan</div>
+                </a>
+            </div>
+            <?php } ?>
+            <?php if(Auth::user()->roles == 'ADMIN_CMS'){ ?>
+             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
+                <a href="/user/artikel" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-newspaper"></i>
+                    </div>
+                    <div class="menu-text">Artikel</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">
+                <a href="/user/layanan_dinas" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Layanan Dinas</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'INFORMASI_PUBLIK') ? 'active' : '' }}">
+                <a href="/user/informasi_publik" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Informasi Publik</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'VISI_MISI') ? 'active' : '' }}">
+                <a href="/user/visi_misi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Visi Misi</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'STRUKTUR_ORGANISASI') ? 'active' : '' }}">
+                <a href="/user/struktur_organisasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-sitemap"></i>
+                    </div>
+                    <div class="menu-text">Struktur Organisasi</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'PROFIL_DINAS') ? 'active' : '' }}">
+                <a href="/user/profil_dinas" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-bank"></i>
+                    </div>
+                    <div class="menu-text">Profil Dinas</div>
+                </a>
+            </div>
+            <?php } ?>
             <!-- BEGIN minify-button -->
             <div class="menu-item d-flex">
                 <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i class="fa fa-angle-double-left"></i></a>
