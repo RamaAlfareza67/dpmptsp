@@ -28,7 +28,8 @@ class Home extends Controller
 
     public function visi_misi()
     {
-        return view('dpmptsp/visi_misi');
+        $data['vis_mis'] = DB::table('visi_misi')->first();
+        return view('dpmptsp/visi_misi', compact('data'));
     }
 
     public function layanan_dinas()
@@ -39,5 +40,18 @@ class Home extends Controller
     public function kontak()
     {
         return view('dpmptsp/kontak');
+    }
+    public function berita_detail()
+    {
+        return view('dpmptsp/berita_detail');
+    }
+    public function pengaduan()
+    {
+        $data['pengaduan'] = DB::table('pengaduan')
+        ->select(DB::raw('pengaduan.*, tanggapan.tanggapan, users.name as petugas'))
+        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+        ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+        ->where('status', '=', 'DIJAWAB')->get();
+        return view('dpmptsp/pengaduan', compact('data'));
     }
 }

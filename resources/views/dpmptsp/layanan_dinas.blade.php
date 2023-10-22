@@ -12,13 +12,11 @@
 </div>
 <!-- end #page-title -->
 <div class="context">
-    <div class="container mt-4">
-        
+    <div class="container mt-4">  
         <!-- BEGIN row -->
         <div class="row">
             <!-- BEGIN col-4 -->
-            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-                    
+            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">           
             </div>
             <p class="fs-18px mb-5"></p>
             <?php
@@ -45,109 +43,18 @@
                     } 
                 } else { 
             ?>
-                <div class="col-lg-12">
-                    <!-- BEGIN card -->
-                    <div class="card shadow border-0 mb-5" >
-                        <div class="card-body p-6">
-                            <p class="fw-bold text-gray-600 mb-0 text-center">
-                            Kosong
-                            </p>
-                        </div>
+            <div class="col-lg-12">
+                <!-- BEGIN card -->
+                <div class="card shadow border-0 mb-5" >
+                    <div class="card-body p-6">
+                        <p class="fw-bold text-gray-600 mb-0 text-center">
+                        Kosong
+                        </p>
                     </div>
-                    <!-- END card -->
                 </div>
+                <!-- END card -->
+            </div>
             <?php } ?>
-            {{-- <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-4">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" >
-                    <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-primary text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fa fa-code-branch fs-28px"></i>
-                        </div>
-                        <h2>OSS</h2>
-                        <p class="fw-bold text-gray-600 mb-0">
-                        Online Singel Submission 
-                        </p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-4">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" >
-                    <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-gray-500 text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fa fa-headset fs-28px"></i>
-                        </div>
-                        <h2>SIMBG</h2>
-                        <p class="fw-bold text-gray-600 mb-0">
-                        Manajemen Bangunan
-                        </p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-4">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" >
-                    <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-teal text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fa fa-pen fs-28px"></i>
-                        </div>
-                        <h2>SIMPEDAL</h2>
-                        <p class="fw-bold text-gray-600 mb-0">
-                        Penanaman Modal 
-                        </p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-4">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" >
-                    <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-orange text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fa fa-lightbulb fs-28px"></i>
-                        </div>
-                        <h2>SINONI-AYU</h2>
-                        <p class="fw-bold text-gray-600 mb-0">
-                        Peluang Investasi 
-                        </p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 -->
-            <!-- BEGIN col-4 -->
-            <div class="col-lg-4">
-                <!-- BEGIN card -->
-                <div class="card shadow border-0 mb-5" >
-                    <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-red text-white d-flex align-items-center justify-content-center position-relative">
-                            <i class="fa fa-bug fs-28px"></i>
-                        </div>
-                        <h2>SINAPEL-AYU</h2>
-                        <p class="fw-bold text-gray-600 mb-0">
-                        Pembinaan Pelaku Usaha 
-                        </p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <!-- END card -->
-            </div>
-            <!-- END col-4 --> --}}
         </div>
     </div>
 </div>

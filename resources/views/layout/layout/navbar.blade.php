@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="header-navbar">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown">PROFIL <b class="caret"></b></a>
+                    <a href="#" data-bs-toggle="dropdown" >PROFIL <b class="caret"></b></a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/visi_misi">VISI & MISI</a>
                         <a class="dropdown-item" href="/struktur_organisasi">STRUKTUR ORGANISASI</a>
@@ -27,7 +27,7 @@
                         <a class="dropdown-item" href="index.html">LAPORAN AKUNTABILITAS</a>
                     </div>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" data-bs-toggle="dropdown">INFORMASI PUBLIK <b class="caret"></b></a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="post_grid.html">S.O.P</a>
@@ -39,9 +39,9 @@
                         <a class="dropdown-item" href="post_without_sidebar.html">PERENCANAAN & ANGGARAN</a>
                         <a class="dropdown-item" href="post_without_sidebar.html">PERIZINAN</a>
                     </div>
-                </li>
+                </li> -->
                 <li><a href="/layanan_dinas">LAYANAN DINAS</a></li>
-                <li><a href="about_me.html">PENGADUAN</a></li>
+                <li><a href="/pengaduan">PENGADUAN</a></li>
                 <li><a href="/kontak">KONTAK KAMI</a></li>
             </ul>
         </div>

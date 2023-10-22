@@ -1,0 +1,108 @@
+@extends('layout.layout.layout')
+
+@section('content')
+
+    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-8 col-12 mx-auto">
+                            <h1 class="text-white text-center">LAYANAN PENGADUAN DPMPTSP</h1>
+
+                            <h6 class="text-center"></h6>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="featured-section">
+                <div class="container">
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                            <div class="custom-block bg-white shadow-lg">
+                                
+                                    <div class="d-flek"> 
+                                            <form>
+                                                <h4 class="mb-5" style="text-align:center;">Silahkan isi data pengaduan Anda</h4>
+                                                <input name="nama" id="nama" rows="5" class="form-control mb-3" placeholder="Nama"></input>
+                                                
+                                                <input name="alamat" id="alamat" rows="5" class="form-control mb-3" placeholder="Alamat"></input>
+                                                
+                                                <input name="kecamatan" id="kecamatan" rows="5" class="form-control mb-3" placeholder="Kecamatan"></input>
+                                                
+                                                <input name="keluarahan" id="keluarahan" rows="5" class="form-control mb-3" placeholder="Keluarahan"></input>
+                                                
+                                                <input name="email" id="email" rows="5" class="form-control mb-3" placeholder="E-mail"></input>
+
+                                                <input name="no_hp" id="no_hp" rows="5" class="form-control mb-3" placeholder="No Telp"></input> 
+                                                  
+                                                <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea>   
+                                                <div class="modal-footer">
+                                                    <button type="reset" class="btn btn-dark " style="margin-right:8px;">Reset</button>
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </form>
+                                               
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-12 mb-4 mb-lg-0">
+                            <div class="custom-block bg-white shadow-lg">
+                    <?php
+                        if(count($data['pengaduan']) > 0){
+                            foreach ($data['pengaduan'] as $val) {
+                    ?>
+                                    <div class="d-flek"> 
+                                        <!-- begin card-forum -->
+                                            <div class="card card-forum mb-4">
+                                                <!-- begin forum-list -->
+                                                <ul class="forum-list forum-topic-list">
+                                                    <li>
+                                                        <!-- begin media -->
+                                                        <div class="media">
+                                                            <img src="../assets/img/user/user-1.jpg" alt="" class="rounded-lg" />
+                                                        </div>
+                                                        <!-- end media -->
+                                                        <!-- begin info-container -->
+                                                        <div class="info-container">
+                                                            <div class="info">
+                                                                <h4 class="title"><a href="detail.html">Pengaduan Dari : {{$val->nama}}</a></h4>
+                                                                <p>"{{$val->isi}}"</p>
+                                                                <h4 class="title"><a href="detail.html">Jawaban : {{$val->petugas}}</a></h4>
+                                                                <p>"{{$val->tanggapan}}"</p>
+                                                                
+                                                            </div>
+                                                            <div class="date-replies">
+                                                                <div class="time">
+                                                                {{$val->created_date}}
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <!-- end info-container -->
+                                                    </li>
+                                                </ul>
+                                                <!-- end forum-list -->
+                                            </div>
+                                            <!-- end card-forum -->
+                                               
+                                    </div>
+                                    <?php 
+                                            } 
+                                        } else { 
+                                    ?>
+                                     <div class="col-lg-8 col-12 mb-4 mb-lg-0">
+                                        <p>kosong</p>
+                                    <div class="custom-block bg-white shadow-lg">
+                                    <?php } ?>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </section>
+@endsection

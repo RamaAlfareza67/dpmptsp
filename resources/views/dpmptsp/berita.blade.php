@@ -56,7 +56,7 @@
 								<!-- end post-info -->
 								<!-- begin read-btn-container -->
 								<div class="read-btn-container">
-									<a href="post_detail.html">Read More <i class="fa fa-angle-double-right"></i></a>
+									<a href="berita_detail">Read More <i class="fa fa-angle-double-right"></i></a>
 								</div>
 								<!-- end read-btn-container -->
 							</div>

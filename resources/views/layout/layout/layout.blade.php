@@ -22,8 +22,10 @@
 	?>
 	
             @include('layout.layout.navbar')
+            
             @yield('content')
-  
+    
+
 	
 	
 	<!-- begin #footer-copyright -->
@@ -38,6 +40,9 @@
 				<li><a href="{{$profil->yt}}"><i class="fa fa-youtube"></i></a></li>
 			</ul>
 		</div>
+        <a href="https://api.whatsapp.com/send?phone=628112228300&amp;text=Selamat%20Datang%20Dilayanan%20Pengaduan%20DPMPTSP" class="floating" target="_blank">
+<i class="fab fa-whatsapp fab-icon"></i>
+</a>
 		<!-- end container -->
 	</div>
 	<!-- end #footer-copyright -->
@@ -83,6 +88,10 @@
 <!-- ================== BEGIN core-js ================== -->
 	<script src="{{ asset('assets/js/blog/vendor.min.js')}}"></script>
 	<script src="{{ asset('assets/js/blog/app.min.js')}}"></script>
+	<!-- <script src="{{ asset('assets/js/blog/bootstrap.bundle.min.js')}}"></script> -->
+	<script src="{{ asset('assets/js/blog/jquery.sticky.js')}}"></script>
+	<script src="{{ asset('assets/js/blog/click-scroll.js')}}"></script>
+	<script src="{{ asset('assets/js/blog/custom.js')}}"></script>
 	<!-- ================== END core-js ================== -->
 	
 </body>

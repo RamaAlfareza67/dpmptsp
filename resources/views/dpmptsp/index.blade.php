@@ -3,43 +3,23 @@
 @section('content')
 
 <!-- begin #page-title -->
+<!-- ***** Main Banner Area Start ***** -->
+<div class="main-banner" id="top">
+        <video autoplay muted loop id="bg-video">
+            <source src="../assets/video/dpmptsp.mp4" type="video/mp4" />
+        </video>
 
-<!-- BEGIN section -->
-<div class="section section-hero">
-    <!-- BEGIN section-bg -->
-    <div class="section-bg with-cover" style="background-image: url(../assets/img/tes.jpg);"></div>
-    <div class="section-bg bg-black-800 bg-opacity-70"></div>
-    <!-- END section-bg -->
-    
-    <!-- BEGIN container -->
-    <div class="container position-relative">
-        <!-- BEGIN section-hero-content -->
-        <div class="section-hero-content">
-            <!-- BEGIN row -->
-            <div class="row">
-                <!-- BEGIN col-8 -->
-                <div class="col-lg-8 col-lg-10">
-                    <!-- BEGIN hero-title-desc -->
-                    <h1 class="hero-title mb-3 mt-5 pt-md-5">
-                        SELAMAT DATANG DI WEBSITE DPMPTSP
-                    </h1>
-                    <div class="fs-18px text-white text-opacity-80 mb-5">
-                        KABUPATEN INDRAMAYU
-                    </div>
-                    <!-- END hero-title-desc -->
-                    
-                    
-                    
-                    <a href="#" class="hero-btn fw-bold mb-n5"><i class="fa fa-arrow-right"></i> Learn About Our Company</a>
-                </div>
-                <!-- END col-8 -->
+        <div class="video-overlay header-text">
+            <div class="caption">
+                <h6>Selamat Datang di Website</h6>
+                <h2>DPM<em>PTSP</em></h2>
+                <h6>KABUPATEN INDRAMAYU</h6>
             </div>
-            <!-- END row -->
         </div>
-        <!-- END section-hero-content -->
     </div>
-    <!-- END container -->
-</div>
+    <!-- ***** Main Banner Area End ***** -->
+<!-- BEGIN section -->
+
 <!-- END section -->
 
 <!-- BEGIN section -->
@@ -75,7 +55,7 @@
                     <!-- END news -->
                 </div>
                 <div class="text-center">
-                    <a href="/berita" class="section-btn">Berita Lainnya <i class="fa fa-arrow-right mb-5"></i></a>
+                    <a href="/berita" class="btn bg-red  fw-bold rounded-pill" style="color:aliceblue;">Berita Lainnya</a>
                 </div>
                 <?php 
                         } 
@@ -91,7 +71,56 @@
     </div>
     <!-- END container -->
 </div>
-<!-- END section -->
+
+<section class="section-padding section-bg">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-lg-6 col-md-6 col-12 mt-3 mb-4 mb-lg-0">
+                <div class="custom-block bg-white shadow-lg">
+                    <a href="topics-detail.html">
+                        <div class="custom-block-overlay-text d-flex">
+                            <div>
+                                <h1>Informasi Layanan Pengaduan</h1>
+                                    <br>
+                                    <div class="header-btn">
+                                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">LAYANAN PENGADUAN</a>
+                                    </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-12 mt-lg-3">
+                <div class="custom-block custom-block-overlay">
+                <a href="topics-detail.html">
+                    <div class="d-flex flex-column h-100">
+                        <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
+
+                        <div class="custom-block-overlay-text d-flex">
+                            <div>
+                            <h1>Sudahkah Anda Mengurus Izin?</h1>
+                            <br>
+                    <div class="header-btn">
+                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">INFORMASI LAYANAN</a>
+                    </div>
+                            </div>
+
+                           
+                        </div>
+                        <div class="section-overlay"></div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN section-title -->
@@ -135,70 +164,76 @@
         </div>
     </div>
     <!-- END container -->
-</div>
-<section> 
+    <section> 
   <div class='air air1'></div>
   <div class='air air2'></div>
   <div class='air air3'></div>
   <div class='air air4'></div>
 </section>
+</div>
+    
+    <div class="section" style="background: url(../assets/img/tes.jpg)center 0px / cover no-repeat">
+    <div class="section-overlay"></div>
+        <section class="timeline-section section-padding" id="section_3" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h2 class="text-white mb-4"> Mengurus izin kini jauh lebih nyaman, cepat, mudah</h1>
+                        <p style="color:white;">5 Alasan pentingnya kita memiliki izin usaha,berikut penjelasannya :</p> <br>
+                    </div>
+                    <div class="col-lg-10 col-12 mx-auto">
+                        <div class="timeline-container">
+                            <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                                <div class="list-progress">
+                                    <div class="inner"></div>
+                                </div>
+                                <li>
+                                    <h4 class="text-white mb-3">Taat Hukum</h4>
+                                    <p class="text-white">Usaha Yang Memiliki Izin Mendapat Jaminan Hukum dan Perlindungan dari Pemerintah Apabila Terjadi Hal Yang Tidak Diinginkan</p>
+                                    <div class="icon-holder">
+                                        <i>1</i>
+                                    </div>
+                                </li>     
+                                <li>
+                                    <h4 class="text-white mb-3">Usaha Berkembang</h4>
+                                    <p class="text-white">Usaha Yang Memiliki Izin Lengkap & Sah Akan Mendapat Kemudahan Dalam Hal Pembiayaan Untuk Perkembangan Usaha</p>
+                                    <div class="icon-holder">
+                                        <i>2</i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h4 class="text-white mb-3">Ikut Serta Dalam Tender</h4>
+                                    <p class="text-white">Usaha Yang Memiliki Izin Akan Lebih Mudah Ikut Serta Dalam Tender</p>
+                                    <div class="icon-holder">
+                                        <i>3</i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h4 class="text-white mb-3">Memperluas Usaha</h4>
+                                    <p class="text-white">Usaha Lokal Yang Memilki Izin, Memiliki Kesempatan Untuk Memperluas Usahanya Ke Tingkat Internasional</p>
+                                    <div class="icon-holder">
+                                        <i>4</i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h4 class="text-white mb-3">Promosi Usaha</h4>
+                                    <p class="text-white">Dengan Memiliki Izin Usaha, Maka Kredibilitas Usaha Anda Baik dan Semakin Mudah Untuk Mengikuti Promosi Melalui Pameran Yang Diselenggarakan Pemerintah</p>
+                                    <div class="icon-holder">
+                                        <i>5</i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 <!-- END section -->
 <!-- BEGIN section -->
-<div class="section bg-light">
-			<!-- BEGIN container -->
-			<div class="container position-relative">
-				<!-- BEGIN row -->
-				<div class="row gx-5 align-items-center">
-					<!-- BEGIN col-6 -->
-					<div class="col-lg-6">
-						<h1 style="color: aliceblue;">Informasi Layanan Pengaduan</h1>
-						<br>
-                        <div class="header-btn">
-					        <a href="#" class="btn bg-black  fw-bold rounded-pill" style="color:aliceblue;">LAYANAN PENGADUAN</a>
-				        </div>
-					</div>
-					<!-- END col-6 -->
-					<!-- BEGIN col-6 -->
-					<div class="col-lg-6" >
-                    <h1 style="color: aliceblue;">Sudahkah Anda Mengurus Izin?</h1>
-						<br>
-                        <div class="header-btn">
-					        <a href="#" class="btn bg-red fw-bold rounded-pill" style="color:aliceblue;">INFORMASI LAYANAN</a>
-				        </div>
-					</div>
-					<!-- END col-6 -->
-				</div>
-				<!-- END row -->
-			</div>
-			<!-- END container -->
-		</div>
-
-		<!-- END section -->
-	<div class="section">
-        <div class="text-center">
-            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-            Mengurus izin kini jauh lebih nyaman, cepat, mudah
-            </div>
-            <p class="fs-18px mb-5">5 Alasan pentingnya kita memiliki izin usaha,berikut penjelasannya :</p> 
-		  <div class="container">
-		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
-		      <div class="fs-16px mb-3 fw-bolder line-h-11"> Usaha Yang Memiliki Izin Mendapat Jaminan Hukum dan Perlindungan dari Pemerintah Apabila Terjadi Hal Yang Tidak Diinginkan</div>
-		    </div>
-		    <div class="p-6 position-relative border-end border-5 border-danger mb-2">
-		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Yang Memiliki Izin Lengkap & Sah Akan Mendapat Kemudahan Dalam Hal Pembiayaan Untuk Perkembangan Usaha </div>
-		    </div>
-		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
-		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Yang Memiliki Izin Akan Lebih Mudah Ikut Serta Dalam Tender</div>
-		    </div>
-		    <div class="p-6 position-relative border-end border-5 border-danger mb-2">
-		      <div class="fs-16px mb-3 fw-bolder line-h-11">Usaha Lokal Yang Memilki Izin, Memiliki Kesempatan Untuk Memperluas Usahanya Ke Tingkat Internasional</div>
-		    </div>
-		    <div class="p-6 position-relative border-start border-5 border-danger mb-2" style="background-color: #ffc0cb;">
-		      <div class="fs-16px mb-3 fw-bolder line-h-11">Dengan Memiliki Izin Usaha, Maka Kredibilitas Usaha Anda Baik dan Semakin Mudah Untuk Mengikuti Promosi Melalui Pameran Yang Diselenggarakan Pemerintah</div>
-		    </div>
-		  </div>
-		</div>
-	</div>
+   
+		
+    
 
 @endsection
 	
