@@ -24,7 +24,7 @@ Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
 Route::get('/kontak', [Home::class, 'kontak']);
 Route::get('/berita_detail', [Home::class, 'berita_detail']);
 Route::get('/pengaduan', [Home::class, 'pengaduan']);
-Route::post('/create_pengaduan', [Home::class, 'create_pengaduan'])->middleware('user_access');
+Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
