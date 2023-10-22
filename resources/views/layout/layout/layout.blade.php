@@ -7,11 +7,13 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="../assets/css/blog/vendor.min.css" rel="stylesheet" />
 	<link href="../assets/css/blog/app.min.css" rel="stylesheet" />
+	<link href="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- <link href="../assets/css/corporate/app.min.css" rel="stylesheet" /> -->
 	<!-- ================== END core-css ================== -->
 	
@@ -92,7 +94,9 @@
 	<script src="{{ asset('assets/js/blog/jquery.sticky.js')}}"></script>
 	<script src="{{ asset('assets/js/blog/click-scroll.js')}}"></script>
 	<script src="{{ asset('assets/js/blog/custom.js')}}"></script>
+	<script src="{{ asset('assets_admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+	<script src="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.js') }}"></script>
 	<!-- ================== END core-js ================== -->
-	
+	@yield('js')
 </body>
 </html>

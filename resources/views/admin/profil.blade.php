@@ -47,42 +47,28 @@
                 </div>
                 <div class="panel-body">
                     <div class="row mb-2">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>NIK</label>
-                                <input type="text" id="nik" name="nik" class="form-control" value="{{$data['user']->nik}}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama</label>
                                 <input type="text" id="name" name="name" class="form-control" value="{{$data['user']->name}}">
                             </div>
                         </div>
+                        
                     </div>
                     <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" id="username" name="username" class="form-control" value="{{$data['user']->username}}">
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>E-mail</label>
                                 <input type="email" id="email" name="email" class="form-control" value="{{$data['user']->email}}">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>No Hp</label>
-                                <input type="text" id="phone" name="phone" class="form-control" value="{{$data['user']->phone}}">
-                            </div>
-                        </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Jabatan</label>
-                                <input type="text" id="jabatan" name="jabatan" class="form-control" value="{{$data['user']->jabatan}}" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -142,16 +128,13 @@ $(document).ready(function() {
             errorClass: "is-invalid",
             // validClass: "is-valid",
             rules: {
-                nik: {
+                username: {
                     required: true
                 },
                 name: {
                     required: true
                 },
                 email: {
-                    required: true
-                },
-                phone: {
                     required: true
                 },
             },

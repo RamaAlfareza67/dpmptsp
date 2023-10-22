@@ -369,20 +369,15 @@ class AdminController extends Controller
     public function pegawai_(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('users')->where('deleted', '!=', 1)->get();
+            $data = DB::table('pegawai')->where('deleted', '!=', 1)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nik="' . $field->nik . '" data-name="' . $field->name . '" data-email="' . $field->email . '" data-phone="' . $field->phone . '" data-roles="' . $field->roles . '" data-jabatan="' . $field->jabatan . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nik="' . $field->nip . '" data-name="' . $field->nama . '" data-email="' . $field->email . '" data-phone="' . $field->no_hp . '"  data-jabatan="' . $field->jabatan . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
                     return $actionBtn;
                 })
-                ->addColumn('img', function ($field) {
-                    $img = ($field->foto != null) ? asset($field->foto) : asset('/uploads/noimage.jpg');
-                    $image = '<img src="' . $img . '" width="50" alt="" class="rounded" />';
-                    return $image;
-                })
-                ->rawColumns(['action', 'img'])
+                ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -390,18 +385,16 @@ class AdminController extends Controller
 
     public function create_pegawai(Request $request)
     {
-        $data['nik'] = $request->nik;
-        $data['name'] = $request->name;
+        $data['nip'] = $request->nik;
+        $data['nama'] = $request->name;
         $data['email'] = $request->email;
-        $data['phone'] = $request->phone;
+        $data['no_hp'] = $request->phone;
         $data['jabatan'] = $request->jabatan;
-        $data['roles'] = $request->roles;
-        $data['password'] = Hash::make($request->password);
 
         $data['created_date'] = date('Y-m-d h:i:s');
         $data['created_by'] = auth()->user()->id;
 
-        $datas = DB::table('users')->insert($data);
+        $datas = DB::table('pegawai')->insert($data);
 
         $r['result'] = true;
         if (!$datas) {
@@ -412,21 +405,17 @@ class AdminController extends Controller
 
     public function update_pegawai(Request $request)
     {
-        $data['nik'] = $request->nik;
-        $data['name'] = $request->name;
+        $data['nip'] = $request->nik;
+        $data['nama'] = $request->name;
         $data['email'] = $request->email;
-        $data['phone'] = $request->phone;
+        $data['no_hp'] = $request->phone;
         $data['jabatan'] = $request->jabatan;
-        $data['roles'] = $request->roles;
-        if ($request->password != '') {
-            $data['password'] = Hash::make($request->password);
-        }
 
         $data['edited_date'] = date('Y-m-d h:i:s');
         $data['edited_by'] = auth()->user()->id;
         // dd($data);
 
-        $datas = DB::table('users')->where('id', $request->hidden_id)->update($data);
+        $datas = DB::table('pegawai')->where('id', $request->hidden_id)->update($data);
 
         $r['result'] = true;
         if (!$datas) {
@@ -437,7 +426,7 @@ class AdminController extends Controller
 
     public function delete_pegawai(Request $request)
     {
-        $data = DB::table('users')->where('id', $request->id)->update([
+        $data = DB::table('pegawai')->where('id', $request->id)->update([
             'deleted' => 1,
         ]);
         if ($data) {
@@ -461,10 +450,9 @@ class AdminController extends Controller
 
     public function update_profil(Request $request)
     {
-        $data['nik'] = $request->nik;
         $data['name'] = $request->name;
         $data['email'] = $request->email;
-        $data['phone'] = $request->phone;
+        $data['username'] = $request->username;
         if ($request->password != '') {
             $data['password'] = Hash::make($request->password);
         }
@@ -616,52 +604,20 @@ class AdminController extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('pengaduan');
-            if (Auth::user()->roles == 'SUPER_ADMIN') {
-                if ($request->tipe == 'EKSTERNAL') {
-                    $data->select(DB::raw('pengaduan.*, jenis_pengaduan.jenis, tanggapan.tanggapan, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_'))
-                        ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
-                        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-                        ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
-                        ->where('pengaduan.tipe', 'EKSTERNAL');
-                    if ($request->tanggal_start != '' && $request->tanggal_end != '') {
-                        $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
-                    }
-                    $data->get();
-                } else if ($request->tipe == 'INTERNAL') {
-                    $data->select(DB::raw('pengaduan.id, pengaduan.id_user, pengaduan.isi, pengaduan.file, pengaduan.status, pengaduan.tipe, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_,
-                        pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
-                        ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
-                        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-                        ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
-                        ->leftJoin('users', 'pengaduan.id_user', '=', 'users.id')
-                        ->where('pengaduan.tipe', 'INTERNAL');
-                    if ($request->tanggal_start != '' && $request->tanggal_end != '') {
-                        $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
-                    }
-                    $data->orderBy('created_date', 'DESC')->get();
-                } else {
-                    $data = [];
-                }
-            } else {
-                $data->select(DB::raw('pengaduan.id, pengaduan.id_user, pengaduan.isi, pengaduan.file, pengaduan.status, pengaduan.tipe, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_,
-                        pengaduan.created_date, users.nik, users.name, users.email, users.phone, users.jabatan, users.foto, jenis_pengaduan.jenis'))
-                    ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
-                    ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-                    ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id')
-                    ->leftJoin('users', 'pengaduan.id_user', '=', 'users.id')
-                    ->where('pengaduan.tipe', 'INTERNAL');
-                $data->where('id_user', Auth::user()->id)->get();
+            $data->select(DB::raw('pengaduan.*, jenis_pengaduan.jenis, tanggapan.tanggapan, tanggapan.tanggapan, tanggapan.created_date as tgl_jawab,petugas.name as petugas_'))
+                ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+                ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+                ->leftJoin('users as petugas', 'petugas.id', '=', 'tanggapan.petugas_id');
+            if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                $data->whereBetween('pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
             }
+            $data->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
                     if ($field->status == 'MENUNGGU') {
-                        if (Auth::user()->roles == 'SUPER_ADMIN') {
-                            $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Dijawab</a>
-                            <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
-                        } else {
-                            $actionBtn = '';
-                        }
+                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Dijawab</a>
+                        <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
                     } else if ($field->status == 'DIJAWAB') {
                         $actionBtn = '<a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-success detail_jawab" data-id="' . $field->id . '" data-isi="' . $field->isi . '" data-tgl="' . $field->created_date . '" data-isi_jawaban="' . $field->tanggapan . '" data-tgl_jawaban="' . $field->tgl_jawab . '" data-petugas="' . $field->petugas_ . '">Detail</a>';
                     } else {
@@ -671,7 +627,7 @@ class AdminController extends Controller
                     return $actionBtn;
                 })
                 ->addColumn('nama', function ($field) use ($request) {
-                    $nama = ($request->tipe == 'EKSTERNAL') ? $field->nama : $field->name;
+                    $nama = $field->nama;
                     return $nama . '<span class="popover_ text-primary" style="margin-left:10px"><i class="fas fa-info-circle"></i></span>';
                 })
                 ->addColumn('status', function ($field) {
@@ -696,45 +652,12 @@ class AdminController extends Controller
         }
     }
 
-    public function create_pengaduan(Request $request)
-    {
-        $data['id_user'] = Auth::user()->id;
-        // $data['nik'] = Auth::user()->nik;
-        // $data['nama'] = Auth::user()->name;
-        // $data['alamat'] = null;
-        // $data['kecamatan'] = null;
-        // $data['kelurahan'] = null;
-        // $data['email'] = Auth::user()->email;
-        // $data['no_hp'] = Auth::user()->phone;
-        $data['isi'] = $request->pengaduan;
-        $data['jenis_pengaduan'] = $request->jenis_pengaduan;
 
-        if ($request->file('file')) {
-            $file = $request->file('file');
-            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
-            $file->move('uploads/pengaduan', $fileName);
-            $file_path = 'uploads/pengaduan/' . $fileName;
-            $data['file'] = $file_path;
-        }
-
-        $data['status'] = 'MENUNGGU';
-        $data['tipe'] = 'INTERNAL';
-        $data['created_date'] = date('Y-m-d h:i:s');
-        $data['created_by'] = auth()->user()->id;
-        $datas = DB::table('pengaduan')->insert($data);
-
-        $r['result'] = true;
-        if (!$datas) {
-            $r['result'] = false;
-        }
-        return response()->json($r);
-    }
 
     public function detail_pengadu($id)
     {
         $pengaduan = DB::table('pengaduan')->where('id', $id)->first();
-        if ($pengaduan->tipe == 'EKSTERNAL') {
-            $isi = '<table class="table">
+        $isi = '<table class="table">
                     <tr>
                         <td>NIK</td>
                         <td>:</td>
@@ -771,36 +694,6 @@ class AdminController extends Controller
                         <td>' . $pengaduan->no_hp . '</td>
                     </tr>
                     </table>';
-        } else if ($pengaduan->tipe == 'INTERNAL') {
-            $user = DB::table('users')->where('id', $pengaduan->id_user)->first();
-            $isi = '<table class="table">
-                    <tr>
-                        <td>NIK</td>
-                        <td>:</td>
-                        <td>' . $user->nik . '</td>
-                    </tr>
-                    <tr>
-                        <td>Nama</td>
-                        <td>:</td>
-                        <td>' . $user->name . '</td>
-                    </tr>
-                    <tr>
-                        <td>E-mail</td>
-                        <td>:</td>
-                        <td>' . $user->email . '</td>
-                    </tr>
-                    <tr>
-                        <td>No Hp</td>
-                        <td>:</td>
-                        <td>' . $user->phone . '</td>
-                    </tr>
-                    <tr>
-                        <td>Jabatan</td>
-                        <td>:</td>
-                        <td>' . $user->jabatan . '</td>
-                    </tr>
-                    </table>';
-        }
 
         echo $isi;
     }
@@ -828,14 +721,14 @@ class AdminController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
                 ->where('pengaduan.id', $request->id)
                 ->first();
-            if ($pengaduan->tipe == 'INTERNAL') {
-                $user = DB::table('users')->where('id', $pengaduan->id_user)->first();
-                $email = $user->email;
-            } else if ($pengaduan->tipe == 'EKSTERNAL') {
-                $email = $pengaduan->email;
-            } else {
-                $email = '';
-            }
+            // if ($pengaduan->tipe == 'INTERNAL') {
+            //     $user = DB::table('users')->where('id', $pengaduan->id_user)->first();
+            //     $email = $user->email;
+            // } else if ($pengaduan->tipe == 'EKSTERNAL') {
+            $email = $pengaduan->email;
+            // } else {
+            //     $email = '';
+            // }
             // dd($pengaduan);
 
             $mailData = [
@@ -860,11 +753,17 @@ class AdminController extends Controller
             DB::rollback();
             $r['title'] = 'Maaf!';
             $r['icon'] = 'error';
-            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+            $r['status'] = 'Tidak dapat Menjawab / Menolak Pengaduan! Silakan hubungi Administrator.';
         }
         return response()->json($r);
     }
 
+
+    public function jenis_pengaduan()
+    {
+        $data['module'] = 'JENIS_PENGADUAN';
+        return view('admin.jenis_pengaduan', compact('data'));
+    }
 
     public function jenis_pengaduan_(Request $request)
     {
@@ -873,8 +772,8 @@ class AdminController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    // <div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-jenis="' . $field->jenis . '"><i class="fas fa-pen fa-xs"></i></a>
-                    $actionBtn = '
+
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-jenis="' . $field->jenis . '" data-tipe="' . $field->tipe . '"><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete_jenis " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
                     return $actionBtn;
                 })
@@ -887,9 +786,25 @@ class AdminController extends Controller
     public function create_jenis_pengaduan(Request $request)
     {
         $data['jenis'] = $request->jenis;
+        $data['tipe'] = $request->tipe;
         $data['created_date'] = date('Y-m-d h:i:s');
         $data['created_by'] = auth()->user()->id;
         $datas = DB::table('jenis_pengaduan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_jenis_pengaduan(Request $request)
+    {
+        $data['jenis'] = $request->jenis;
+        $data['tipe'] = $request->tipe;
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        $datas = DB::table('jenis_pengaduan')->where('id', $request->hidden_id)->update($data);
 
         $r['result'] = true;
         if (!$datas) {
@@ -924,5 +839,88 @@ class AdminController extends Controller
         }
         echo $isi;
         return;
+    }
+
+    public function user_management()
+    {
+        $data['module'] = 'USERMANAGEMENT';
+        return view('admin.usermanagement', compact('data'));
+    }
+
+    public function user_management_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('users')->where('deleted', '!=', 1)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '"  data-name="' . $field->name . '" data-email="' . $field->email . '" data-username="' . $field->username . '" data-roles="' . $field->roles . '"  ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_user_management(Request $request)
+    {
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['username'] = $request->username;
+        $data['roles'] = $request->roles;
+        $data['password'] = Hash::make($request->password);
+
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+
+        $datas = DB::table('users')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_user_management(Request $request)
+    {
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['username'] = $request->username;
+        $data['roles'] = $request->roles;
+        if ($request->password != '') {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        // dd($data);
+
+        $datas = DB::table('users')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_user_management(Request $request)
+    {
+        $data = DB::table('users')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
     }
 }

@@ -37,21 +37,56 @@ class Home extends Controller
         $data['layanan'] = DB::table('layanan_dinas')->where('deleted', '!=', 1)->get();
         return view('dpmptsp/layanan_dinas', compact('data'));
     }
+
     public function kontak()
     {
         return view('dpmptsp/kontak');
     }
+
     public function berita_detail()
     {
         return view('dpmptsp/berita_detail');
     }
+
     public function pengaduan()
     {
         $data['pengaduan'] = DB::table('pengaduan')
-        ->select(DB::raw('pengaduan.*, tanggapan.tanggapan, users.name as petugas'))
-        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-        ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
-        ->where('status', '=', 'DIJAWAB')->get();
+            ->select(DB::raw('pengaduan.*, tanggapan.tanggapan, users.name as petugas'))
+            ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+            ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+            ->where('status', '=', 'DIJAWAB')->get();
+        $data['jenis'] = DB::table('jenis_pengaduan')->where('tipe', 'PENGADUAN')->where('deleted', 0)->get();
         return view('dpmptsp/pengaduan', compact('data'));
+    }
+
+    public function create_pengaduan(Request $request)
+    {
+        $data['nik'] = $request->nik;
+        $data['nama'] = $request->nama;
+        $data['alamat'] = $request->alamat;
+        $data['kecamatan'] = $request->kecamatan;
+        $data['kelurahan'] = $request->kelurahan;
+        $data['email'] = $request->email;
+        $data['no_hp'] = $request->no_hp;
+        $data['isi'] = $request->isi;
+        $data['jenis_pengaduan'] = $request->jenis_pengaduan;
+
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+            $file->move('uploads/pengaduan', $fileName);
+            $file_path = 'uploads/pengaduan/' . $fileName;
+            $data['file'] = $file_path;
+        }
+
+        $data['status'] = 'MENUNGGU';
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $datas = DB::table('pengaduan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
     }
 }

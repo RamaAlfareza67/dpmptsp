@@ -1,18 +1,18 @@
 @extends('layout.layout_admin.index')
 @section('title')
-    Pegawai
+    Jenis Pengaduan
 @endsection
 @section('content')
 <div id="content" class="app-content">
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Pegawai</li>
+        <li class="breadcrumb-item active">Jenis Pengaduan</li>
     </ol>
     {{-- <h1 class="page-header">Data Artikel</h1> --}}
     <div class="panel">
         <div class="panel-heading bg-blue-700 text-white">
-            <h4 class="panel-title">Data Pegawai</h4>
+            <h4 class="panel-title">Data Jenis Pengaduan</h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -24,11 +24,8 @@
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th>NIP</th>
-                            <th>Nama</th>
-                            <th>Jabatan</th>
-                            <th>E-Mail</th>
-                            <th>No Hp</th>
+                            <th>Jenis</th>
+                            <th>Tipe</th>
                             <th width="5%">Aksi</th>
                         </tr>
                     </thead>
@@ -58,39 +55,22 @@
                                 <div class="row mb-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>NIP</label>
-                                            <input type="number" id="nik" name="nik" class="form-control" >
+                                            <label>Nama Jenis</label>
+                                            <input type="text" id="jenis" name="jenis" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nama</label>
-                                            <input type="text" id="name" name="name" class="form-control" >
+                                            <label>Tipe</label>
+                                            <select class="form-control" name="tipe" id="tipe">
+                                                <option value="">- Pilih Tipe -</option>
+                                                <option value="PENGADUAN">E-Pengaduan</option>
+                                                <option value="WBS">Whistleblowing System (WBS)</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>E-mail</label>
-                                            <input type="email" id="email" name="email" class="form-control" >
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>No Hp</label>
-                                            <input type="number" id="phone" name="phone" class="form-control" >
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Jabatan</label>
-                                            <input type="text" id="jabatan" name="jabatan" class="form-control" >
-                                        </div>
-                                    </div>
-                                </div>
+
                                 
                     </div>
                 </div>
@@ -125,7 +105,7 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/user/pegawai_',
+                url: '/user/jenis_pengaduan_',
                 method: 'POST',
                 data: function(d){
 
@@ -134,11 +114,8 @@ $(document).ready(function() {
           
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                {data: 'nip', name: 'nip'},
-                {data: 'nama', name: 'nama'},
-                {data: 'jabatan', name: 'jabatan'},
-                {data: 'email', name: 'email'},       
-                {data: 'no_hp', name: 'no_hp'},        
+                {data: 'jenis', name: 'jenis'},
+                {data: 'tipe', name: 'tipe'},    
                 {
                     data: 'action', 
                     name: 'action', 
@@ -148,7 +125,7 @@ $(document).ready(function() {
             ],
             columnDefs: [
                 {
-                    targets: [0,6],
+                    targets: [0,2,3],
                     className: 'text-center'
                     
                 },
@@ -159,13 +136,13 @@ $(document).ready(function() {
                     action: function(e, dt, node, config) {
                         $('#add-form')[0].reset();
                         $('#Modal').modal('show');
-                        $('.judul-modal').text('Tambah Pegawai');
+                        $('.judul-modal').text('Tambah Jenis Pengaduan');
                         $('#hidden_status').val('add');
                     }
                 }, 
                 {
                     extend: 'excel',
-                    title: 'Pegawai',
+                    title: 'Jenis Pengaduan',
                     className: 'btn',
                     text: '<i class="far fa-file-code"></i> Excel',
                     titleAttr: 'Excel',
@@ -180,14 +157,11 @@ $(document).ready(function() {
         $(document).on('click', '.edit', function() {
             $('#add-form')[0].reset();
             $('#Modal').modal('show');
-            $('.judul-modal').text('Edit Pegawai');
+            $('.judul-modal').text('Edit Jenis Pengaduan');
             $('#hidden_status').val('edit');
             $('#hidden_id').val($(this).data('id'));
-            $('#nik').val($(this).data('nik'));
-            $('#name').val($(this).data('name'));
-            $('#email').val($(this).data('email'));
-            $('#phone').val($(this).data('phone'));
-            $('#jabatan').val($(this).data('jabatan'));
+            $('#jenis').val($(this).data('jenis'));
+            $('#tipe').val($(this).data('tipe'));
 
         });
 
@@ -204,7 +178,7 @@ $(document).ready(function() {
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/user/delete_pegawai",
+                        url: "/user/delete_jenis_pengaduan",
                         type: "POST",
                         data: {
                             id: id
@@ -233,28 +207,19 @@ $(document).ready(function() {
             errorClass: "is-invalid",
             // validClass: "is-valid",
             rules: {
-                nik: {
+                jenis: {
                     required: true
                 },
-                name: {
-                    required: true
-                },
-                email: {
-                    required: true
-                },
-                phone: {
-                    required: true
-                },
-                jabatan: {
+                tipe: {
                     required: true
                 },
             },
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/user/create_pegawai';
+                    url = '/user/create_jenis_pengaduan';
                 } else {
-                    url = '/user/update_pegawai';
+                    url = '/user/update_jenis_pengaduan';
                 }
 
                 var form_data = new FormData(document.getElementById("add-form"));
@@ -285,7 +250,7 @@ $(document).ready(function() {
                         if (data.result != true) {
                             Swal.fire({
                                 title: 'Gagal',
-                                text: "Gagal Tambah / Edit Artikel",
+                                text: "Gagal Tambah / Edit Jenis Pengaduan",
                                 icon: 'error',
                                 showCancelButton: false,
                                 showConfirmButton: true,

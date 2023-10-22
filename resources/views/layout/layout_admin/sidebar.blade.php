@@ -44,7 +44,14 @@
                     <div class="menu-text">Pengaduan</div>
                 </a>
             </div>
-            <?php if(Auth::user()->roles == 'SUPER_ADMIN') { ?>
+            <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">
+                <a href="/user/jenis_pengaduan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="menu-text">Jenis Pengaduan</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
                 <a href="/user/pegawai" class="menu-link">
                     <div class="menu-icon">
@@ -53,8 +60,6 @@
                     <div class="menu-text">Pegawai</div>
                 </a>
             </div>
-            <?php } ?>
-            <?php if(Auth::user()->roles == 'ADMIN' || Auth::user()->roles == 'SUPER_ADMIN') { ?>
             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
                 <a href="/user/artikel" class="menu-link">
                     <div class="menu-icon">
@@ -103,7 +108,14 @@
                     <div class="menu-text">Profil Dinas</div>
                 </a>
             </div>
-            <?php } ?>
+            <div class="menu-item {{ ($data['module'] == 'USERMANAGEMENT') ? 'active' : '' }}">
+                <a href="/user/user_management" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="menu-text">User Management</div>
+                </a>
+            </div>
             <!-- BEGIN minify-button -->
             <div class="menu-item d-flex">
                 <a href="javascript:;" class="app-sidebar-minify-btn ms-auto" data-toggle="app-sidebar-minify"><i class="fa fa-angle-double-left"></i></a>
