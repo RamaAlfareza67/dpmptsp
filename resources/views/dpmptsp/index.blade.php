@@ -96,15 +96,16 @@
             <div class="col-lg-6 col-md-6 col-12 mt-lg-3">
                 <div class="custom-block custom-block-overlay">
                 <a href="topics-detail.html">
+                <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
                     <div class="d-flex flex-column h-100">
-                        <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
+                        
 
-                        <div class="custom-block-overlay-text d-flex">
+                        <div class="custom-block-overlay-text d-flex" style="color:white;">
                             <div>
-                            <h1>Sudahkah Anda Mengurus Izin?</h1>
+                            <h1 style="color:white;">Sudahkah Anda Mengurus Izin?</h1>
                             <br>
                     <div class="header-btn">
-                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">INFORMASI LAYANAN</a>
+                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3" style="color:white;">INFORMASI LAYANAN</a>
                     </div>
                             </div>
 
@@ -120,7 +121,7 @@
     </div>
 </section>
 
-
+<section class="section-padding section-bg">
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN section-title -->
@@ -164,6 +165,7 @@
         </div>
     </div>
     <!-- END container -->
+    </section>
     <section> 
   <div class='air air1'></div>
   <div class='air air2'></div>

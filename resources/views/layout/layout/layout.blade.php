@@ -8,7 +8,7 @@
 	<meta content="" name="description" />
 	<meta content="" name="author" />
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	
+	<link rel="icon" type="image/x-icon" href="../assets/img/logo.png"/>
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="{{ asset('assets/css/blog/vendor.min.css')}}" rel="stylesheet" />
