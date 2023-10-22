@@ -98,9 +98,9 @@
                                             } 
                                         } else { 
                                     ?>
-                                     <div class="col-lg-8 col-12 mb-4 mb-lg-0">
-                                        <p>kosong</p>
-                                    <div class="custom-block bg-white shadow-lg">
+                                     
+                                     <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
+                                       
                                     <?php } ?>
                                 </div>
                             </div>

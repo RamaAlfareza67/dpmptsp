@@ -27,8 +27,8 @@
                 <!-- BEGIN card -->
                 <div class="card shadow border-0 mb-5" >
                     <div class="card-body p-6">
-                        <div class="mb-3 w-50px h-50px rounded-3 bg-indigo text-white d-flex align-items-center justify-content-center position-relative">
-                            <img src="{{asset($val->image)}}" alt="{{$val->nama}}" width="10%">
+                        <div class="mb-3 w-50px h-50px rounded-3  text-white d-flex align-items-center justify-content-center position-relative">
+                            <img src="{{asset($val->image)}}" alt="{{$val->nama}}" width="100%">
                         </div>
                         <h2>{{$val->nama}}</h2>
                         <p class="fw-bold text-gray-600 mb-0">
