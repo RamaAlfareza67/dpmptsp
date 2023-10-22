@@ -41,6 +41,7 @@
                     </div>
                 </li> -->
                 <li><a href="/layanan_dinas">LAYANAN DINAS</a></li>
+                <li><a href="/berita">BERITA</a></li>
                 <li><a href="/pengaduan">PENGADUAN</a></li>
                 <li><a href="/kontak">KONTAK KAMI</a></li>
             </ul>

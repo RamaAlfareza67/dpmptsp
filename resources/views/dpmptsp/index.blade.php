@@ -78,11 +78,12 @@
 
 
             <div class="col-lg-6 col-md-6 col-12 mt-3 mb-4 mb-lg-0">
-                <div class="custom-block bg-white shadow-lg">
+                <div class="custom-block custom-block-overlay shadow-lg">
                     <a href="topics-detail.html">
+                    <img src="../assets/img/info.jpg" class="custom-block-image img-fluid" alt="">
                         <div class="custom-block-overlay-text d-flex">
                             <div>
-                                <h1>Informasi Layanan Pengaduan</h1>
+                                <h1 style="color:red;">Informasi Layanan Pengaduan</h1>
                                     <br>
                                     <div class="header-btn">
                                     <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">LAYANAN PENGADUAN</a>
@@ -98,8 +99,6 @@
                 <a href="topics-detail.html">
                 <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
                     <div class="d-flex flex-column h-100">
-                        
-
                         <div class="custom-block-overlay-text d-flex" style="color:white;">
                             <div>
                             <h1 style="color:white;">Sudahkah Anda Mengurus Izin?</h1>
