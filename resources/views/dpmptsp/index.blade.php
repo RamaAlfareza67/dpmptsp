@@ -72,21 +72,23 @@
     <!-- END container -->
 </div>
 
+
+
 <section class="section-padding section-bg">
-    <div class="container">
+    
         <div class="row">
 
 
             <div class="col-lg-6 col-md-6 col-12 mt-3 mb-4 mb-lg-0">
                 <div class="custom-block custom-block-overlay shadow-lg">
-                    <a href="topics-detail.html">
+                    <a href="">
                     <img src="../assets/img/info.jpg" class="custom-block-image img-fluid" alt="">
                         <div class="custom-block-overlay-text d-flex">
                             <div>
-                                <h1 style="color:red;">Informasi Layanan Pengaduan</h1>
+                                <h1 style="color:red; text-align:right;">Informasi Layanan Pengaduan</h1>
                                     <br>
                                     <div class="header-btn">
-                                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">LAYANAN PENGADUAN</a>
+                                    <a href="" class="btn custom-btn mt-2 mt-lg-3">LAYANAN PENGADUAN</a>
                                     </div>
                             </div>
                         </div>
@@ -96,7 +98,7 @@
 
             <div class="col-lg-6 col-md-6 col-12 mt-lg-3">
                 <div class="custom-block custom-block-overlay">
-                <a href="topics-detail.html">
+                <a href="">
                 <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
                     <div class="d-flex flex-column h-100">
                         <div class="custom-block-overlay-text d-flex" style="color:white;">
@@ -117,10 +119,10 @@
             </div>
 
         </div>
-    </div>
+    
 </section>
 
-<section class="section-padding section-bg">
+<section class="section-padding section-bg" style="padding-top:0px;">
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN section-title -->

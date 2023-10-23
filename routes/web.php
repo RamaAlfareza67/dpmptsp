@@ -25,6 +25,7 @@ Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
 Route::get('/kontak', [Home::class, 'kontak']);
 // Route::get('/berita_detail', [Home::class, 'berita_detail']);
 Route::get('/pengaduan', [Home::class, 'pengaduan']);
+Route::get('/wbs', [Home::class, 'wbs']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 
 

@@ -39,7 +39,7 @@
 				<li><a href="{{$profil->facebook}}"><i class="fab fa-facebook"></i></a></li>
 				<li><a href="{{$profil->ig}}"><i class="fab fa-instagram"></i></a></li>
 				<li><a href="{{$profil->twitter}}"><i class="fab fa-twitter"></i></a></li>
-				<li><a href="{{$profil->yt}}"><i class="fa fa-youtube"></i></a></li>
+				<li><a href="{{$profil->yt}}"><i class="fab fa-youtube"></i></a></li>
 			</ul>
 		</div>
         <a href="https://api.whatsapp.com/send?phone=628112228300&amp;text=Selamat%20Datang%20Dilayanan%20Pengaduan%20DPMPTSP" class="floating" target="_blank">

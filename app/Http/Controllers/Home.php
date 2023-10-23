@@ -63,6 +63,17 @@ class Home extends Controller
         return view('dpmptsp/pengaduan', compact('data'));
     }
 
+    public function wbs()
+    {
+        $data['pengaduan'] = DB::table('pengaduan')
+            ->select(DB::raw('pengaduan.*, tanggapan.tanggapan, users.name as petugas'))
+            ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+            ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+            ->where('status', '=', 'DIJAWAB')->get();
+        $data['jenis'] = DB::table('jenis_pengaduan')->where('tipe', 'PENGADUAN')->where('deleted', 0)->get();
+        return view('dpmptsp/wbs', compact('data'));
+    }
+
     public function create_pengaduan(Request $request)
     {
         $data['nik'] = $request->nik;
