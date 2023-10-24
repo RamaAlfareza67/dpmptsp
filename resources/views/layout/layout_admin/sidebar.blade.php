@@ -44,6 +44,14 @@
                     <div class="menu-text">Pengaduan</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'WBS') ? 'active' : '' }}">
+                <a href="/user/wbs" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="menu-text">WBS (Wishtleblowing System)</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/jenis_pengaduan" class="menu-link">
                     <div class="menu-icon">
@@ -124,6 +132,14 @@
                         <i class="fa fa-paper-plane"></i>
                     </div>
                     <div class="menu-text">Pengaduan</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'WBS') ? 'active' : '' }}">
+                <a href="/user/wbs" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="menu-text">WBS (Wishtleblowing System)</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">

@@ -995,4 +995,313 @@ class AdminController extends Controller
         }
         return response()->json($r);
     }
+
+    public function wbs()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_PENGADUAN') {
+            $data['module'] = 'WBS';
+            return view('admin.wbs', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function wbs_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('wbs_pengaduan');
+            $data->select(DB::raw('wbs_pengaduan.*, jenis_pengaduan.jenis'))
+                ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'wbs_pengaduan.jenis_pengaduan');
+            if ($request->tanggal_start != '' && $request->tanggal_end != '') {
+                $data->whereBetween('wbs_pengaduan.created_date', [$request->tanggal_start, $request->tanggal_end]);
+            }
+            $data->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    if ($field->status == 'MENUNGGU') {
+                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary accept mr-1" data-id="' . $field->id . '" >Diterima</a>
+                        <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger rejact " data-id="' . $field->id . '">Ditolak</a></div>';
+                    } else if ($field->status == 'DITERIMA') {
+                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-info process mr-1" data-id="' . $field->id . '" >Diproses</a></div>';
+                        // $actionBtn = '<a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-success detail_jawab" data-id="' . $field->id . '" data-isi="' . $field->isi . '" data-tgl="' . $field->created_date . '" data-isi_jawaban="' . $field->tanggapan . '" data-tgl_jawaban="' . $field->tgl_jawab . '" data-petugas="' . $field->petugas_ . '">Detail</a>';
+                    } else if ($field->status == 'DIPROSES') {
+                        $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-info tanggap mr-1" data-id="' . $field->id . '" >Tanggap</a>
+                        <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-success selesai " data-id="' . $field->id . '">Selesai</a></div>';
+                    } else if ($field->status == 'SELESAI') {
+                        // $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-primary process mr-1" data-id="' . $field->id . '" >Diproses</a></div>';
+                        $actionBtn = '<a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-success detail_" data-id="' . $field->id . '">Detail</a>';
+                    } else {
+                        $actionBtn = '';
+                    }
+
+                    return $actionBtn;
+                })
+                ->addColumn('nama', function ($field) use ($request) {
+                    $nama = $field->nama;
+                    return $nama . '<span class="popover_ text-primary" style="margin-left:10px"><i class="fas fa-info-circle"></i></span>';
+                })
+                ->addColumn('status', function ($field) {
+                    if ($field->status == 'DITERIMA') {
+                        $d = '<span class="badge bg-primary">Diterima</span>';
+                    } else if ($field->status == 'MENUNGGU') {
+                        $d = '<span class="badge bg-warning">Menunggu</span>';
+                    } else if ($field->status == 'DITOLAK') {
+                        $d = '<span class="badge bg-danger">Ditolak</span>';
+                    } else if ($field->status == 'DIPROSES') {
+                        $d = '<span class="badge bg-info">Diproses</span>';
+                    } else if ($field->status == 'SELESAI') {
+                        $d = '<span class="badge bg-success">Selesai</span>';
+                    } else {
+                        $d = '-';
+                    }
+                    return $d;
+                })
+                ->addColumn('file', function ($field) use ($request) {
+                    $file = ($field->file != '') ? '<a href="' . asset($field->file) . '" class="btn btn-xs waves-effect waves-light btn-outline-primary" target="_blank">Lihat File</a>' : '-';
+                    return $file;
+                })
+                ->rawColumns(['action', 'nama', 'file', 'status'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function detail_pengadu_wbs($id)
+    {
+        $pengaduan = DB::table('wbs_pengaduan')->where('id', $id)->first();
+        // dd($pengaduan);
+
+        $isi = '<table class="table table-small table-striped" width="100%">
+                    <tr>
+                        <td>NIK</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->nik . '</td>
+                    </tr>
+                    <tr>
+                        <td>Nama</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->nama . '</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->alamat . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kecamatan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kecamatan . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kelurahan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kelurahan . '</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->email . '</td>
+                    </tr>
+                    <tr>
+                        <td>No Hp</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->no_hp . '</td>
+                    </tr>
+                    </table>';
+        $isi_ = '<table class="table small table-striped" width="100%">
+                    <tr>
+                        <td width="30%">Jenis Pengaduan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->jenis_pengaduan . '</td>
+                    </tr>
+                    <tr>
+                        <td>Nama Terlapor</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->nama_terlapor . '</td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal kejadian</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->tgl_kejadian . '</td>
+                    </tr>
+                    <tr>
+                        <td>Waktu kejadian</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->waktu_kejadian . '</td>
+                    </tr>
+                    <tr>
+                        <td>Lokasi kejadian</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->lokasi_kejadian . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kecamatan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kecamatan_ . '</td>
+                    </tr>
+                    <tr>
+                        <td>Kelurahan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->kelurahan_ . '</td>
+                    </tr>
+                   
+                    <tr>
+                        <td>Isi Pengaduan</td>
+                        <td>:</td>
+                        <td>' . $pengaduan->isi . '</td>
+                    </tr>
+                    </table>';
+        $card = '<div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Data Pribadi
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                ' . $isi . '
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                Data Pengaduan
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                ' . $isi_ . '
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+
+        echo $card;
+    }
+
+    public function accept_rejact_wbs(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            DB::table('wbs_pengaduan')->where('id', $request->id)->update([
+                'status' => $request->status,
+            ]);
+
+            // $pengaduan = DB::table('wbs_pengaduan')
+            //     ->select(DB::raw('wbs_pengaduan.*'))
+            //     ->where('wbs_pengaduan.id', $request->id)
+            //     ->first();
+
+            // $email = $pengaduan->email;
+
+            // $mailData = [
+            //     'title' => 'Pengaduan',
+            //     'body' => [
+            //         'isi' => $pengaduan->isi,
+            //         'jawab' => ($request->status == 'DITERIMA') ? 'Pengaduan Anda telah Kamu Terima' : 'Pengaduan DITOLAK',
+            //         'petugas' => Auth::user()->name,
+            //         'status' => $request->status
+            //     ]
+            // ];
+
+            // Mail::to($email)->send(new DpmptspMail($mailData));
+
+            DB::commit();
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil ' . $request->status . '!';
+
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = 'Tidak dapat Menerima / Menolak Pengaduan! Silakan hubungi Administrator.';
+        }
+        return response()->json($r);
+    }
+
+    public function process_wbs(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            DB::table('wbs_pengaduan')->where('id', $request->id)->update([
+                'status' => $request->status,
+            ]);
+
+            $jawab['pengaduan_id'] = $request->id;
+            $jawab['tanggapan'] = $request->jawab;
+            $jawab['petugas_id'] = Auth::user()->id;
+            $jawab['created_date'] = date('Y-m-d h:i:s');
+            DB::table('tanggapan_wbs')->insert($jawab);
+
+            // $pengaduan = DB::table('wbs_pengaduan')
+            //     ->select(DB::raw('wbs_pengaduan.*'))
+            //     ->where('wbs_pengaduan.id', $request->id)
+            //     ->first();
+
+            // $email = $pengaduan->email;
+
+            // $mailData = [
+            //     'title' => 'Pengaduan',
+            //     'body' => [
+            //         'isi' => $pengaduan->isi,
+            //         'jawab' => ($request->status == 'DITERIMA') ? 'Pengaduan Anda telah Kamu Terima' : 'Pengaduan DITOLAK',
+            //         'petugas' => Auth::user()->name,
+            //         'status' => $request->status
+            //     ]
+            // ];
+
+            // Mail::to($email)->send(new DpmptspMail($mailData));
+
+            DB::commit();
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil ' . $request->status . '!';
+
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = 'Tidak dapat Memproses Pengaduan! Silakan hubungi Administrator.';
+        }
+        return response()->json($r);
+    }
+
+    public function get_detail_wbs(Request $request)
+    {
+        $id = $request->id;
+        $pengaduan = DB::table('wbs_pengaduan')
+            ->select(DB::raw('wbs_pengaduan.*'))
+            ->where('wbs_pengaduan.id', $id)
+            ->first();
+        // dd($pengaduan);
+        $tanggapan = DB::table('tanggapan_wbs')
+            ->select(DB::raw('tanggapan_wbs.*, users.name as petugas'))
+            ->leftJoin('users', 'users.id', '=', 'tanggapan_wbs.petugas_id')
+            ->where('tanggapan_wbs.pengaduan_id', $pengaduan->id)
+            ->get();
+
+        $isi_pengaduan = '<p>Pengaduan Oleh ' . $pengaduan->nama . ' | ' . $pengaduan->created_date . '</p>
+                <p>' . $pengaduan->isi . '</p>';
+
+        $isi_tanggapan = '';
+        foreach ($tanggapan as $val) {
+            $isi_tanggapan .= '<div class="mb-2" style="background-color: rgb(226 232 240 / 1);border-left:4px solid #519259;padding:1rem">
+                <p>Ditanggapi Oleh ' . $val->petugas . ' | ' . $val->created_date . '</p>
+                <p>' . $val->tanggapan . '</p>
+                </div>';
+        }
+
+
+        $r['pengaduan'] = $isi_pengaduan;
+        $r['tanggapan'] = $isi_tanggapan;
+        return response()->json($r);
+    }
 }

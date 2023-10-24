@@ -27,7 +27,7 @@ Route::get('/kontak', [Home::class, 'kontak']);
 Route::get('/pengaduan', [Home::class, 'pengaduan']);
 Route::get('/wbs', [Home::class, 'wbs']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
-
+Route::post('/create_wbs', [Home::class, 'create_wbs']);
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom');
@@ -69,7 +69,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/delete_informasi_publik', [AdminController::class, 'delete_informasi_publik'])->middleware('user_access');
     Route::get('/user/pengaduan', [AdminController::class, 'pengaduan'])->middleware('user_access');
     Route::post('/user/pengaduan_', [AdminController::class, 'pengaduan_'])->middleware('user_access');
-
     Route::post('/user/accept_rejact_pengaduan', [AdminController::class, 'accept_rejact_pengaduan'])->middleware('user_access');
     Route::get('/user/detail_pengadu/{id}', [AdminController::class, 'detail_pengadu'])->middleware('user_access');
     Route::get('/user/jenis_pengaduan', [AdminController::class, 'jenis_pengaduan'])->middleware('user_access');
@@ -83,4 +82,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/create_user_management', [AdminController::class, 'create_user_management'])->middleware('user_access');
     Route::post('/user/update_user_management', [AdminController::class, 'update_user_management'])->middleware('user_access');
     Route::post('/user/delete_user_management', [AdminController::class, 'delete_user_management'])->middleware('user_access');
+
+    Route::get('/user/wbs', [AdminController::class, 'wbs'])->middleware('user_access');
+    Route::post('/user/wbs_', [AdminController::class, 'wbs_'])->middleware('user_access');
+    Route::post('/user/accept_rejact_wbs', [AdminController::class, 'accept_rejact_wbs'])->middleware('user_access');
+    Route::post('/user/process_wbs', [AdminController::class, 'process_wbs'])->middleware('user_access');
+    Route::get('/user/detail_pengadu_wbs/{id}', [AdminController::class, 'detail_pengadu_wbs'])->middleware('user_access');
+    Route::post('/user/get_detail_wbs', [AdminController::class, 'get_detail_wbs'])->middleware('user_access');
 });

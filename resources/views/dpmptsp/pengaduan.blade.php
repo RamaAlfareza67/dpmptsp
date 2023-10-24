@@ -189,7 +189,6 @@ $(document).ready(function() {
                                 showCancelButton: false,
                                 showConfirmButton: false,
                                 buttons: false,
-                                timer: 2000,
                                 didOpen: () => {
                                     Swal.showLoading()
                                 }

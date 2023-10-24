@@ -93,19 +93,19 @@
                                                                     </div> 
                                                                     <div class="col-lg-3">
                                                                         <label for="" >Kecamatan<a style="color:red;">*</a></label>
-                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="nama kecamatan" >
+                                                                        <input name="kecamatan_" id="kecamatan_"  class="form-control mb-2" placeholder="nama kecamatan" >
                                                                     </div> 
                                                                     <div class="col-lg-3">
                                                                         <label for="" >Keluarahan<a style="color:red;">*</a></label>
-                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="nama kelurahan" >
+                                                                        <input name="kelurahan_" id="kelurahan_"  class="form-control mb-2" placeholder="nama kelurahan" >
                                                                     </div> 
                                                                     <div class="col-lg-6">
                                                                         <label for="" >Tanggal Perkiraan Kejadian<a style="color:red;">*</a></label>
-                                                                        <input type="date" name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" >
+                                                                        <input type="date" name="tgl_kejadian" id="tgl_kejadian"  class="form-control mb-2" >
                                                                     </div> 
                                                                     <div class="col-lg-6">
                                                                         <label for="" >Waktu Perkiraan Kejadian<a style="color:red;">*</a></label>
-                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="Contoh : Sekitar waktu Peringatan Hari Ulang Tahun Instansi tsb." >
+                                                                        <input name="waktu_kejadian" id="waktu_kejadian"  class="form-control mb-2" placeholder="Contoh : Sekitar waktu Peringatan Hari Ulang Tahun Instansi tsb." >
                                                                     </div> 
                                                                     <div class="col-lg-12">
                                                                         <label for="" >Lampiran</label>
@@ -130,58 +130,6 @@
                                                 </div> 
                                             </form>       
                                     </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb-lg-0">
-                            <div class="custom-block bg-white shadow-lg">
-                                <?php
-                                    if(count($data['pengaduan']) > 0){
-                                        foreach ($data['pengaduan'] as $val) {
-                                ?>
-                                    <div class="d-flek"> 
-                                        <!-- begin card-forum -->
-                                            <div class="card card-forum mb-4">
-                                                <!-- begin forum-list -->
-                                                <ul class="forum-list forum-topic-list">
-                                                    <li>
-                                                        <!-- begin media -->
-                                                        <div class="media">
-                                                            <img src="../assets/img/user/user-1.jpg" alt="" class="rounded-lg" />
-                                                        </div>
-                                                        <!-- end media -->
-                                                        <!-- begin info-container -->
-                                                        <div class="info-container">
-                                                            <div class="info">
-                                                                <h4 class="title"><a href="detail.html">Pengaduan Dari : {{$val->nama}}</a></h4>
-                                                                <p>"{{$val->isi}}"</p>
-                                                                <h4 class="title"><a href="detail.html">Jawaban : {{$val->petugas}}</a></h4>
-                                                                <p>"{{$val->tanggapan}}"</p>
-                                                                
-                                                            </div>
-                                                            <div class="date-replies">
-                                                                <div class="time">
-                                                                {{$val->created_date}}
-                                                                </div>
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <!-- end info-container -->
-                                                    </li>
-                                                </ul>
-                                                <!-- end forum-list -->
-                                            </div>
-                                            <!-- end card-forum -->
-                                                
-                                    </div>
-                                    <?php 
-                                            } 
-                                        } else { 
-                                    ?>
-                                        
-                                        <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
-                                        
-                                    <?php } ?>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -231,10 +179,31 @@ $(document).ready(function() {
                 isi: {
                     required: true
                 },
+                nama_terlapor: {
+                    required: true
+                },
+                lokasi_kejadian: {
+                    required: true
+                },
+                kecamatan_: {
+                    required: true
+                },
+                kelurahan_: {
+                    required: true
+                },
+                tgl_kejadian: {
+                    required: true
+                },
+                waktu_kejadian: {
+                    required: true
+                },
+                file: {
+                    required: true
+                },
             },
             submitHandler: function(form) {
                 let url;
-                url = '/create_pengaduan';
+                url = '/create_wbs';
 
                 var form_data = new FormData(document.getElementById("add-form"));
 
@@ -254,7 +223,6 @@ $(document).ready(function() {
                                 showCancelButton: false,
                                 showConfirmButton: false,
                                 buttons: false,
-                                timer: 2000,
                                 didOpen: () => {
                                     Swal.showLoading()
                                 }
@@ -273,7 +241,7 @@ $(document).ready(function() {
                         } else {
                             Swal.fire({
                                 title: 'Berhasil',
-                                text:'Pengaduan Anda Telah Kami Terima dan Akan Segera Kami Proses Untuk Jawaban nya akan Kami Kirim ke E-mail yang tertera di form',
+                                text:'Terimakasi Atas Pengaduan Anda dan Akan Segera Kami Proses, Untuk Jawaban nya akan Kami Kirim ke E-mail yang tertera di form',
                                 icon: 'success',
                                 showCancelButton: false,
                                 showConfirmButton: true
