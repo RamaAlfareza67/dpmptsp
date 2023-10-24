@@ -5,20 +5,26 @@
 	$profil = getProfilDinas();
 ?>
 <!-- begin #page-title -->
-<div id="page-title" class="page-title has-bg">
-		<div class="bg-cover" data-paroller="true" data-paroller-factor="0.5" data-paroller-factor-xs="0.2" style="background: url(../assets/img/cover/cover-8.jpg) center 0px / cover no-repeat"></div>
-		<div class="container">
-			<h1 style="color:black;">Kontak <a style="color:red;">Kami</a></h1>
-			<p>Kabeh Berita Seputar DPMPTSP ana ning kene lurd!</p>
-		</div>
-	</div>
-	<!-- end #page-title -->
-    <!-- begin #content -->
-	<div id="content" class="content">
-		<!-- begin container -->
-		<div class="container">
-			<!-- begin row -->
-			<div class="row row-space-30">
+<section class="hero-section d-flex justify-content-center align-items-center bg-[length:auto_100% bg-cover bg-no-repeat bg-bottom h-[700px] lg:h-[70vh] visible" id="section_1"  style="background: url(../assets/img/kontak.jpg) center 0px / cover no-repeat; background-position: top;
+    background-repeat: no-repeat;">
+                <div class="container mb-5">
+                    <h1 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">KONTAK KAMI</b></h1>
+                    <h6 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">Mari Bersama-sama Menciptakan Pemerintahan Yang Jujur dan Bersih, Laporkan Setiap Pelanggaran Yang Terjadi Di Lingkungan Kerja</b></h6>
+                </div>
+            </section>
+
+
+            <section class="featured-section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12 mb-lg-0">
+                            
+                        </div>
+                        <div class="col-lg-12 mb-lg-2">
+                            <div class="custom-block bg-white shadow-lg">      
+                                    <div class="d-flek"> 
+                                              <!-- begin row -->
+			<div class="row row-space-30" style="position: relative; bottom: 0px;margin-bottom: 0px;">
 				<!-- begin col-9 -->
 				<div class="col-lg-6">
 					<!-- begin section-container -->
@@ -36,67 +42,23 @@
 					<div class="section-container">
 						<h4 class="section-title m-b-20"><span>CONTACT US</span></h4>
 						<p class="m-b-30">
-							If you have a project you would like to discuss, get in touch with us.
-							Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, 
-							lectus arcu pulvinar risus, vitae facilisis libero dolor a purus.
+						Jl. RA Kartini No.1, Margadadi, Kec. Indramayu, Kabupaten Indramayu, Jawa Barat 45211, Indonesia
 						</p>
-						<!-- begin row -->
-						<div class="row row-space-30">
-							<!-- begin col-8 -->
-							<div class="col-md-8">
-								<form class="form-horizontal">
-									<div class="mb-3 row">
-										<label class="col-form-label col-md-3 text-md-right">Name <span class="text-danger">*</span></label>
-										<div class="col-md-9">
-											<input type="text" class="form-control">
-										</div>
-									</div>
-									<div class="mb-3 row">
-										<label class="col-form-label col-md-3 text-md-right">Email <span class="text-danger">*</span></label>
-										<div class="col-md-9">
-											<input type="text" class="form-control">
-										</div>
-									</div>
-									<div class="mb-3 row">
-										<label class="col-form-label col-md-3 text-md-right">Message <span class="text-danger">*</span></label>
-										<div class="col-md-9">
-											<textarea class="form-control" rows="3"></textarea>
-										</div>
-									</div>
-									<div class="mb-3 row">
-										<label class="col-form-label col-md-3 text-md-right"></label>
-										<div class="col-md-9 text-left">
-											<button type="submit" class="btn btn-dark btn-lg btn-block">Send Message</button>
-										</div>
-									</div>
-								</form>
-							</div>
-							<!-- end col-8 -->
-							<!-- begin col-4 -->
-							<div class="col-md-4">
-								<p>
-									<strong>SeanTheme Studio, Inc</strong><br>
-									795 Folsom Ave, Suite 600<br>
-									San Francisco, CA 94107<br>
-									P: (123) 456-7890<br>
-								</p>
-								<p>
-									<span class="phone">+11 (0) 123 456 78</span><br>
-									<a href="mailto:hello@emailaddress.com">seanthemes@support.com</a>
-								</p>
-							</div>
-							<!-- end col-4 -->
-						</div>
-						<!-- end row -->
+
 					</div>
 					<!-- end section-container --
 				</div>
 				<!-- end col-3 -->
 			</div>
-			<!-- end row -->
-		</div>
-		<!-- end container -->
-	</div>
-	<!-- end #content -->
+			<!-- end row -->   
+                                    </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+	<!-- end #page-title -->
+
 
 @endsection
