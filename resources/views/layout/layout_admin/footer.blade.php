@@ -40,3 +40,8 @@
 <script src="{{ asset('assets_admin/plugins/select2/dist/js/select2.min.js')}}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script> --}}
 <script src="{{ asset('assets_admin/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js')}}"></script>
+
+<script src="{{ asset('assets_admin/plugins/highchart/highcharts.js')}}"></script>
+<script src="{{ asset('assets_admin/plugins/highchart/modules/exporting.js')}}"></script>
+<script src="{{ asset('assets_admin/plugins/highchart/modules/export-data.js')}}"></script>
+<script src="{{ asset('assets_admin/plugins/highchart/modules/accessibility.js')}}"></script>

@@ -13,6 +13,10 @@
 	<!-- ================== END core-css ================== -->
 </head>
 <body class='pace-top'>
+	<?php 
+		$profil = getProfilDinas();
+	?>
+	
 	<!-- BEGIN #loader -->
 	<div id="loader" class="app-loader">
 		<span class="spinner"></span>
@@ -26,6 +30,7 @@
 			<!-- BEGIN news-feed -->
 			<div class="news-feed">
 				<div class="news-image" style="background-image: url(../assets/img/tes.jpg)"></div>
+				
 				<div class="news-caption">
 					<h4 class="caption-title"><b>DPMPTSP</b> KAB INDRAMAYU</h4>
 					<p>
@@ -41,7 +46,7 @@
 				<div class="login-header mb-30px">
 					<div class="brand">
 						<div class="d-flex align-items-center">
-							<span class="logo"><img src="http://localhost:8000/uploads/logo/169669327791_logo1.png" class="img-fluid"></span>
+							<span class="logo"><img src="{{($profil->logo != null) ? asset($profil->logo) : ''}}" class="img-fluid"></span>
 							
 						</div>
 					</div>

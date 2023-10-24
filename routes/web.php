@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user', [AdminController::class, 'index'])->middleware('user_access');
     Route::get('/user/dashboard', [AdminController::class, 'dashboard'])->middleware('user_access');
     Route::get('/user/get_count', [AdminController::class, 'get_count'])->middleware('user_access');
+    Route::get('/user/grafik_pengaduan', [AdminController::class, 'grafik_pengaduan'])->middleware('user_access');
+
     Route::get('/user/artikel', [AdminController::class, 'artikel'])->middleware('user_access');
     Route::post('/user/artikel_', [AdminController::class, 'artikel_'])->middleware('user_access');
     Route::post('/user/create_artikel', [AdminController::class, 'create_artikel'])->middleware('user_access');

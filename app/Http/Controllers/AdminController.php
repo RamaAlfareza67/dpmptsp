@@ -9,6 +9,7 @@ use DataTables;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use App\Mail\DpmptspMail;
+use SebastianBergmann\CodeCoverage\Driver\Selector;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,33 @@ class AdminController extends Controller
     public function get_count()
     {
         $datas['artikel'] = DB::table('artikel')->where('deleted', '!=', 1)->count();
+        $datas['pengaduan'] = DB::table('pengaduan')->count();
+        $datas['pengaduan_menunggu'] = DB::table('pengaduan')->where('status', 'MENUNGGU')->count();
+        $datas['pengaduan_dijawab'] = DB::table('pengaduan')->where('status', 'DIJAWAB')->count();
+        $datas['pengaduan_ditolak'] = DB::table('pengaduan')->where('status', 'DITOLAK')->count();
+        return response()->json($datas);
+    }
+
+    public function grafik_pengaduan()
+    {
+        $datas['jenis'] = DB::table('jenis_pengaduan')->select('id', 'jenis')->where('tipe', 'PENGADUAN')->where('deleted', '!=', 1)->get();
+        $datas['pengaduan'] = DB::table('pengaduan')->select('status')->groupBy('status')->get();
+        $arr = [];
+        $jenis = [];
+        foreach ($datas['pengaduan'] as $v) {
+            $count = [];
+            foreach ($datas['jenis'] as $val) {
+                $p = DB::table('pengaduan')->where('status', $v->status)->where('jenis_pengaduan', $val->id)->count();
+                $count[] = $p;
+                $jenis[] = $val->jenis;
+            }
+            $arr[] = [
+                'name' => $v->status,
+                'data' => $count
+            ];
+        }
+        $datas['data'] = $arr;
+        $datas['js'] = $jenis;
         return response()->json($datas);
     }
 

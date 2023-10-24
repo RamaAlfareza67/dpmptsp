@@ -18,3 +18,4 @@
 <link href="{{ asset('assets_admin/plugins/select-picker/dist/picker.min.css')}}" rel="stylesheet" />
 <link href="{{ asset('assets_admin/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css')}}" rel="stylesheet" />
 <link href="{{ asset('assets_admin/plugins/summernote/dist/summernote-lite.css')}}" rel="stylesheet" />
+<link href="{{ asset('assets_admin/plugins/highchart/css/highcharts.css')}}" rel="stylesheet" />
