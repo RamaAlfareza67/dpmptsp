@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+    <section class="hero-section d-flex justify-content-center align-items-center bg-[length:auto_100% bg-cover bg-no-repeat bg-bottom h-[700px] lg:h-[70vh] visible" id="section_1"  style="background: url(../assets/img/atas.jpg) center 0px / cover no-repeat; background-position: top;
+    background-repeat: no-repeat;">
                 <div class="container">
                     <div class="row">
 
                         <div class="col-lg-8 col-12 mx-auto">
-                            <h1 class="text-white text-center">LAYANAN PENGADUAN DPMPTSP</h1>
+                            <h1 class="text-white text-center">WBS DPMPTSP</h1>
 
                             <h6 class="text-center"></h6>
 
@@ -21,44 +22,59 @@
             <section class="featured-section">
                 <div class="container">
                     <div class="row justify-content-center">
-
-                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">
-                            <div class="custom-block bg-white shadow-lg">
-                                
+                        <div class="col-lg-12 mb-lg-0">
+                            
+                        </div>
+                        <div class="col-lg-12 mb-lg-2">
+                            <div class="custom-block bg-white shadow-lg">      
                                     <div class="d-flek"> 
                                             <form id="add-form">
-                                                <h4 class="mb-5" style="text-align:center;">Silahkan isi data pengaduan Anda</h4>
-                                                <input name="nik" id="nik"  class="form-control mb-3" placeholder="NIK">
-                                                <input name="nama" id="nama"  class="form-control mb-3" placeholder="Nama">
-                                                <input name="alamat" id="alamat"  class="form-control mb-3" placeholder="Alamat">
-                                                <input name="kecamatan" id="kecamatan"  class="form-control mb-3" placeholder="Kecamatan">
-                                                <input name="kelurahan" id="kelurahan"  class="form-control mb-3" placeholder="Kelurahan">
-                                                <input name="email" id="email"  class="form-control mb-3" placeholder="E-mail">
-                                                <input name="no_hp" id="no_hp"  class="form-control mb-3" placeholder="No Telp"> 
-                                                <select name="jenis_pengaduan" id="jenis_pengaduan" class="form-control mb-3">
-                                                    <option value="">- Pilih Jenis Pengaduan -</option>
-                                                    @foreach($data['jenis'] as $val)
-                                                        <option value="{{$val->id}}">{{$val->jenis}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
-                                                <input type="file" name="file" id="file"  class="form-control mb-3">  
-                                                <div class="modal-footer">
-                                                    <button type="reset" class="btn btn-dark " style="margin-right:8px;">Reset</button>
-                                                    <button type="submit" class="btn btn-success">Submit</button>
-                                                </div>
-                                            </form>
-                                               
+                                                <div class="row justify-content-center">
+                                                    <div class="col-lg-12 mb-lg-2">
+                                                        <h4 class="mb-5" style="text-align:center;">Silahkan isi data pengaduan Anda</h4>
+                                                    </div>
+                                                    <div class="col-lg-12  mt-lg-5  mb-lg-2">
+                                                        <h4 class="mb-5" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
+                                                        <p style="text-align:center;">Anda melihat atau mengetahui dugaan Tindak Pidana Korupsi yang dilakukan pegawai<b> DPMPTSP</b>. Silahkan melapor ke Inspektorat <b>DPMPTSP</b>. Jika laporan anda memenuhi syarat/kriteria, maka akan diproses lebih lanjut.</p>
+                                                    </div>
+                                                    <div class="col-lg-4 mb-lg-2">
+                                                        <input name="nik" id="nik"  class="form-control mb-3" placeholder="NIK">
+                                                        <input name="nama" id="nama"  class="form-control mb-3" placeholder="Nama">
+                                                        <input name="alamat" id="alamat"  class="form-control mb-3" placeholder="Alamat">
+                                                    </div>
+                                                    <div class="col-lg-4 mb-lg-2">
+                                                        <input name="kecamatan" id="kecamatan"  class="form-control mb-3" placeholder="Kecamatan">
+                                                        <input name="kelurahan" id="kelurahan"  class="form-control mb-3" placeholder="Kelurahan">
+                                                        <input name="email" id="email"  class="form-control mb-3" placeholder="E-mail">
+                                                    </div>
+                                                    <div class="col-lg-4 mb-lg-2">
+                                                        <input name="no_hp" id="no_hp"  class="form-control mb-3" placeholder="No Telp"> 
+                                                        <select name="jenis_pengaduan" id="jenis_pengaduan" class="form-control mb-3">
+                                                            <option value="">- Pilih Jenis Pengaduan -</option>
+                                                            @foreach($data['jenis'] as $val)
+                                                                <option value="{{$val->id}}">{{$val->jenis}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <input type="file" name="file" id="file"  class="form-control mb-3"> 
+                                                    </div> 
+                                                    <div class="col-lg-12 mb-lg-2">
+                                                        <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-dark " style="margin-right:8px;">Reset</button>
+                                                            <button type="submit" class="btn btn-success">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </form>       
                                     </div>
-                                
                             </div>
                         </div>
-                        <div class="col-lg-8 col-12 mb-4 mb-lg-0">
+                        <div class="col-lg-12 mb-lg-0">
                             <div class="custom-block bg-white shadow-lg">
-                    <?php
-                        if(count($data['pengaduan']) > 0){
-                            foreach ($data['pengaduan'] as $val) {
-                    ?>
+                                <?php
+                                    if(count($data['pengaduan']) > 0){
+                                        foreach ($data['pengaduan'] as $val) {
+                                ?>
                                     <div class="d-flek"> 
                                         <!-- begin card-forum -->
                                             <div class="card card-forum mb-4">
@@ -92,18 +108,19 @@
                                                 <!-- end forum-list -->
                                             </div>
                                             <!-- end card-forum -->
-                                               
+                                                
                                     </div>
                                     <?php 
                                             } 
                                         } else { 
                                     ?>
-                                     
-                                     <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
-                                       
+                                        
+                                        <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
+                                        
                                     <?php } ?>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </section>
