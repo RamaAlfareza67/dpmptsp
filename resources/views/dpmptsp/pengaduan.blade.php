@@ -72,39 +72,42 @@
                                 ?>
                                     <div class="d-flek"> 
                                         <!-- begin card-forum -->
-                                            <div class="card card-forum mb-4">
-                                                <!-- begin forum-list -->
-                                                <ul class="forum-list forum-topic-list">
-                                                    <li>
-                                                        <!-- begin media -->
-                                                        <div class="media">
-                                                            <img src="../assets/img/user/user-1.jpg" alt="" class="rounded-lg" />
-                                                        </div>
-                                                        <!-- end media -->
-                                                        <!-- begin info-container -->
-                                                        <div class="info-container">
-                                                            <div class="info">
-                                                                <h4 class="title"><a href="detail.html">Pengaduan Dari : {{$val->nama}}</a></h4>
-                                                                <p>"{{$val->isi}}"</p>
-                                                                <h4 class="title"><a href="detail.html">Jawaban : {{$val->petugas}}</a></h4>
-                                                                <p>"{{$val->tanggapan}}"</p>
-                                                                
+                                        <div class="row" style="position: relative; bottom: 0px;margin-bottom: 0px;">
+                                            <div class="col-6">
+                                                <div class="card card-forum mb-4">
+                                                    <!-- begin forum-list -->
+                                                    <ul class="forum-list forum-topic-list">
+                                                        <li>
+                                                            <!-- begin media -->
+                                                            <div class="media">
+                                                                <img src="../assets/img/user/user.png" alt="" class="rounded-lg" />
                                                             </div>
-                                                            <div class="date-replies">
-                                                                <div class="time">
-                                                                {{$val->created_date}}
+                                                            <!-- end media -->
+                                                            <!-- begin info-container -->
+                                                            <div class="info-container">
+                                                                <div class="info">
+                                                                    <h4 class="title"><a href="detail.html">Pengaduan Dari : {{$val->nama}}</a></h4>
+                                                                    <p>"{{$val->isi}}"</p>
+                                                                    <h4 class="title"><a href="detail.html">Jawaban : {{$val->petugas}}</a></h4>
+                                                                    <p>"{{$val->tanggapan}}"</p>   
                                                                 </div>
-                                                                
+                                                                <div class="date-replies">
+                                                                    <div class="time">
+                                                                    {{$val->created_date}}
+                                                                    </div>
+                                                                    
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- end info-container -->
-                                                    </li>
-                                                </ul>
-                                                <!-- end forum-list -->
+                                                            <!-- end info-container -->
+                                                        </li>
+                                                    </ul>
+                                                    <!-- end forum-list -->
+                                                </div>
+                                                <!-- end card-forum -->
                                             </div>
-                                            <!-- end card-forum -->
-                                                
+                                        </div>
                                     </div>
+                                                
                                     <?php 
                                             } 
                                         } else { 
