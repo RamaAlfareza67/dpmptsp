@@ -54,10 +54,7 @@
                                                     </div> 
                                                     <div class="col-lg-12 mb-lg-2">
                                                         <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
-                                                        <div class="modal-footer">
-                                                            <button type="reset" class="btn btn-dark " style="margin-right:8px;">Reset</button>
-                                                            <button type="submit" class="btn btn-success">Submit</button>
-                                                        </div>
+                                                        <button type="submit" class="btn btn-primary" style="width: 100%">Kirim Pengaduan</button>
                                                     </div>
                                                 </div> 
                                             </form>       

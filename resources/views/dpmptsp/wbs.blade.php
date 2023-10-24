@@ -120,12 +120,8 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="col-lg-12 mb-lg-2">
-                                                        
-                                                        <div class="modal-footer">
-                                                            <button type="reset" class="btn btn-dark " style="margin-right:8px;">Reset</button>
-                                                            <button type="submit" class="btn btn-success">Submit</button>
-                                                        </div>
+                                                    <div class="col-lg-12 mb-lg-2 mt-2">
+                                                        <button type="submit" class="btn btn-primary" style="width: 100%">Kirim Pengaduan</button>
                                                     </div>
                                                 </div> 
                                             </form>       
