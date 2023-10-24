@@ -4,17 +4,9 @@
 
     <section class="hero-section d-flex justify-content-center align-items-center bg-[length:auto_100% bg-cover bg-no-repeat bg-bottom h-[700px] lg:h-[70vh] visible" id="section_1"  style="background: url(../assets/img/atas.jpg) center 0px / cover no-repeat; background-position: top;
     background-repeat: no-repeat;">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-8 col-12 mx-auto">
-                            <h1 class="text-white text-center">WBS DPMPTSP</h1>
-
-                            <h6 class="text-center"></h6>
-
-                        </div>
-
-                    </div>
+                <div class="container mb-5">
+                    <h1 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">PENGADUAN DPMPTSP</b></h1>
+                    <h6 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">Mari Bersama-sama Menciptakan Pemerintahan Yang Jujur dan Bersih, Laporkan Setiap Pelanggaran Yang Terjadi Di Lingkungan Kerja</b></h6>
                 </div>
             </section>
 
@@ -33,28 +25,31 @@
                                                     <div class="col-lg-12 mb-lg-2">
                                                         <h4 class="mb-5" style="text-align:center;">Silahkan isi data pengaduan Anda</h4>
                                                     </div>
-                                                    <div class="col-lg-12  mt-lg-5  mb-lg-2">
-                                                        <h4 class="mb-5" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
+                                                    <div class="col-lg-12  mt-lg-2 ">
+                                                        <h4 class="" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
                                                         <p style="text-align:center;">Anda melihat atau mengetahui dugaan Tindak Pidana Korupsi yang dilakukan pegawai<b> DPMPTSP</b>. Silahkan melapor ke Inspektorat <b>DPMPTSP</b>. Jika laporan anda memenuhi syarat/kriteria, maka akan diproses lebih lanjut.</p>
                                                     </div>
-                                                    <div class="col-lg-4 mb-lg-2">
+                                                    <div class="col-lg-6 mb-lg-2">
                                                         <input name="nik" id="nik"  class="form-control mb-3" placeholder="NIK">
-                                                        <input name="nama" id="nama"  class="form-control mb-3" placeholder="Nama">
-                                                        <input name="alamat" id="alamat"  class="form-control mb-3" placeholder="Alamat">
-                                                    </div>
-                                                    <div class="col-lg-4 mb-lg-2">
-                                                        <input name="kecamatan" id="kecamatan"  class="form-control mb-3" placeholder="Kecamatan">
-                                                        <input name="kelurahan" id="kelurahan"  class="form-control mb-3" placeholder="Kelurahan">
-                                                        <input name="email" id="email"  class="form-control mb-3" placeholder="E-mail">
-                                                    </div>
-                                                    <div class="col-lg-4 mb-lg-2">
                                                         <input name="no_hp" id="no_hp"  class="form-control mb-3" placeholder="No Telp"> 
+                                                        <input name="alamat" id="alamat"  class="form-control mb-3" placeholder="Alamat">
+                                                        <input name="kecamatan" id="kecamatan"  class="form-control mb-3" placeholder="Kecamatan">
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-6 mb-lg-2">
+                                                        <input name="nama" id="nama"  class="form-control mb-3" placeholder="Nama">
+                                                        <input name="email" id="email"  class="form-control mb-3" placeholder="E-mail">
+                                                        <input name="kelurahan" id="kelurahan"  class="form-control mb-3" placeholder="Kelurahan">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-lg-2">
                                                         <select name="jenis_pengaduan" id="jenis_pengaduan" class="form-control mb-3">
                                                             <option value="">- Pilih Jenis Pengaduan -</option>
                                                             @foreach($data['jenis'] as $val)
                                                                 <option value="{{$val->id}}">{{$val->jenis}}</option>
                                                             @endforeach
                                                         </select>
+                                                    </div> 
+                                                    <div class="col-lg-6 mb-lg-2">
                                                         <input type="file" name="file" id="file"  class="form-control mb-3"> 
                                                     </div> 
                                                     <div class="col-lg-12 mb-lg-2">

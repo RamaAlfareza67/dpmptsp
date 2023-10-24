@@ -55,7 +55,7 @@
 	<script src="{{ asset('assets/js/blog/app.min.js')}}"></script>
 	<!-- <script src="{{ asset('assets/js/blog/bootstrap.bundle.min.js')}}"></script> -->
 	<script src="{{ asset('assets/js/blog/jquery.sticky.js')}}"></script>
-	<script src="{{ asset('assets/js/blog/click-scroll.js')}}"></script>
+	
 	<script src="{{ asset('assets/js/blog/custom.js')}}"></script>
 	<script src="{{ asset('assets_admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 	<script src="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.js') }}"></script>

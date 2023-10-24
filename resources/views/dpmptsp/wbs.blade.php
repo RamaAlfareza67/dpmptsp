@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <section class="hero-section d-flex justify-content-center align-items-center bg-[length:auto_100% bg-cover bg-no-repeat bg-bottom h-[700px] lg:h-[70vh] visible" id="section_1"  style="background: url(../assets/img/atas.jpg) center 0px / cover no-repeat; background-position: top;
+    <section class="hero-section d-flex justify-content-center align-items-center bg-[length:auto_100% bg-cover bg-no-repeat bg-bottom h-[700px] lg:h-[70vh] visible" id="section_1"  style="background: url(../assets/img/wbs.jpg) center 0px / cover no-repeat; background-position: top;
     background-repeat: no-repeat;">
                 <div class="container mb-5">
                     <h1 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">WHISTLEBLOWING SYSTEM DPMPTSP</b></h1>
@@ -27,38 +27,41 @@
                                                         <h4 class="mb-5" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
                                                         
                                                     </div>
-                                                    <div class="col-lg-12  mt-lg-5  mb-lg-2">
-                                                        <h4 class="mb-5" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
+                                                    <div class="col-lg-12  mt-lg-2 ">
+                                                        <h4 class="" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
                                                         <p style="text-align:center;">Anda melihat atau mengetahui dugaan Tindak Pidana Korupsi yang dilakukan pegawai<b> DPMPTSP</b>. Silahkan melapor ke Inspektorat <b>DPMPTSP</b>. Jika laporan anda memenuhi syarat/kriteria, maka akan diproses lebih lanjut.</p>
                                                     </div>
-                                                    <div class="col-lg-12  mt-lg-5 mb-2">
+                                                    <div class="col-lg-12  mt-lg-2 mb-2">
                                                         <div class="card">
                                                             <div class="card-header" style="background-color: #931a2c; color:white;">
                                                                 Data Pribadi
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="row" style="position: relative; bottom: 0px;margin-bottom: 0px;">
-                                                                    <div class="col-4 mb-2">
+                                                                    <div class="col-6 mb-2">
                                                                         <label for=""  >Nomor Induk Kependudukan<a style="color:red;">*</a></label>
                                                                         <input name="nik" id="nik"  class="form-control mb-2">
-                                                                        <label for="" >Nama Lengkap<a style="color:red;">*</a></label>
-                                                                        <input name="nama" id="nama"  class="form-control mb-2" >
                                                                         <label for="" >E-mail<a style="color:red;">*</a></label>
                                                                         <input name="email" id="email"  class="form-control mb-2">
-                                                                        
-                                                                    </div>
-                                                                    <div class="col-4 mb-2">
-                                                                    <label for="" >Alamat<a style="color:red;">*</a></label>
+                                                                        <label for="" >Alamat<a style="color:red;">*</a></label>
                                                                         <input name="alamat" id="alamat"  class="form-control mb-2" >
                                                                         <label for="" >Kecamatan<a style="color:red;">*</a></label>
                                                                         <input name="kecamatan" id="kecamatan"  class="form-control mb-2" >
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-6 mb-2">
+                                                                        <label for="" >Nama Lengkap<a style="color:red;">*</a></label>
+                                                                        <input name="nama" id="nama"  class="form-control mb-2" >
+                                                                        <label for="" >No Handphone<a style="color:red;">*</a></label>
+                                                                        <input name="no_hp" id="no_hp"  class="form-control mb-2"> 
                                                                         <label for="" >Keluarahan<a style="color:red;">*</a></label>
                                                                         <input name="kelurahan" id="kelurahan"  class="form-control mb-2">
                                                                         
                                                                     </div>
-                                                                    <div class="col-lg-4 mb-2">
-                                                                        <label for="" >No Handphone<a style="color:red;">*</a></label>
-                                                                        <input name="no_hp" id="no_hp"  class="form-control mb-2"> 
+                                                                    <div class="col-6 mb-2">
+                                                                        
+                                                                    
+                                                                        
                                                                     </div> 
                                                                 </div>
                                                             </div>
@@ -81,11 +84,36 @@
                                                                         </select>
                                                                     </div> 
                                                                     <div class="col-lg-6">
-                                                                        <label for="" >File Pendukung</label>
+                                                                        <label for="" >Nama Terlapor<a style="color:red;">*</a></label>
+                                                                        <input name="nama_terlapor" id="nama_terlapor"  class="form-control mb-2" placeholder="dapat diisi lebih dari satu nama" >
+                                                                    </div> 
+                                                                    <div class="col-lg-6">
+                                                                        <label for="" >Lokasi Kejadian<a style="color:red;">*</a></label>
+                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="detail nama tempat/alamat kejadian" >
+                                                                    </div> 
+                                                                    <div class="col-lg-3">
+                                                                        <label for="" >Kecamatan<a style="color:red;">*</a></label>
+                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="nama kecamatan" >
+                                                                    </div> 
+                                                                    <div class="col-lg-3">
+                                                                        <label for="" >Keluarahan<a style="color:red;">*</a></label>
+                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="nama kelurahan" >
+                                                                    </div> 
+                                                                    <div class="col-lg-6">
+                                                                        <label for="" >Tanggal Perkiraan Kejadian<a style="color:red;">*</a></label>
+                                                                        <input type="date" name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" >
+                                                                    </div> 
+                                                                    <div class="col-lg-6">
+                                                                        <label for="" >Waktu Perkiraan Kejadian<a style="color:red;">*</a></label>
+                                                                        <input name="lokasi_kejadian" id="lokasi_kejadian"  class="form-control mb-2" placeholder="Contoh : Sekitar waktu Peringatan Hari Ulang Tahun Instansi tsb." >
+                                                                    </div> 
+                                                                    <div class="col-lg-12">
+                                                                        <label for="" >Lampiran</label>
                                                                         <input type="file" name="file" id="file"  class="form-control mb-2"> 
                                                                     </div> 
                                                                     <div class="col-12 mb-2 mt-2">
-                                                                    <textarea name="isi" id="isi" rows="5" class="form-control mb-2" placeholder="Pesan"></textarea> 
+                                                                    <label for="" >Uraian Pengaduan</label>
+                                                                    <textarea name="isi" id="isi" rows="5" class="form-control mb-2" placeholder="Maksimum 1000 karakter"></textarea> 
                                                                     </div>
                                                                 </div>
                                                             </div>
