@@ -24,6 +24,7 @@ class AdminController extends Controller
     public function get_count()
     {
         $datas['artikel'] = DB::table('artikel')->where('deleted', '!=', 1)->count();
+        $datas['pegawai'] = DB::table('pegawai')->where('deleted', '!=', 1)->count();
         $datas['pengaduan'] = DB::table('pengaduan')->count();
         $datas['pengaduan_menunggu'] = DB::table('pengaduan')->where('status', 'MENUNGGU')->count();
         $datas['pengaduan_dijawab'] = DB::table('pengaduan')->where('status', 'DIJAWAB')->count();
@@ -1172,7 +1173,11 @@ class AdminController extends Controller
 
     public function detail_pengadu_wbs($id)
     {
-        $pengaduan = DB::table('wbs_pengaduan')->where('id', $id)->first();
+        $pengaduan = DB::table('wbs_pengaduan')
+            ->select(DB::raw('wbs_pengaduan.*, jenis_pengaduan.jenis'))
+            ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'wbs_pengaduan.jenis_pengaduan')
+            ->where('wbs_pengaduan.id', $id)
+            ->first();
         // dd($pengaduan);
 
         $isi = '<table class="table table-small table-striped" width="100%">
@@ -1216,7 +1221,7 @@ class AdminController extends Controller
                     <tr>
                         <td width="30%">Jenis Pengaduan</td>
                         <td>:</td>
-                        <td>' . $pengaduan->jenis_pengaduan . '</td>
+                        <td>' . $pengaduan->jenis . '</td>
                     </tr>
                     <tr>
                         <td>Nama Terlapor</td>

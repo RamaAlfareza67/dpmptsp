@@ -30,7 +30,7 @@
                         <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                         <div class="stats-info text-white">
                             <h4>TOTAL PEGAWAI</h4>
-                            <p class="artikel">0</p>	
+                            <p class="pegawai">0</p>	
                         </div>
                         <div class="stats-link detail_artikel">
                         </div>
@@ -205,6 +205,7 @@ function get_count(){
         method: "GET",
         success:function(res){
             $('.artikel').html(res.artikel);
+            $('.pegawai').html(res.pegawai);
             $('.pengaduan').html(res.pengaduan);
             $('.pengaduan_menunggu').html(res.pengaduan_menunggu);
             $('.pengaduan_dijawab').html(res.pengaduan_dijawab);

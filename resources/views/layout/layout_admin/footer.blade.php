@@ -43,5 +43,5 @@
 
 <script src="{{ asset('assets_admin/plugins/highchart/highcharts.js')}}"></script>
 <script src="{{ asset('assets_admin/plugins/highchart/modules/exporting.js')}}"></script>
-<script src="{{ asset('assets_admin/plugins/highchart/modules/export-data.js')}}"></script>
+{{-- <script src="{{ asset('assets_admin/plugins/highchart/modules/export-data.js')}}"></script> --}}
 <script src="{{ asset('assets_admin/plugins/highchart/modules/accessibility.js')}}"></script>

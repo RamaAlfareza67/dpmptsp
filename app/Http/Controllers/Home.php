@@ -10,7 +10,7 @@ class Home extends Controller
 {
     public function home()
     {
-        $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->get();
+        $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->orderBy('created_date', 'desc')->take(6)->get();
         $data['informasi_publik'] = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
         // dd($data);
         return view('dpmptsp/index', compact('data'));
