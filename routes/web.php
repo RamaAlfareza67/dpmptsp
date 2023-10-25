@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/dashboard', [AdminController::class, 'dashboard'])->middleware('user_access');
     Route::get('/user/get_count', [AdminController::class, 'get_count'])->middleware('user_access');
     Route::get('/user/grafik_pengaduan', [AdminController::class, 'grafik_pengaduan'])->middleware('user_access');
+    Route::get('/user/grafik_pengaduan_wbs', [AdminController::class, 'grafik_pengaduan_wbs'])->middleware('user_access');
+    Route::post('/user/get_new_artikel_', [AdminController::class, 'get_new_artikel_'])->middleware('user_access');
 
     Route::get('/user/artikel', [AdminController::class, 'artikel'])->middleware('user_access');
     Route::post('/user/artikel_', [AdminController::class, 'artikel_'])->middleware('user_access');
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/pengaduan_', [AdminController::class, 'pengaduan_'])->middleware('user_access');
     Route::post('/user/accept_rejact_pengaduan', [AdminController::class, 'accept_rejact_pengaduan'])->middleware('user_access');
     Route::get('/user/detail_pengadu/{id}', [AdminController::class, 'detail_pengadu'])->middleware('user_access');
+    Route::post('/user/get_detail_pengaduan', [AdminController::class, 'get_detail_pengaduan'])->middleware('user_access');
     Route::get('/user/jenis_pengaduan', [AdminController::class, 'jenis_pengaduan'])->middleware('user_access');
     Route::post('/user/jenis_pengaduan_', [AdminController::class, 'jenis_pengaduan_'])->middleware('user_access');
     // Route::post('/user/get_select_jenis', [AdminController::class, 'get_select_jenis'])->middleware('user_access');

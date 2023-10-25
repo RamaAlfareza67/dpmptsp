@@ -36,6 +36,7 @@
                     <div class="menu-text">Dashboard</div>
                 </a>
             </div>
+            <div class="menu-header">Pengaduan</div>
             <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/pengaduan" class="menu-link">
                     <div class="menu-icon">
@@ -47,27 +48,21 @@
             <div class="menu-item {{ ($data['module'] == 'WBS') ? 'active' : '' }}">
                 <a href="/user/wbs" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-paper-plane"></i>
+                        <i class="fa fa-bookmark"></i>
                     </div>
-                    <div class="menu-text">WBS (Wishtleblowing System)</div>
+                    <div class="menu-text">Wishtleblowing System</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/jenis_pengaduan" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-paper-plane"></i>
+                        <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Jenis Pengaduan</div>
                 </a>
             </div>
-            <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
-                <a href="/user/pegawai" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-users"></i>
-                    </div>
-                    <div class="menu-text">Pegawai</div>
-                </a>
-            </div>
+            
+            <div class="menu-header">CMS</div>
             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
                 <a href="/user/artikel" class="menu-link">
                     <div class="menu-icon">
@@ -116,6 +111,15 @@
                     <div class="menu-text">Profil Dinas</div>
                 </a>
             </div>
+            <div class="menu-header">Data</div>
+            <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
+                <a href="/user/pegawai" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="menu-text">Pegawai</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'USERMANAGEMENT') ? 'active' : '' }}">
                 <a href="/user/user_management" class="menu-link">
                     <div class="menu-icon">
@@ -137,15 +141,15 @@
             <div class="menu-item {{ ($data['module'] == 'WBS') ? 'active' : '' }}">
                 <a href="/user/wbs" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-paper-plane"></i>
+                        <i class="fa fa-bookmark"></i>
                     </div>
-                    <div class="menu-text">WBS (Wishtleblowing System)</div>
+                    <div class="menu-text">Wishtleblowing System</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'JENIS_PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/jenis_pengaduan" class="menu-link">
                     <div class="menu-icon">
-                        <i class="fa fa-paper-plane"></i>
+                        <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Jenis Pengaduan</div>
                 </a>

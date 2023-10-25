@@ -92,42 +92,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row mb-2">
-                    <h4>Pengaduan :</h4>
-                    <div class="row table-responsive">
-                        <table class="table small table-striped table-bordered dataTables_wrapper" width="100%">
-                            <tr>
-                                <td width="10%">Isi</td>
-                                <td width="5%">:</td>
-                                <td id="isi_pengaduan_"></td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal</td>
-                                <td>:</td>
-                                <td id="tgl_pengaduan_"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <h4>Jawaban : </h4>
-                    <div class="row table-responsive">
-                        <table class="table small table-striped table-bordered dataTables_wrapper" width="100%">
-                            <tr>
-                                <td width="10%">Isi</td>
-                                <td width="5%">:</td>
-                                <td id="isi_jawaban_"></td>
-                            </tr>
-                            <tr>
-                                <td>Petugas</td>
-                                <td>:</td>
-                                <td id="petugas_jawaban_"></td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal</td>
-                                <td>:</td>
-                                <td id="tgl_jawaban_"></td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="mb-2" style="background-color: rgb(226 232 240 / 1);border-left:4px solid #927851;padding:1rem">
+                    <div id="detail_isi_"></div>
+                </div>
+                <div id="detail_tanggap_">
+                    
                 </div>
             </div>
             <div class="modal-footer">
@@ -141,7 +110,20 @@
 @section('js')
 <script>
     let table_jenis_pengaduan;
-$(document).ready(function() {
+    function get_detail(id){
+        $.ajax({
+            url: "/user/get_detail_pengaduan",
+            method: "POST",
+            data:{
+                id:id
+            },
+            success:function(res){
+                $('#detail_isi_').html(res.pengaduan);
+                $('#detail_tanggap_').html(res.tanggapan);
+            }
+        })
+    }
+    $(document).ready(function() {
        
         $.ajaxSetup({
             headers: {
@@ -240,13 +222,10 @@ $(document).ready(function() {
         
 
         $(document).on('click', '.detail_jawab', function(){
+            var id = $(this).data('id');
             $('#detail_jawab_').modal('show');
             $('.judul-modal-detail').text('Detail Pengaduan');
-            $('#isi_pengaduan_').html($(this).data('isi'))
-            $('#tgl_pengaduan_').html($(this).data('tgl'))
-            $('#isi_jawaban_').html($(this).data('isi_jawaban'))
-            $('#petugas_jawaban_').html($(this).data('petugas'))
-            $('#tgl_jawaban_').html($(this).data('tgl_jawaban'))
+            get_detail(id);
         })
 
         $(document).on('click', '.accept', function() {

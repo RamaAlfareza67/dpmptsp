@@ -507,6 +507,7 @@
 
         $(document).on('click', '.detail_', function() {
             var id = $(this).data('id');
+            $('.judul-modal-detail').text('Detail Pengaduan');
              $('#detail_jawab_').modal('show');
             get_detail(id);
         });

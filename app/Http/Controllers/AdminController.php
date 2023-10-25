@@ -28,6 +28,13 @@ class AdminController extends Controller
         $datas['pengaduan_menunggu'] = DB::table('pengaduan')->where('status', 'MENUNGGU')->count();
         $datas['pengaduan_dijawab'] = DB::table('pengaduan')->where('status', 'DIJAWAB')->count();
         $datas['pengaduan_ditolak'] = DB::table('pengaduan')->where('status', 'DITOLAK')->count();
+
+        $datas['wbs'] = DB::table('wbs_pengaduan')->count();
+        $datas['wbs_menunggu'] = DB::table('wbs_pengaduan')->where('status', 'MENUNGGU')->count();
+        $datas['wbs_diterima'] = DB::table('wbs_pengaduan')->where('status', 'DITERIMA')->count();
+        $datas['wbs_diproses'] = DB::table('wbs_pengaduan')->where('status', 'DIPROSES')->count();
+        $datas['wbs_selesai'] = DB::table('wbs_pengaduan')->where('status', 'SELESAI')->count();
+        $datas['wbs_ditolak'] = DB::table('wbs_pengaduan')->where('status', 'DITOLAK')->count();
         return response()->json($datas);
     }
 
@@ -52,6 +59,65 @@ class AdminController extends Controller
         $datas['data'] = $arr;
         $datas['js'] = $jenis;
         return response()->json($datas);
+    }
+
+    public function grafik_pengaduan_wbs()
+    {
+        $datas['jenis'] = DB::table('jenis_pengaduan')->select('id', 'jenis')->where('tipe', 'WBS')->where('deleted', '!=', 1)->get();
+        $datas['pengaduan'] = DB::table('wbs_pengaduan')->select('status')->groupBy('status')->get();
+        $arr = [];
+        $jenis = [];
+        foreach ($datas['pengaduan'] as $v) {
+            $count = [];
+            foreach ($datas['jenis'] as $val) {
+                $p = DB::table('wbs_pengaduan')->where('status', $v->status)->where('jenis_pengaduan', $val->id)->count();
+                $count[] = $p;
+                $jenis[] = $val->jenis;
+            }
+            $arr[] = [
+                'name' => $v->status,
+                'data' => $count
+            ];
+        }
+        $datas['data'] = $arr;
+        $datas['js'] = $jenis;
+        return response()->json($datas);
+    }
+
+    public function get_new_artikel_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('artikel')->where('deleted', '!=', 1)->where('status', 'PUBLISH')->orderBy('created_date', 'desc')->take(10)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-judul="' . $field->judul . '" data-isi="' . htmlspecialchars($field->isi) . '" data-image="' . $field->image . '" data-penulis="' . $field->penulis . '" data-status="' . $field->status . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->addColumn('desc', function ($field) {
+                    // $desc = stripslashes($field->isi);
+                    $desc = strip_tags($field->isi);
+                    $d = substr($desc, 0, 50) . ' ... ';
+                    return $d;
+                })
+                ->addColumn('judul', function ($field) {
+                    // $desc = stripslashes($field->isi);
+                    $d = substr($field->judul, 0, 50) . ' ... ';
+                    return $d;
+                })
+                ->addColumn('img', function ($field) {
+                    $image = '<img src="' . asset($field->image) . '" width="50" alt="" class="rounded" />';
+                    return $image;
+                })
+                ->addColumn('status', function ($field) {
+                    $d = ($field->status == 'PUBLISH') ? '<span class="badge bg-success">Publish</span>' : '<span class="badge bg-warning">Draft</span>';
+                    return $d;
+                })
+                ->rawColumns(['action', 'img', 'desc', 'status', 'judul'])
+                ->addIndexColumn()
+                ->make(true);
+        }
     }
 
     public function dashboard()
@@ -88,7 +154,13 @@ class AdminController extends Controller
                 ->addColumn('desc', function ($field) {
                     // $desc = stripslashes($field->isi);
                     $desc = strip_tags($field->isi);
-                    return $desc;
+                    $d = substr($desc, 0, 200) . ' ... ';
+                    return $d;
+                })
+                ->addColumn('judul', function ($field) {
+                    // $desc = stripslashes($field->isi);
+                    $d = substr($field->judul, 0, 200) . ' ... ';
+                    return $d;
                 })
                 ->addColumn('img', function ($field) {
                     $image = '<img src="' . asset($field->image) . '" width="50" alt="" class="rounded" />';
@@ -98,7 +170,7 @@ class AdminController extends Controller
                     $d = ($field->status == 'PUBLISH') ? '<span class="badge bg-success">Publish</span>' : '<span class="badge bg-warning">Draft</span>';
                     return $d;
                 })
-                ->rawColumns(['action', 'img', 'desc', 'status'])
+                ->rawColumns(['action', 'img', 'desc', 'status', 'judul'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -760,6 +832,37 @@ class AdminController extends Controller
                     </table>';
 
         echo $isi;
+    }
+
+    public function get_detail_pengaduan(Request $request)
+    {
+        $id = $request->id;
+        $pengaduan = DB::table('pengaduan')
+            ->select(DB::raw('pengaduan.*'))
+            ->where('pengaduan.id', $id)
+            ->first();
+        // dd($pengaduan);
+        $tanggapan = DB::table('tanggapan')
+            ->select(DB::raw('tanggapan.*, users.name as petugas'))
+            ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+            ->where('tanggapan.pengaduan_id', $pengaduan->id)
+            ->get();
+
+        $isi_pengaduan = '<p>Pengaduan Oleh ' . $pengaduan->nama . ' | ' . $pengaduan->created_date . '</p>
+                <p>' . $pengaduan->isi . '</p>';
+
+        $isi_tanggapan = '';
+        foreach ($tanggapan as $val) {
+            $isi_tanggapan .= '<div class="mb-2" style="background-color: rgb(226 232 240 / 1);border-left:4px solid #519259;padding:1rem">
+                <p>Ditanggapi Oleh ' . $val->petugas . ' | ' . $val->created_date . '</p>
+                <p>' . $val->tanggapan . '</p>
+                </div>';
+        }
+
+
+        $r['pengaduan'] = $isi_pengaduan;
+        $r['tanggapan'] = $isi_tanggapan;
+        return response()->json($r);
     }
 
     public function accept_rejact_pengaduan(Request $request)
