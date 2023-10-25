@@ -26,7 +26,7 @@
 						<div class="row row-space-30" style="position: relative; bottom: 0px;margin-bottom: 0px;">
 							<!-- begin col-9 -->
 							<div class="col-lg-4 col-md-6 col-sm-12">
-								<article class="kartu kartu--1">
+								<article  class="kartu kartu--1">
 								<div class="kartu__info-hover">
 								</svg>
 									<div class="kartu__clock-info">
@@ -36,7 +36,7 @@
 									
 								</div>
 								<div class="kartu__img"></div>
-								<a href="#" class="kartu_link">
+								<a href="/berita/detail/{{Crypt::encrypt($val->id)}}" class="kartu_link">
 									<div class="kartu__img--hover" style="background-image: url({{$val->image}});"></div>
 								</a>
 								<div class="kartu__info">
