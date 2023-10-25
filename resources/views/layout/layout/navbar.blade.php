@@ -22,24 +22,11 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/visi_misi">VISI & MISI</a>
                         <a class="dropdown-item" href="/struktur_organisasi">STRUKTUR ORGANISASI</a>
-                        <a class="dropdown-item" href="index.html">TUPOKSI</a>
+                        <!-- <a class="dropdown-item" href="index.html">TUPOKSI</a>
                         <a class="dropdown-item" href="index.html">RENCANA KERJA</a>
-                        <a class="dropdown-item" href="index.html">LAPORAN AKUNTABILITAS</a>
+                        <a class="dropdown-item" href="index.html">LAPORAN AKUNTABILITAS</a> -->
                     </div>
                 </li>
-                <!-- <li class="dropdown">
-                    <a href="#" data-bs-toggle="dropdown">INFORMASI PUBLIK <b class="caret"></b></a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="post_grid.html">S.O.P</a>
-                        <a class="dropdown-item" href="post_grid.html">S.O.P OSS</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">STANDAR PELAYANAN</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">STANDAR PELAYANAN OSS</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">MAKLUMAT PELAYANAN</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">MEKANISME</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">PERENCANAAN & ANGGARAN</a>
-                        <a class="dropdown-item" href="post_without_sidebar.html">PERIZINAN</a>
-                    </div>
-                </li> -->
                 <li><a href="/layanan_dinas">LAYANAN DINAS</a></li>
                 <li><a href="/berita">BERITA</a></li>
                 <li><a href="/pengaduan">PENGADUAN</a></li>

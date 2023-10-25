@@ -70,7 +70,7 @@
                                     <div class="d-flek"> 
                                         <!-- begin card-forum -->
                                         <div class="row" style="position: relative; bottom: 0px;margin-bottom: 0px;">
-                                            <div class="col-6">
+                                            <div class="col-lg-6 col-md-12">
                                                 <div class="card card-forum mb-4">
                                                     <!-- begin forum-list -->
                                                     <ul class="forum-list forum-topic-list">

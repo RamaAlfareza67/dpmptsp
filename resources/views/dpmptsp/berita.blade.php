@@ -19,84 +19,41 @@
             <div class="col-lg-12 mb-lg-2">
             	<div class="custom-block bg-white shadow-lg">      
                     <div class="d-flek"> 
+					<?php
+                    if(count($data['berita']) > 0){
+                        foreach ($data['berita'] as $val) {
+               		?>
 						<div class="row row-space-30" style="position: relative; bottom: 0px;margin-bottom: 0px;">
 							<!-- begin col-9 -->
-							<div class="col-lg-9">
-								<!-- begin post-list -->
-								<ul class="post-list">
-									<li>
-										<!-- begin post-left-info -->
-										<div class="post-left-info">
-											<div class="post-date">
-												<span class="day">03</span>
-												<span class="month">SEPT</span>
-											</div>
-										</div>
-										<!-- end post-left-info -->
-										<!-- begin post-content -->
-										<div class="post-content">
-										<div class="post-image">
-												<a href="post_detail.html">
-													<div class="post-image-cover" style="background-image: url(../assets/img/berita/berita1.jpg);"></div>
-												</a>
-											</div>
-											<!-- begin post-info -->
-											<div class="post-info">
-												<h4 class="post-title">
-													<a href="post_detail.html">Kunjungan Kementrian Pan-RB</a>
-												</h4>
-												<div class="post-by">
-													Posted By <a href="#">admin</a> <span class="divider">|</span> <a href="#">Sports</a>, <a href="#">Mountain</a>, <a href="#">Bike</a> <span class="divider">|</span> 2 Comments
-												</div>
-												<div class="post-desc">
-													Kunjungan Kementrian PAN-RB dalam rangka memantau kesiapan fasilitas Mal Pelayanan Publik Kabupaten Indramayu. [...]
-												</div>
-											</div>
-											<!-- end post-info -->
-											<!-- begin read-btn-container -->
-											<div class="read-btn-container">
-												<a href="berita_detail">Read More <i class="fa fa-angle-double-right"></i></a>
-											</div>
-											<!-- end read-btn-container -->
-										</div>
-										<!-- end post-content -->
-									</li>
+							<div class="col-lg-4 col-md-6 col-sm-12">
+								<article class="kartu kartu--1">
+								<div class="kartu__info-hover">
+								</svg>
+									<div class="kartu__clock-info">
+										<svg class="kartu__clock"  viewBox="0 0 24 24"><path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M19.03,7.39L20.45,5.97C20,5.46 19.55,5 19.04,4.56L17.62,6C16.07,4.74 14.12,4 12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22C17,22 21,17.97 21,13C21,10.88 20.26,8.93 19.03,7.39M11,14H13V8H11M15,1H9V3H15V1Z" />
+										</svg><span class="kartu__time">{{$val->created_date}}</span>
+									</div>
 									
-								<!-- end pagination -->
-							</div>
-							<!-- end col-9 -->
-							<!-- begin col-3 -->
-							<div class="col-lg-3">
-									<!-- BEGIN news -->
-									<div class="news">
-										<div class="news-media">
-											<div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita4.jpeg);"></div>
-										</div>
-										<div class="news-content">
-											<div class="news-title">Pemberian penghargaan sebagai Pembina Olahraga kepada Bupati Indramayu Nina Agustina</div>
-											<div class="news-date">September 16, 2020</div>
-										</div>
-										<a href="#" class="stretched-link"></a>
-									</div>
-									<!-- END news -->
-									<!-- BEGIN news -->
-									<div class="news">
-										<div class="news-media">
-											<div class="news-media-img news-media-img-lg" style="background-image: url(../assets/img/berita/berita3.jpg);"></div>
-										</div>
-										<div class="news-content">
-											<div class="news-title">Pencegahan Pungli</div>
-											<div class="news-date">September 16, 2020</div>
-										</div>
-										<a href="#" class="stretched-link"></a>
-									</div>
-									<!-- END news -->
 								</div>
-							<!-- end section-container -->
-							</div>
-							<!-- end col-3 -->
+								<div class="kartu__img"></div>
+								<a href="#" class="kartu_link">
+									<div class="kartu__img--hover" style="background-image: url({{$val->image}});"></div>
+								</a>
+								<div class="kartu__info">
+									
+									<h3 class="kartu__title">{{$val->judul}}</h3>
+									<span class="kartu__by">by <a href="#" class="kartu__author" title="author">{{$val->penulis}}</a></span>
+								</div>
+								</article>
+							</div>    
 						</div>    
 					</div>
+					<?php 
+                        } 
+                    } else { 
+               		 ?>
+                    <p class="fs-18px mb-5">Kosong</p>
+                	<?php } ?>
 				</div>
 			</div>
 			

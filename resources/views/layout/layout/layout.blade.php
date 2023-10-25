@@ -14,6 +14,10 @@
 	<link href="{{ asset('assets/css/blog/vendor.min.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets/css/blog/app.min.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
 	<!-- <link href="../assets/css/corporate/app.min.css" rel="stylesheet" /> -->
 	<!-- ================== END core-css ================== -->
 	
@@ -59,6 +63,7 @@
 	<script src="{{ asset('assets/js/blog/custom.js')}}"></script>
 	<script src="{{ asset('assets_admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 	<script src="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<!-- ================== END core-js ================== -->
 	@yield('js')
 </body>

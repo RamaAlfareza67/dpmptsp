@@ -18,7 +18,8 @@ class Home extends Controller
 
     public function berita()
     {
-        return view('dpmptsp/berita');
+        $data['berita'] = DB::table('artikel')->where('deleted', '!=', 1)->get();
+        return view('dpmptsp/berita', compact('data'));
     }
 
     public function struktur_organisasi()
