@@ -131,6 +131,28 @@ class AdminController extends Controller
         }
     }
 
+    public function dashboard_investasi()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN') {
+            $data['module'] = 'DASHBOARD_INVESTASI';
+            $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
+            return view('admin.dashboard_investasi', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function grafik_realisasi_investasi(Request $request)
+    {
+        $data = DB::table('investasi')->select('jumlah')->where('tahun', $request->tahun)->where('deleted', 0)->where('jenis', $request->jenis)->orderBy('triwulan', 'asc')->get();
+        $arr = [];
+        foreach ($data as $val) {
+            $arr[] = $val->jumlah;
+        }
+        $r['data'] = $arr;
+        return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
+    }
+
     public function artikel()
     {
         if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
@@ -1410,6 +1432,117 @@ class AdminController extends Controller
 
         $r['pengaduan'] = $isi_pengaduan;
         $r['tanggapan'] = $isi_tanggapan;
+        return response()->json($r);
+    }
+
+    public function investasi()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN') {
+            $data['module'] = 'INVESTASI';
+            $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->get();
+            return view('admin.investasi', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function investasi_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('investasi')->where('deleted', '!=', 1);
+            if ($request->tahun <> '') {
+                $data->where('tahun', $request->tahun);
+            }
+            if ($request->jenis <> '') {
+                $data->where('jenis', $request->jenis);
+            }
+
+            $data->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-tahun="' . $field->tahun . '" data-triwulan="' . $field->triwulan . '" data-jumlah="' . $field->jumlah . '" data-jenis="' . $field->jenis . '"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->addColumn('jumlah', function ($field) {
+                    $hasil_rupiah = "Rp " . number_format($field->jumlah, 0, '.', ',');
+                    return $hasil_rupiah;
+                })
+                ->addColumn('jenis', function ($field) {
+                    $d = ($field->jenis == 'realisasi') ? '<span class="badge bg-success">Realisasi</span>' : '<span class="badge bg-primary">Proyek</span>';
+                    return $d;
+                })
+                ->rawColumns(['action', 'jumlah', 'jenis'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function get_tahun_investasi()
+    {
+        $data_tahun = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->get();
+        $tahun = '<option value="">- Pilih Tahun -</option>';
+        foreach ($data_tahun as $val) {
+            $tahun .= '<option value="' . $val->tahun . '">' . $val->tahun . '</option>';
+        }
+        $r['tahun'] = $tahun;
+        return response()->json($r);
+    }
+
+    public function create_investasi(Request $request)
+    {
+        $data['tahun'] = $request->tahun;
+        $data['triwulan'] = $request->triwulan;
+        $data['jumlah'] = $request->jumlah;
+        $data['jenis'] = $request->jenis;
+        // dd($data);
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+
+        $datas = DB::table('investasi')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_investasi(Request $request)
+    {
+        $data['tahun'] = $request->tahun;
+        $data['triwulan'] = $request->triwulan;
+        $data['jumlah'] = $request->jumlah;
+        $data['jenis'] = $request->jenis;
+
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        // dd($data);
+
+        $datas = DB::table('investasi')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_investasi(Request $request)
+    {
+        $data = DB::table('investasi')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
         return response()->json($r);
     }
 }

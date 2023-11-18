@@ -36,10 +36,12 @@ Route::get('signout', [LoginController::class, 'signOut'])->name('signout');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/user', [AdminController::class, 'index'])->middleware('user_access');
     Route::get('/user/dashboard', [AdminController::class, 'dashboard'])->middleware('user_access');
+    Route::get('/user/dashboard_investasi', [AdminController::class, 'dashboard_investasi'])->middleware('user_access');
     Route::get('/user/get_count', [AdminController::class, 'get_count'])->middleware('user_access');
     Route::get('/user/grafik_pengaduan', [AdminController::class, 'grafik_pengaduan'])->middleware('user_access');
     Route::get('/user/grafik_pengaduan_wbs', [AdminController::class, 'grafik_pengaduan_wbs'])->middleware('user_access');
     Route::post('/user/get_new_artikel_', [AdminController::class, 'get_new_artikel_'])->middleware('user_access');
+    Route::post('/user/grafik_realisasi_investasi', [AdminController::class, 'grafik_realisasi_investasi'])->middleware('user_access');
 
     Route::get('/user/artikel', [AdminController::class, 'artikel'])->middleware('user_access');
     Route::post('/user/artikel_', [AdminController::class, 'artikel_'])->middleware('user_access');
@@ -85,6 +87,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/create_user_management', [AdminController::class, 'create_user_management'])->middleware('user_access');
     Route::post('/user/update_user_management', [AdminController::class, 'update_user_management'])->middleware('user_access');
     Route::post('/user/delete_user_management', [AdminController::class, 'delete_user_management'])->middleware('user_access');
+
+    Route::get('/user/investasi', [AdminController::class, 'investasi'])->middleware('user_access');
+    Route::post('/user/investasi_', [AdminController::class, 'investasi_'])->middleware('user_access');
+    Route::post('/user/create_investasi', [AdminController::class, 'create_investasi'])->middleware('user_access');
+    Route::post('/user/update_investasi', [AdminController::class, 'update_investasi'])->middleware('user_access');
+    Route::post('/user/delete_investasi', [AdminController::class, 'delete_investasi'])->middleware('user_access');
+    Route::get('/user/get_tahun_investasi', [AdminController::class, 'get_tahun_investasi'])->middleware('user_access');
 
     Route::get('/user/wbs', [AdminController::class, 'wbs'])->middleware('user_access');
     Route::post('/user/wbs_', [AdminController::class, 'wbs_'])->middleware('user_access');

@@ -36,6 +36,14 @@
                     <div class="menu-text">Dashboard</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'DASHBOARD_INVESTASI') ? 'active' : '' }}">
+                <a href="/user/dashboard_investasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-chart-pie"></i>
+                    </div>
+                    <div class="menu-text">Dashboard Investasi</div>
+                </a>
+            </div>
             <div class="menu-header">Pengaduan</div>
             <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/pengaduan" class="menu-link">
@@ -112,6 +120,14 @@
                 </a>
             </div>
             <div class="menu-header">Data</div>
+             <div class="menu-item {{ ($data['module'] == 'INVESTASI') ? 'active' : '' }}">
+                <a href="/user/investasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Investasi</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
                 <a href="/user/pegawai" class="menu-link">
                     <div class="menu-icon">
