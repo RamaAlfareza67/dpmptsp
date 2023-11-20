@@ -14674,7 +14674,7 @@ body {
 }
 .header.navbar-default {
   background: var(--app-component-bg);
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
+ 
 }
 .header.navbar-default .navbar-toggle {
   background: var(--bs-light);
@@ -22577,19 +22577,19 @@ img.u-image, .u-video-poster {
 
 /* Add WA floating button CSS */
 .floating {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366;
-    color: #fff;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 3px #999;
-    z-index: 100;
-    }
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 10px;
+  right: 40px;
+  background-color: #ff5b57;
+  color: #fff;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 10px #999;
+  z-index: 100;
+}
     
     .fab-icon {
     margin-top: 16px;

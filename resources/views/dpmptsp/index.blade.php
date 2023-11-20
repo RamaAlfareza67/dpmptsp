@@ -33,18 +33,17 @@
             </div>
             <p class="fs-18px mb-5"></p>    
          <div class="row">
-        <div class="col-xl-12 col-md-12 mb-2">               
+        <div class="col-xl-12 col-md-12 mb-2 ">               
             <div class="row mb-2">
-                <div class="col-md-9">
+                <div class="col-xl-9 col-md-7 mb-2">
                     <select name="tahun_filter" id="tahun_filter" class="form-control">
                         @foreach ($data['tahun'] as $val)
                             <option value="{{$val->tahun}}">{{$val->tahun}}</option>
                         @endforeach
                     </select>
                 </div>   
-                <div class="col-md-3">
-                    <button class="btn btn-primary" id="filter"> Filter</button>
-                    <button class="btn btn-warning" id="reset"> Reset</button>
+                <div class="col-xl-3 col-md-5 mb-2" style="text-align:end;">
+                    <button class="btn btn-primary" id="filter" style="width:100px; color:white;"> Filter</button>
                 </div>
             </div>        
         </div>
