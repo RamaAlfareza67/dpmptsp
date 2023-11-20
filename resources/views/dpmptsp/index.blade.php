@@ -29,6 +29,58 @@
         <!-- BEGIN section-title -->
         <div class="pt-lg-5 pb-lg-3 text-center">
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
+                Grafik Investasi Dinas DPMPTSP KAB.INDRAMAYU
+            </div>
+            <p class="fs-18px mb-5"></p>    
+         <div class="row">
+        <div class="col-xl-12 col-md-12 mb-2">               
+            <div class="row mb-2">
+                <div class="col-md-9">
+                    <select name="tahun_filter" id="tahun_filter" class="form-control">
+                        @foreach ($data['tahun'] as $val)
+                            <option value="{{$val->tahun}}">{{$val->tahun}}</option>
+                        @endforeach
+                    </select>
+                </div>   
+                <div class="col-md-3">
+                    <button class="btn btn-primary" id="filter"> Filter</button>
+                    <button class="btn btn-warning" id="reset"> Reset</button>
+                </div>
+            </div>        
+        </div>
+        <div class="col-xl-6 col-md-6"> 
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row">
+                       <div id="realisasi"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-6"> 
+            <div class="panel">
+                
+                <div class="panel-body">
+                    <div class="row">
+                       <div id="proyek"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        <!-- END section-title -->
+    </div>
+    <!-- END container -->
+</div>
+
+<!-- BEGIN section -->
+<div class="section">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN section-title -->
+        <div class="pt-lg-5 pb-lg-3 text-center">
+            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
                 Berita & Event Terbaru
             </div>
             <p class="fs-18px mb-5">Update Seputar Aktivitas, Acara dan Info lainnya</p>
@@ -54,15 +106,15 @@
                     </div>
                     <!-- END news -->
                 </div>
-                <div class="text-center">
-                    <a href="/berita" class="btn bg-red  fw-bold rounded-pill" style="color:aliceblue;">Berita Lainnya</a>
-                </div>
                 <?php 
                         } 
                     } else { 
                 ?>
                     <p class="fs-18px mb-5">Kosong</p>
                 <?php } ?>
+                <div class="text-center">
+                    <a href="/berita" class="btn bg-red  fw-bold rounded-pill" style="color:aliceblue;">Berita Lainnya</a>
+                </div>
             </div>
             
         <!-- END row -->
@@ -85,7 +137,7 @@
                     <img src="../assets/img/info.jpg" class="custom-block-image img-fluid" alt="">
                         <div class="custom-block-overlay-text d-flex">
                             <div>
-                                <h1 style="color:red; text-align:right;">Informasi Layanan Pengaduan</h1>
+                                <h1 style="color:red;">Informasi Layanan Pengaduan</h1>
                                     <br>
                                     <div class="header-btn">
                                     <a href="" class="btn custom-btn mt-2 mt-lg-3">LAYANAN PENGADUAN</a>
@@ -96,7 +148,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-12 mt-lg-3">
+            <div class="col-lg-6 col-md-6 col-12 mt-3 mb-4 mb-lg-0">
                 <div class="custom-block custom-block-overlay">
                 <a href="">
                 <img src="../assets/img/tes.jpg" class="custom-block-image img-fluid" alt="">
@@ -138,7 +190,7 @@
                 if(count($data['informasi_publik']) > 0){
                     foreach ($data['informasi_publik'] as $val) {
             ?>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                 <!-- BEGIN card -->
                 <div class="card shadow border-0 mb-5">
                     <div class="card-body p-4">
@@ -240,5 +292,174 @@
 
 @endsection
 	
-	
+@section('js')
+<script>
+var tahun;
+function get_realisasi(tahun, jenis){
+    $.ajax({
+        url: "/grafik_realisasi_investasi_publik",
+        method: "POST",
+        data: {
+            tahun: tahun,
+            jenis: jenis
+        },
+        success:function(res){
+            // console.log(res.data)
+            grafik_realisasi(res.data);
+        }
+    })
+} 
+
+function get_proyek(tahun, jenis){
+    $.ajax({
+        url: "/grafik_realisasi_investasi_publik",
+        method: "POST",
+        data: {
+            tahun: tahun,
+            jenis: jenis
+        },
+        success:function(res){
+            // console.log(res.data)
+            grafik_proyek(res.data);
+        }
+    })
+} 
+
+function grafik_realisasi(datas){
+    // console.log(datas);
+    if(datas.length == 0){
+        datas = [0,0,0,0]
+    }
+    Highcharts.chart('realisasi', {
+        chart: {
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 10,
+                beta: 25,
+                depth: 70
+            }
+        },
+        title: {
+            text: 'Grafik Realisasi Investasi',
+            align: 'left'
+        },
+        // subtitle: {
+        //     text: 'Source: ' +
+        //         '<a href="https://www.ssb.no/en/statbank/table/08804/"' +
+        //         'target="_blank">SSB</a>',
+        //     align: 'left'
+        // },
+        plotOptions: {
+            column: {
+                depth: 25
+            }
+        },
+        xAxis: {
+            categories: ['Triwulan I', 'Triwulan II', 'Triwulan III', 'Triwulan IV'],
+            labels: {
+                skew3d: true,
+                style: {
+                    fontSize: '16px'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                enabled: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: 'Total Realisasi: Rp. {point.y}'
+        },
+        series: [{
+            name: 'Total Realisasi',
+            data: datas
+        }]
+    });
+}
+
+function grafik_proyek(datas){
+    // console.log(datas);
+    if(datas.length == 0){
+        datas = [0,0,0,0]
+    }
+    Highcharts.chart('proyek', {
+        chart: {
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 10,
+                beta: 25,
+                depth: 70
+            }
+        },
+        title: {
+            text: 'Grafik Proyek / Perusahaan Investasi',
+            align: 'left'
+        },
+        // subtitle: {
+        //     text: 'Source: ' +
+        //         '<a href="https://www.ssb.no/en/statbank/table/08804/"' +
+        //         'target="_blank">SSB</a>',
+        //     align: 'left'
+        // },
+        plotOptions: {
+            column: {
+                depth: 25,
+                color: '#6AF9C4'
+            }
+        },
+        xAxis: {
+            categories: ['Triwulan I', 'Triwulan II', 'Triwulan III', 'Triwulan IV'],
+            labels: {
+                skew3d: true,
+                style: {
+                    fontSize: '16px'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                enabled: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: 'Total Proyek: {point.y}'
+        },
+        series: [{
+            name: 'Total Proyek',
+            data: datas,
+        }],
+        colors: ['#6AF9C4'],
+    });
+}
+$(document).ready(function() {
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    tahun = $("#tahun_filter").val();
+    get_realisasi(tahun , 'realisasi');
+    get_proyek(tahun, 'proyek');
+    
+    $(document).on('click', '#filter', function(){
+        tahun = $("#tahun_filter").val();
+        get_realisasi(tahun , 'realisasi');
+        get_proyek(tahun, 'proyek');
+    })
+})
+</script>
+@endsection
 	

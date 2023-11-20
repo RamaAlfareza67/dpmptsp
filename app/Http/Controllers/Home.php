@@ -12,9 +12,22 @@ class Home extends Controller
     {
         $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->orderBy('created_date', 'desc')->take(6)->get();
         $data['informasi_publik'] = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
+        $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
         // dd($data);
         return view('dpmptsp/index', compact('data'));
     }
+
+    public function grafik_realisasi_investasi_publik(Request $request)
+    {
+        $data = DB::table('investasi')->select('jumlah')->where('tahun', $request->tahun)->where('deleted', 0)->where('jenis', $request->jenis)->orderBy('triwulan', 'asc')->get();
+        $arr = [];
+        foreach ($data as $val) {
+            $arr[] = $val->jumlah;
+        }
+        $r['data'] = $arr;
+        return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
+    }
+
 
     public function berita()
     {

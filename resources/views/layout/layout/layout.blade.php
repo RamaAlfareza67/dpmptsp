@@ -14,6 +14,7 @@
 	<link href="{{ asset('assets/css/blog/vendor.min.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets/css/blog/app.min.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('assets_admin/plugins/highchart/css/highcharts.css')}}" rel="stylesheet" />
 	<link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
@@ -64,6 +65,11 @@
 	<script src="{{ asset('assets_admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 	<script src="{{ asset('assets_admin/plugins/sweetalert/sweetalert2.min.js') }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+	<script src="{{ asset('assets_admin/plugins/highchart/highcharts.js')}}"></script>
+<script src="{{ asset('assets_admin/plugins/highchart/highcharts-3d.js')}}"></script>
+<script src="{{ asset('assets_admin/plugins/highchart/modules/exporting.js')}}"></script>
+{{-- <script src="{{ asset('assets_admin/plugins/highchart/modules/export-data.js')}}"></script> --}}
+<script src="{{ asset('assets_admin/plugins/highchart/modules/accessibility.js')}}"></script>
 	<!-- ================== END core-js ================== -->
 	@yield('js')
 </body>

@@ -28,6 +28,8 @@ Route::get('/pengaduan', [Home::class, 'pengaduan']);
 Route::get('/wbs', [Home::class, 'wbs']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 Route::post('/create_wbs', [Home::class, 'create_wbs']);
+Route::post('/grafik_realisasi_investasi_publik', [Home::class, 'grafik_realisasi_investasi_publik']);
+
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('custom-login', [LoginController::class, 'customLogin'])->name('login.custom');

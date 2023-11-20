@@ -63,13 +63,13 @@
                         </div>
                         <div class="col-lg-12 mb-lg-0">
                             <div class="custom-block bg-white shadow-lg">
+                                    <div class="d-flek"> 
+                                        <!-- begin card-forum -->
+                                        <div class="row" style="position: relative; bottom: 0px;margin-bottom: 0px;">
                                 <?php
                                     if(count($data['pengaduan']) > 0){
                                         foreach ($data['pengaduan'] as $val) {
                                 ?>
-                                    <div class="d-flek"> 
-                                        <!-- begin card-forum -->
-                                        <div class="row" style="position: relative; bottom: 0px;margin-bottom: 0px;">
                                             <div class="col-lg-6 col-md-12">
                                                 <div class="card card-forum mb-4">
                                                     <!-- begin forum-list -->
@@ -102,17 +102,17 @@
                                                 </div>
                                                 <!-- end card-forum -->
                                             </div>
+                                            <?php 
+                                                    } 
+                                                } else { 
+                                            ?>
+                                                
+                                                <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
+                                                
+                                            <?php } ?>
                                         </div>
                                     </div>
                                                 
-                                    <?php 
-                                            } 
-                                        } else { 
-                                    ?>
-                                        
-                                        <img src="../assets/img/kosong.jpg"  alt="" style="object-fit:cover; width:100%;">
-                                        
-                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
