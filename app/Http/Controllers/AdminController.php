@@ -133,7 +133,7 @@ class AdminController extends Controller
 
     public function dashboard_investasi()
     {
-        if (Auth::user()->roles == 'SUPER_ADMIN') {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
             $data['module'] = 'DASHBOARD_INVESTASI';
             $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
             return view('admin.dashboard_investasi', compact('data'));
@@ -1437,7 +1437,7 @@ class AdminController extends Controller
 
     public function investasi()
     {
-        if (Auth::user()->roles == 'SUPER_ADMIN') {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
             $data['module'] = 'INVESTASI';
             $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->get();
             return view('admin.investasi', compact('data'));
@@ -1466,7 +1466,7 @@ class AdminController extends Controller
                     return $actionBtn;
                 })
                 ->addColumn('jumlah', function ($field) {
-                    $hasil_rupiah = "Rp " . number_format($field->jumlah, 0, '.', ',');
+                    $hasil_rupiah = number_format($field->jumlah, 0, '.', ',');
                     return $hasil_rupiah;
                 })
                 ->addColumn('jenis', function ($field) {

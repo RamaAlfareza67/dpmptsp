@@ -79,6 +79,14 @@
                     <div class="menu-text">Artikel</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'INVESTASI') ? 'active' : '' }}">
+                <a href="/user/investasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Investasi</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">
                 <a href="/user/layanan_dinas" class="menu-link">
                     <div class="menu-icon">
@@ -120,14 +128,6 @@
                 </a>
             </div>
             <div class="menu-header">Data</div>
-             <div class="menu-item {{ ($data['module'] == 'INVESTASI') ? 'active' : '' }}">
-                <a href="/user/investasi" class="menu-link">
-                    <div class="menu-icon">
-                        <i class="fa fa-book"></i>
-                    </div>
-                    <div class="menu-text">Investasi</div>
-                </a>
-            </div>
             <div class="menu-item {{ ($data['module'] == 'PEGAWAI') ? 'active' : '' }}">
                 <a href="/user/pegawai" class="menu-link">
                     <div class="menu-icon">
@@ -172,12 +172,28 @@
             </div>
             <?php } ?>
             <?php if(Auth::user()->roles == 'ADMIN_CMS'){ ?>
-             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
+            <div class="menu-item {{ ($data['module'] == 'DASHBOARD_INVESTASI') ? 'active' : '' }}">
+                <a href="/user/dashboard_investasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-chart-pie"></i>
+                    </div>
+                    <div class="menu-text">Dashboard Investasi</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
                 <a href="/user/artikel" class="menu-link">
                     <div class="menu-icon">
                         <i class="fa fa-newspaper"></i>
                     </div>
                     <div class="menu-text">Artikel</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'INVESTASI') ? 'active' : '' }}">
+                <a href="/user/investasi" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Investasi</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">
