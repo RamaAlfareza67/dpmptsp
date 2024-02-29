@@ -29,7 +29,7 @@
         <!-- BEGIN section-title -->
         <div class="pt-lg-5 pb-lg-3 text-center">
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-                Grafik Investasi Dinas DPMPTSP KAB.INDRAMAYU
+               GRAFIK INVESTASI
             </div>
             <p class="fs-18px mb-5"></p>    
          <div class="row">

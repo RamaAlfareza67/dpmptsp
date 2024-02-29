@@ -121,7 +121,7 @@
                                                     </div>
                                                     
                                                     <div class="col-lg-12 mb-lg-2 mt-2">
-                                                        <button type="submit" class="btn btn-primary" style="width: 100%">Kirim Pengaduan</button>
+                                                        <button type="submit" class="btn btn-danger" style="width: 100%; color:white;">Kirim Pengaduan</button>
                                                     </div>
                                                 </div> 
                                             </form>       
