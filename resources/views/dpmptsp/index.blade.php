@@ -29,44 +29,49 @@
         <!-- BEGIN section-title -->
         <div class="pt-lg-5 pb-lg-3 text-center">
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-               GRAFIK INVESTASI
+               Garfik Investasi
             </div>
-            <p class="fs-18px mb-5"></p>    
-         <div class="row">
-        <div class="col-xl-12 col-md-12 mb-2 ">               
-            <div class="row mb-2">
-                <div class="col-xl-9 col-md-7 mb-2">
-                    <select name="tahun_filter" id="tahun_filter" class="form-control">
-                        @foreach ($data['tahun'] as $val)
-                            <option value="{{$val->tahun}}">{{$val->tahun}}</option>
-                        @endforeach
-                    </select>
-                </div>   
-                <div class="col-xl-3 col-md-5 mb-2" style="text-align:end;">
-                    <button class="btn btn-primary" id="filter" style="width:100px; color:white;"> Filter</button>
+            <p class="fs-18px mb-5">Update Seputar Data Investasi per tahun</p>    
+            <div class="row">
+                <hr>
+                <div class="col-xl-12 col-md-12 mb-2 ">               
+                    <div class="row mb-2">
+                        <div class="col-xl-9 col-md-7 mb-2">
+                            <label for="">Tahun</label>
+                            <select name="tahun_filter" id="tahun_filter" class="form-control">
+                                @foreach ($data['tahun'] as $val)
+                                    <option value="{{$val->tahun}}">{{$val->tahun}}</option>
+                                @endforeach
+                            </select>
+                        </div>   
+                        <div class="col-xl-3 col-md-5 mb-2" style="text-align:end;">
+                            <button class="btn btn-primary" id="filter" style="width:100px; color:white;"> Filter</button>
+                        </div>
+                    </div>        
                 </div>
-            </div>        
-        </div>
-        <div class="col-xl-6 col-md-6"> 
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="row">
-                       <div id="realisasi"></div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6"> 
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                            <div id="realisasi"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6"> 
+                    <div class="card">
+                        
+                        <div class="card-body">
+                            <div class="row">
+                            <div id="proyek"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-6 col-md-6"> 
-            <div class="panel">
-                
-                <div class="panel-body">
-                    <div class="row">
-                       <div id="proyek"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
         </div>
         <!-- END section-title -->
     </div>

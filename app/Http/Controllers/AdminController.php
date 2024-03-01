@@ -153,6 +153,35 @@ class AdminController extends Controller
         return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
+    public function dashboard_perizinan()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'DASHBOARD_PERIZINAN';
+            $data['tahun'] = DB::table('perizinan')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
+            $data['kategori'] = DB::table('kategori_perizinan')->where('deleted', 0)->get();
+            return view('admin.dashboard_perizinan', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function grafik_perizinan(Request $request)
+    {
+        $data = DB::table('perizinan')
+            ->leftJoin('kategori_perizinan', 'kategori_perizinan.id', '=', 'perizinan.id_kategori_perizinan')
+            ->select(DB::raw('perizinan.total as jumlah'))
+            ->where('perizinan.tahun', $request->tahun)->where('kategori_perizinan.id', $request->kategori)
+            ->where('perizinan.deleted', 0)->orderBy('perizinan.bulan', 'asc')
+            ->get();
+        // dd($data);
+        $arr = [];
+        foreach ($data as $val) {
+            $arr[] = $val->jumlah;
+        }
+        $r['data'] = $arr;
+        return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
+    }
+
     public function artikel()
     {
         if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
@@ -1532,6 +1561,193 @@ class AdminController extends Controller
     public function delete_investasi(Request $request)
     {
         $data = DB::table('investasi')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function kategori_perizinan()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'PERIZINAN';
+            return view('admin.kategori_perizinan', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function kategori_perizinan_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('kategori_perizinan')->where('deleted', '!=', 1)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete_jenis " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_kategori_perizinan(Request $request)
+    {
+        $data['nama'] = $request->nama;
+        $data['deskripsi'] = $request->deskripsi;
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+        $datas = DB::table('kategori_perizinan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_kategori_perizinan(Request $request)
+    {
+        $data['nama'] = $request->nama;
+        $data['deskripsi'] = $request->deskripsi;
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        $datas = DB::table('kategori_perizinan')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_kategori_perizinan(Request $request)
+    {
+        $data = DB::table('kategori_perizinan')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+
+    public function perizinan()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'PERIZINAN';
+            $data['tahun'] = DB::table('perizinan')->select('tahun')->where('deleted', 0)->groupBy('tahun')->get();
+            $data['kategori'] = DB::table('kategori_perizinan')->where('deleted', 0)->get();
+            return view('admin.perizinan', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function perizinan_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('perizinan');
+            $data->leftJoin('kategori_perizinan', 'kategori_perizinan.id', '=', 'perizinan.id_kategori_perizinan');
+            $data->select('perizinan.*', 'kategori_perizinan.nama as kategori');
+            $data->where('perizinan.deleted', '!=', 1);
+            if ($request->tahun <> '') {
+                $data->where('perizinan.tahun', $request->tahun);
+            }
+            if ($request->jenis <> '') {
+                $data->where('kategori_perizinan.id', $request->jenis);
+            }
+
+            $data->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-tahun="' . $field->tahun . '" data-bulan="' . $field->bulan . '" data-total="' . $field->total . '" data-kategori="' . $field->id_kategori_perizinan . '"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->addColumn('total', function ($field) {
+                    $hasil_rupiah = number_format($field->total, 0, '.', ',');
+                    return $hasil_rupiah;
+                })
+                ->rawColumns(['action', 'jumlah'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function get_tahun_perizinan()
+    {
+        $data_tahun = DB::table('perizinan')->select('tahun')->where('deleted', 0)->groupBy('tahun')->get();
+        $tahun = '<option value="">- Pilih Tahun -</option>';
+        foreach ($data_tahun as $val) {
+            $tahun .= '<option value="' . $val->tahun . '">' . $val->tahun . '</option>';
+        }
+        $r['tahun'] = $tahun;
+        return response()->json($r);
+    }
+
+    public function create_perizinan(Request $request)
+    {
+        $data['tahun'] = $request->tahun;
+        $data['bulan'] = $request->bulan;
+        $data['total'] = $request->total;
+        $data['id_kategori_perizinan'] = $request->kategori;
+        // dd($data);
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+
+        $datas = DB::table('perizinan')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_perizinan(Request $request)
+    {
+        $data['tahun'] = $request->tahun;
+        $data['bulan'] = $request->bulan;
+        $data['total'] = $request->total;
+        $data['id_kategori_perizinan'] = $request->kategori;
+
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        // dd($data);
+
+        $datas = DB::table('perizinan')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_perizinan(Request $request)
+    {
+        $data = DB::table('perizinan')->where('id', $request->id)->update([
             'deleted' => 1,
         ]);
         if ($data) {

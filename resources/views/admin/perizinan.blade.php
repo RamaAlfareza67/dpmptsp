@@ -1,13 +1,13 @@
 @extends('layout.layout_admin.index')
 @section('title')
-    Investasi
+    Perizinan
 @endsection
 @section('content')
 <div id="content" class="app-content">
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Investasi</li>
+        <li class="breadcrumb-item active">Perizinan</li>
     </ol>
     {{-- <h1 class="page-header">Data Artikel</h1> --}}
     <div class="panel panel-inverse">
@@ -31,11 +31,12 @@
                                 </select>
                             </div>
                             <div class="col-md-4 mb-6">
-                                <label>Jenis</label>
-                                <select name="jenis_filter" id="jenis_filter" class="form-control">
+                                <label>Kategori</label>
+                                <select name="kategori_filter" id="kategori_filter" class="form-control">
                                     <option value="">- Pilih Jenis -</option>
-                                    <option value="realisasi">Realisasi</option>
-                                    <option value="proyek">Proyek</option>
+                                    @foreach ($data['kategori'] as $val)
+                                        <option value="{{$val->id}}">{{$val->nama}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             {{-- <div class="col-md-4 mb-6">
@@ -59,7 +60,7 @@
     </div>
     <div class="panel">
         <div class="panel-heading bg-blue-700 text-white">
-            <h4 class="panel-title">Data Investasi</h4>
+            <h4 class="panel-title">Data Perizinan</h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -71,10 +72,10 @@
                     <thead>
                         <tr>
                             <th width="5%">No</th>
+                            <th>Kategori</th>
                             <th>Tahun</th>
-                            <th>Triwulan</th>
+                            <th>Bulan</th>
                             <th>Jumlah</th>
-                            <th>Jenis</th>
                             <th width="10%">Aksi</th>
                         </tr>
                     </thead>
@@ -106,6 +107,19 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <label>Kategori</label>
+                                            <select name="kategori" id="kategori" class="form-control">
+                                                <option value="">- Pilih Kategori -</option>
+                                                @foreach ($data['kategori'] as $val)
+                                                    <option value="{{$val->id}}">{{$val->nama}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             <label>Tahun</label>
                                             <input type="number" id="tahun" name="tahun" class="form-control" >
                                         </div>
@@ -114,13 +128,21 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Triwulan</label>
-                                            <select name="triwulan" id="triwulan" class="form-control">
-                                                <option value="">- Pilih Triwulan -</option>
-                                                <option value="Triwulan I">Triwulan I</option>
-                                                <option value="Triwulan II">Triwulan II</option>
-                                                <option value="Triwulan III">Triwulan III</option>
-                                                <option value="Triwulan IV">Triwulan IV</option>
+                                            <label>Bulan</label>
+                                            <select name="bulan" id="bulan" class="form-control">
+                                                <option value="">- Pilih Bulan -</option>
+                                                <option value="JANUARI">JANUARI</option>
+                                                <option value="FEBRUARI">FEBRUARI</option>
+                                                <option value="MARET">MARET</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MEI">MEI</option>
+                                                <option value="JUNI">JUNI</option>
+                                                <option value="JULI">JULI</option>
+                                                <option value="AGUSTUS">AGUSTUS</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OKTOBER">OKTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DESEMBER">DESEMBER</option>
                                             </select>
                                         </div>
                                     </div>
@@ -129,22 +151,11 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Jumlah</label>
-                                            <input type="number" name="jumlah" id="jumlah" class="form-control ">
+                                            <input type="number" name="total" id="total" class="form-control ">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Jenis</label>
-                                            <select name="jenis" id="jenis" class="form-control">
-                                                <option value="">- Pilih Jenis -</option>
-                                                <option value="realisasi">Realisasi</option>
-                                                <option value="proyek">Proyek</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -165,7 +176,7 @@
 <script>
     function get_tahun(){
         $.ajax({
-            url: "/user/get_tahun_investasi",
+            url: "/user/get_tahun_perizinan",
             method: "GET",
             success:function(res){
                 $('#tahun_filter').html(res.tahun);
@@ -194,20 +205,20 @@
                 "emptyTable": "Data tidak ditemukan - Silahkan Filter Data Pengaduan terlebih dahulu !"
             },
             ajax: {
-                url: '/user/investasi_',
+                url: '/user/perizinan_',
                 method: 'POST',
                 data: function(d){
                     d.tahun = $('#tahun_filter').val();
-                    d.jenis = $('#jenis_filter').val();
+                    d.kategori = $('#kategori_filter').val();
                 }
             },
           
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                {data: 'kategori', name: 'kategori'},
                 {data: 'tahun', name: 'tahun'},
-                {data: 'triwulan', name: 'triwulan'},
-                {data: 'jumlah', name: 'jumlah'},
-                {data: 'jenis', name: 'jenis'},   
+                {data: 'bulan', name: 'bulan'},
+                {data: 'total', name: 'total'},  
                 {
                     data: 'action', 
                     name: 'action', 
@@ -217,7 +228,7 @@
             ],
             columnDefs: [
                 {
-                    targets: [1,5],
+                    targets: [0,5],
                     className: 'text-center'
                     
                 },
@@ -228,13 +239,20 @@
                     action: function(e, dt, node, config) {
                         $('#add-form')[0].reset();
                         $('#Modal').modal('show');
-                        $('.judul-modal').text('Tambah Data Investasi');
+                        $('.judul-modal').text('Tambah Data Perizinan');
                         $('#hidden_status').val('add');
                     }
                 }, 
                 {
+                    text: '<i class="far fa-edit"></i> Kategori Perizinan',
+                    className: 'btn btn-info',
+                    action: function(e, dt, node, config) {
+                        window.location.href = '/user/kategori_perizinan';
+                    }
+                },
+                {
                     extend: 'excel',
-                    title: 'Informasi Publik',
+                    title: 'Perizinan',
                     className: 'btn',
                     text: '<i class="far fa-file-code"></i> Excel',
                     titleAttr: 'Excel',
@@ -249,13 +267,13 @@
         $(document).on('click', '.edit', function() {
             $('#add-form')[0].reset();
             $('#Modal').modal('show');
-            $('.judul-modal').text('Edit Data Investasi');
+            $('.judul-modal').text('Edit Data Perizinan');
             $('#hidden_status').val('edit');
             $('#hidden_id').val($(this).data('id'));
             $('#tahun').val($(this).data('tahun'));
-            $('#triwulan').val($(this).data('triwulan'));
-            $('#jumlah').val($(this).data('jumlah'));
-            $('#jenis').val($(this).data('jenis'));
+            $('#bulan').val($(this).data('bulan'));
+            $('#total').val($(this).data('total'));
+            $('#kategori').val($(this).data('kategori'));
             // $(".summernote").summernote('code', $(this).data('isi'));
             // $('#file').val($(this).data('file'));
             // $('#status').val($(this).data('status'));
@@ -275,7 +293,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/user/delete_investasi",
+                        url: "/user/delete_perizinan",
                         type: "POST",
                         data: {
                             id: id
@@ -307,22 +325,22 @@
                 tahun: {
                     required: true
                 },
-                triwulan: {
+                bulan: {
                     required: true
                 },
-                jumlah: {
+                total: {
                     required: true
                 },
-                jenis: {
+                kategori: {
                     required: true
                 },
             },
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/user/create_investasi';
+                    url = '/user/create_perizinan';
                 } else {
-                    url = '/user/update_investasi';
+                    url = '/user/update_perizinan';
                 }
 
                 var form_data = new FormData(document.getElementById("add-form"));
@@ -352,7 +370,7 @@
                         if (data.result != true) {
                             Swal.fire({
                                 title: 'Gagal',
-                                text: "Gagal Tambah / Edit Data Investasi",
+                                text: "Gagal Tambah / Edit Data Perizinan",
                                 icon: 'error',
                                 showCancelButton: false,
                                 showConfirmButton: true,

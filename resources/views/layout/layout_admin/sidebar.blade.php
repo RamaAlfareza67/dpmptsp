@@ -44,6 +44,14 @@
                     <div class="menu-text">Dashboard Investasi</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'DASHBOARD_PERIZINAN') ? 'active' : '' }}">
+                <a href="/user/dashboard_perizinan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-chart-pie"></i>
+                    </div>
+                    <div class="menu-text">Dashboard Perizinan</div>
+                </a>
+            </div>
             <div class="menu-header">Pengaduan</div>
             <div class="menu-item {{ ($data['module'] == 'PENGADUAN') ? 'active' : '' }}">
                 <a href="/user/pengaduan" class="menu-link">
@@ -85,6 +93,14 @@
                         <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Investasi</div>
+                </a>
+            </div>
+            <div class="menu-item {{ ($data['module'] == 'PERIZINAN') ? 'active' : '' }}">
+                <a href="/user/perizinan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Perizinan</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">
@@ -180,6 +196,14 @@
                     <div class="menu-text">Dashboard Investasi</div>
                 </a>
             </div>
+            <div class="menu-item {{ ($data['module'] == 'DASHBOARD_PERIZINAN') ? 'active' : '' }}">
+                <a href="/user/dashboard_perizinan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-chart-pie"></i>
+                    </div>
+                    <div class="menu-text">Dashboard Perizinan</div>
+                </a>
+            </div>
             <div class="menu-item {{ ($data['module'] == 'ARTIKEL') ? 'active' : '' }}">
                 <a href="/user/artikel" class="menu-link">
                     <div class="menu-icon">
@@ -194,6 +218,14 @@
                         <i class="fa fa-book"></i>
                     </div>
                     <div class="menu-text">Investasi</div>
+                </a>
+            </div>
+             <div class="menu-item {{ ($data['module'] == 'PERIZINAN') ? 'active' : '' }}">
+                <a href="/user/perizinan" class="menu-link">
+                    <div class="menu-icon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <div class="menu-text">Perizinan</div>
                 </a>
             </div>
             <div class="menu-item {{ ($data['module'] == 'LAYANAN_DINAS') ? 'active' : '' }}">

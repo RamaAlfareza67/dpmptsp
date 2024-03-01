@@ -39,11 +39,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user', [AdminController::class, 'index'])->middleware('user_access');
     Route::get('/user/dashboard', [AdminController::class, 'dashboard'])->middleware('user_access');
     Route::get('/user/dashboard_investasi', [AdminController::class, 'dashboard_investasi'])->middleware('user_access');
+    Route::get('/user/dashboard_perizinan', [AdminController::class, 'dashboard_perizinan'])->middleware('user_access');
     Route::get('/user/get_count', [AdminController::class, 'get_count'])->middleware('user_access');
     Route::get('/user/grafik_pengaduan', [AdminController::class, 'grafik_pengaduan'])->middleware('user_access');
     Route::get('/user/grafik_pengaduan_wbs', [AdminController::class, 'grafik_pengaduan_wbs'])->middleware('user_access');
     Route::post('/user/get_new_artikel_', [AdminController::class, 'get_new_artikel_'])->middleware('user_access');
     Route::post('/user/grafik_realisasi_investasi', [AdminController::class, 'grafik_realisasi_investasi'])->middleware('user_access');
+    Route::post('/user/grafik_perizinan', [AdminController::class, 'grafik_perizinan'])->middleware('user_access');
 
     Route::get('/user/artikel', [AdminController::class, 'artikel'])->middleware('user_access');
     Route::post('/user/artikel_', [AdminController::class, 'artikel_'])->middleware('user_access');
@@ -103,4 +105,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/process_wbs', [AdminController::class, 'process_wbs'])->middleware('user_access');
     Route::get('/user/detail_pengadu_wbs/{id}', [AdminController::class, 'detail_pengadu_wbs'])->middleware('user_access');
     Route::post('/user/get_detail_wbs', [AdminController::class, 'get_detail_wbs'])->middleware('user_access');
+
+
+    Route::get('/user/perizinan', [AdminController::class, 'perizinan'])->middleware('user_access');
+    Route::post('/user/perizinan_', [AdminController::class, 'perizinan_'])->middleware('user_access');
+    Route::post('/user/create_perizinan', [AdminController::class, 'create_perizinan'])->middleware('user_access');
+    Route::post('/user/update_perizinan', [AdminController::class, 'update_perizinan'])->middleware('user_access');
+    Route::post('/user/delete_perizinan', [AdminController::class, 'delete_perizinan'])->middleware('user_access');
+    Route::get('/user/get_tahun_perizinan', [AdminController::class, 'get_tahun_perizinan'])->middleware('user_access');
+
+    Route::get('/user/kategori_perizinan', [AdminController::class, 'kategori_perizinan'])->middleware('user_access');
+    Route::post('/user/kategori_perizinan_', [AdminController::class, 'kategori_perizinan_'])->middleware('user_access');
+    Route::post('/user/create_kategori_perizinan', [AdminController::class, 'create_kategori_perizinan'])->middleware('user_access');
+    Route::post('/user/update_kategori_perizinan', [AdminController::class, 'update_kategori_perizinan'])->middleware('user_access');
+    Route::post('/user/delete_kategori_perizinan', [AdminController::class, 'delete_kategori_perizinan'])->middleware('user_access');
 });
