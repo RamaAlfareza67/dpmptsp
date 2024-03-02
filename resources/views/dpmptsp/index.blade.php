@@ -29,7 +29,7 @@
         <!-- BEGIN section-title -->
         <div class="pt-lg-5 pb-lg-3 text-center">
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-               Garfik Investasi
+               Grafik Investasi
             </div>
             <p class="fs-18px mb-5">Update Seputar Data Investasi per tahun</p>    
             <div class="row">
@@ -44,7 +44,7 @@
                                 @endforeach
                             </select>
                         </div>   
-                        <div class="col-xl-3 col-md-5 mb-2" style="text-align:end;">
+                        <div class="col-xl-3 col-md-5 mb-2" style="align-self: flex-end;">
                             <button class="btn btn-primary" id="filter" style="width:100px; color:white;"> Filter</button>
                         </div>
                     </div>        
@@ -72,6 +72,57 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- END section-title -->
+    </div>
+    <!-- END container -->
+</div>
+
+<div class="section">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN section-title -->
+        <div class="pt-lg-5 pb-lg-3 text-center">
+            <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
+               Garfik Perijinan
+            </div>
+            <p class="fs-18px mb-5">Update Seputar Data Perijinan per tahun</p>  
+            <div class="row">
+                <hr>  
+                    <div class="col-xl-12 col-md-12 mb-2 "> 
+                        <div class="row mb-2"> 
+                            <div class="col-xl-5 col-md-6"> 
+                                <label>Tahun</label>
+                                <select name="tahun_perijinan_filter" id="tahun_perijinan_filter" class="form-control">
+                                    @foreach ($data['tahun_perijinan'] as $val)
+                                        <option value="{{$val->tahun}}">{{$val->tahun}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xl-5 col-md-6"> 
+                                <label>Kategori</label>
+                                <select name="kategori_filter" id="kategori_filter" class="form-control">
+                                    @foreach ($data['kategori'] as $val)
+                                        <option value="{{$val->id}}">{{$val->nama}}</option>
+                                    @endforeach
+                                </select>
+                            </div>          
+                            <div class="col-md-2" style="align-self: flex-end;">
+                                <button class="btn btn-primary" id="filter" style="width:70px; color:white;"> Filter</button>
+                                <button class="btn btn-warning" id="reset" style="width:70px; color:white;"> Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                <hr>
+            </div>
+                                
+                </div>
+                <div class="col-xl-12 col-md-12"> 
+                <div class="row">
+                <div id="perizinan"></div>
+                </div>
+                
+           
         </div>
         <!-- END section-title -->
     </div>
@@ -462,6 +513,99 @@ $(document).ready(function() {
         tahun = $("#tahun_filter").val();
         get_realisasi(tahun , 'realisasi');
         get_proyek(tahun, 'proyek');
+    })
+})
+function get_perizinan(tahun, kategori){
+    $.ajax({
+        url: "/user/grafik_perizinan",
+        method: "POST",
+        data: {
+            tahun: tahun,
+            kategori: kategori
+        },
+        success:function(res){
+            // console.log(res.data)
+            grafik_perizinan(res.data);
+        }
+    })
+} 
+
+
+function grafik_perizinan(datas){
+    // console.log(datas);
+    if(datas.length == 0){
+        datas = [0,0,0,0,0,0,0,0,0,0,0,0]
+    }
+    Highcharts.chart('perizinan', {
+        chart: {
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 10,
+                beta: 25,
+                depth: 70
+            }
+        },
+        title: {
+            text: 'Grafik Perizinan',
+            align: 'left'
+        },
+        // subtitle: {
+        //     text: 'Source: ' +
+        //         '<a href="https://www.ssb.no/en/statbank/table/08804/"' +
+        //         'target="_blank">SSB</a>',
+        //     align: 'left'
+        // },
+        plotOptions: {
+            column: {
+                depth: 25,
+                color: '#44a832'
+            }
+        },
+        xAxis: {
+            categories: ['JANUARI','FEBRUARI','MARET','APRIL','MEI','JUNI','JULI','AGUSTUS','SEPTEMBER','OKTOBER','NOVEMBER','DESEMBER'],
+            labels: {
+                skew3d: true,
+                style: {
+                    fontSize: '16px'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                enabled: false
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: 'Total Realisasi: Rp. {point.y}'
+        },
+        series: [{
+            name: 'Total Realisasi',
+            data: datas
+        }]
+    });
+}
+
+$(document).ready(function() {
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    tahun = $("#tahun_perijinan_filter").val();
+    kategori = $("#kategori_filter").val();
+    get_perizinan(tahun , kategori);
+    
+    $(document).on('click', '#filter', function(){
+        tahun = $("#tahun_perijinan_filter").val();
+        kategori = $("#kategori_filter").val();
+        get_perizinan(tahun , kategori);
     })
 })
 </script>

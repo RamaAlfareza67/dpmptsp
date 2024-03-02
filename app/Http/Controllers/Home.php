@@ -13,6 +13,8 @@ class Home extends Controller
         $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->orderBy('created_date', 'desc')->take(6)->get();
         $data['informasi_publik'] = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
         $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
+        $data['tahun_perijinan'] = DB::table('perizinan')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
+        $data['kategori'] = DB::table('kategori_perizinan')->where('deleted', 0)->get();
         // dd($data);
         return view('dpmptsp/index', compact('data'));
     }
@@ -28,6 +30,23 @@ class Home extends Controller
         return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
+    public function grafik_perizinan(Request $request)
+    {
+        $data = DB::table('perizinan')
+            ->leftJoin('kategori_perizinan', 'kategori_perizinan.id', '=', 'perizinan.id_kategori_perizinan')
+            ->select(DB::raw('perizinan.total as jumlah'))
+            ->where('perizinan.tahun', $request->tahun)->where('kategori_perizinan.id', $request->kategori)
+            ->where('perizinan.deleted', 0)->orderBy('perizinan.bulan', 'asc')
+            ->get();
+        // dd($data);
+        $arr = [];
+        foreach ($data as $val) {
+            $arr[] = $val->jumlah;
+        }
+        $r['data'] = $arr;
+        return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
+    }
+    
 
     public function berita()
     {
