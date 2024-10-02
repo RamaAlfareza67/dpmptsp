@@ -15,44 +15,47 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12 mb-lg-2">
-                <div class="custom-block bg-white shadow-lg">      
-                    <div class="d-flek"> 
-                        <?php
-                            if(count($data['layanan']) > 0){
-                                foreach ($data['layanan'] as $val) {
-                        ?>
-                         <div class="col-lg-4">
-                            <!-- BEGIN card -->
-                            <div class="card shadow border-0 mb-2" >
-                                <div class="card-body p-6">
-                                    <div class="mb-3 w-50px h-50px rounded-3  text-white d-flex align-items-center justify-content-center position-relative">
-                                        <img src="{{asset($val->image)}}" alt="{{$val->nama}}" width="100%">
+            	<div class="custom-block bg-white shadow-lg">      
+					<div class="d-flek"> 
+					    <div class="row row-space-30" style="position: relative; bottom: 0px;margin-bottom: 30px;">
+                            <?php
+                                if(count($data['layanan']) > 0){
+                                    foreach ($data['layanan'] as $val) {
+                            ?>
+                                <div class="col-lg-4">
+                                    <!-- BEGIN card -->
+                                    <div class="card shadow border-0 mb-2" >
+                                        <div class="card-body p-6">
+                                            <div class="mb-3 w-50px h-50px rounded-3  text-white d-flex align-items-center justify-content-center position-relative">
+                                                <img src="{{asset($val->image)}}" alt="{{$val->nama}}" width="100%">
+                                            </div>
+                                            <h2>{{$val->nama}}</h2>
+                                            <p class="fw-bold text-gray-600 mb-0">
+                                            {{$val->deskripsi}}
+                                            </p>
+                                            <a href="{{$val->link}}" class="stretched-link" target="_blank"></a>
+                                        </div>
                                     </div>
-                                    <h2>{{$val->nama}}</h2>
-                                    <p class="fw-bold text-gray-600 mb-0">
-                                    {{$val->deskripsi}}
-                                    </p>
-                                    <a href="{{$val->link}}" class="stretched-link" target="_blank"></a>
+                                    <!-- END card -->
                                 </div>
-                            </div>
-                            <!-- END card -->
-                         </div>
-                        <?php 
+                            <?php 
                                 } 
                             } else { 
-                        ?>
-                    <div class="col-lg-12">
-                        <!-- BEGIN card -->
-                        <div class="card shadow border-0 mb-2" >
-                            <div class="card-body p-6">
-                                <p class="fw-bold text-gray-600 mb-0 text-center">
-                                Kosong
-                                </p>
-                            </div>
+                                ?>
                         </div>
+                        <div class="col-lg-12">
+                        <!-- BEGIN card -->
+                            <div class="card shadow border-0 mb-2" >
+                                <div class="card-body p-6">
+                                    <p class="fw-bold text-gray-600 mb-0 text-center">
+                                    Kosong
+                                    </p>
+                                </div>
+                            </div>
                         <!-- END card -->
-                    </div>
-                    <?php } ?>
+                        </div>
+                        <?php } ?>
+                    </div>     
                 </div>     
             </div>
         </div>

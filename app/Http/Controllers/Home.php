@@ -30,7 +30,7 @@ class Home extends Controller
         return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
-    public function grafik_perizinan(Request $request)
+    public function grafik_perizinan_publik(Request $request)
     {
         $data = DB::table('perizinan')
             ->leftJoin('kategori_perizinan', 'kategori_perizinan.id', '=', 'perizinan.id_kategori_perizinan')

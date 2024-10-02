@@ -6,7 +6,7 @@
     background-repeat: no-repeat;">
                 <div class="container mb-5">
                     <h1 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">PENGADUAN DPMPTSP</b></h1>
-                    <h6 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">Mari Bersama-sama Menciptakan Pemerintahan Yang Jujur dan Bersih, Laporkan Setiap Pelanggaran Yang Terjadi Di Lingkungan Kerja</b></h6>
+                    <h6 class="text-white text-center"><b style="text-shadow: 0px 2px 7px black;">Mari Bersama-sama Menciptakan Pemerintahan Yang Jujur dan Bersih, Laporkan Setiap Pelanggaran Yang Terjadi.</b></h6>
                 </div>
             </section>
 
@@ -27,34 +27,29 @@
                                                     </div>
                                                     <div class="col-lg-12  mt-lg-2 ">
                                                         <h4 class="" style="text-align:center;"><B>KIRIM PENGADUAN</B></h4>
-                                                        <p style="text-align:center;">Anda melihat atau mengetahui dugaan Tindak Pidana Korupsi yang dilakukan pegawai<b> DPMPTSP</b>. Silahkan melapor ke Inspektorat <b>DPMPTSP</b>. Jika laporan anda memenuhi syarat/kriteria, maka akan diproses lebih lanjut.</p>
+                                                        <p style="text-align:center;">Silahkan kirim aduan anda ke Inspektorat <b>DPMPTSP</b>. Jika laporan anda memenuhi syarat/kriteria, maka akan diproses lebih lanjut.</p>
                                                     </div>
                                                     <div class="col-lg-6 mb-lg-2">
                                                         <input name="nik" id="nik"  class="form-control mb-3" placeholder="NIK">
                                                         <input name="no_hp" id="no_hp"  class="form-control mb-3" placeholder="No Telp"> 
-                                                        <input name="alamat" id="alamat"  class="form-control mb-3" placeholder="Alamat">
                                                         <input name="kecamatan" id="kecamatan"  class="form-control mb-3" placeholder="Kecamatan">
-                                                        
+                                                        <textarea name="alamat" id="alamat" rows="4"  class="form-control mb-3" placeholder="Alamat"></textarea> 
                                                     </div>
                                                     <div class="col-lg-6 mb-lg-2">
                                                         <input name="nama" id="nama"  class="form-control mb-3" placeholder="Nama">
                                                         <input name="email" id="email"  class="form-control mb-3" placeholder="E-mail">
                                                         <input name="kelurahan" id="kelurahan"  class="form-control mb-3" placeholder="Kelurahan">
-                                                    </div>
-                                                    <div class="col-lg-6 mb-lg-2">
                                                         <select name="jenis_pengaduan" id="jenis_pengaduan" class="form-control mb-3">
                                                             <option value="">- Pilih Jenis Pengaduan -</option>
                                                             @foreach($data['jenis'] as $val)
                                                                 <option value="{{$val->id}}">{{$val->jenis}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div> 
-                                                    <div class="col-lg-6 mb-lg-2">
                                                         <input type="file" name="file" id="file"  class="form-control mb-3"> 
-                                                    </div> 
+                                                    </div>
                                                     <div class="col-lg-12 mb-lg-2">
-                                                        <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
-                                                        <button type="submit" class="btn btn-danger" style="width: 100%; color:white;">Kirim Pengaduan</button>
+                                                    <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
+                                                    <button type="submit" class="btn btn-danger" style="width: 100%; color:white;">Kirim Pengaduan</button>
                                                     </div>
                                                 </div> 
                                             </form>       

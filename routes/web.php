@@ -29,6 +29,8 @@ Route::get('/wbs', [Home::class, 'wbs']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 Route::post('/create_wbs', [Home::class, 'create_wbs']);
 Route::post('/grafik_realisasi_investasi_publik', [Home::class, 'grafik_realisasi_investasi_publik']);
+Route::post('/grafik_perizinan_publik', [Home::class, 'grafik_perizinan_publik']);
+
 
 
 Route::get('login', [LoginController::class, 'index'])->name('login');

@@ -517,7 +517,7 @@ $(document).ready(function() {
 })
 function get_perizinan(tahun, kategori){
     $.ajax({
-        url: "/user/grafik_perizinan",
+        url: "/grafik_perizinan_publik",
         method: "POST",
         data: {
             tahun: tahun,
