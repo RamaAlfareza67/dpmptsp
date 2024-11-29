@@ -34,8 +34,8 @@
                                 <label>Jenis</label>
                                 <select name="jenis_filter" id="jenis_filter" class="form-control">
                                     <option value="">- Pilih Jenis -</option>
-                                    <option value="realisasi">Realisasi</option>
-                                    <option value="proyek">Proyek</option>
+                                    <option value="realisasi">PMDN</option>
+                                    <option value="proyek">PMA</option>
                                 </select>
                             </div>
                             {{-- <div class="col-md-4 mb-6">
@@ -139,8 +139,8 @@
                                             <label>Jenis</label>
                                             <select name="jenis" id="jenis" class="form-control">
                                                 <option value="">- Pilih Jenis -</option>
-                                                <option value="realisasi">Realisasi</option>
-                                                <option value="proyek">Proyek</option>
+                                                <option value="realisasi">PMDN</option>
+                                                <option value="proyek">PMA</option>
                                             </select>
                                         </div>
                                     </div>
@@ -230,6 +230,8 @@
                         $('#Modal').modal('show');
                         $('.judul-modal').text('Tambah Data Investasi');
                         $('#hidden_status').val('add');
+                        $("#tahun").prop('disabled', false);
+                        $("#triwulan").prop('disabled', false);
                     }
                 }, 
                 {
@@ -256,6 +258,8 @@
             $('#triwulan').val($(this).data('triwulan'));
             $('#jumlah').val($(this).data('jumlah'));
             $('#jenis').val($(this).data('jenis'));
+            $("#tahun").prop('disabled', true);
+            $("#triwulan").prop('disabled', true);
             // $(".summernote").summernote('code', $(this).data('isi'));
             // $('#file').val($(this).data('file'));
             // $('#status').val($(this).data('status'));
@@ -349,17 +353,31 @@
                             })
                         },
                     success: function(data) {
-                        if (data.result != true) {
+                        if (data.result == false) {
                             Swal.fire({
                                 title: 'Gagal',
-                                text: "Gagal Tambah / Edit Data Investasi",
+                                text: "Gagal Tambah / Edit Data Realisasi Investasi",
                                 icon: 'error',
                                 showCancelButton: false,
                                 showConfirmButton: true,
                                 // buttons: false,
                             });
                             // table.ajax.reload();
-                        } else {
+                        } 
+
+                        if (data.result == "ada") {
+                            Swal.fire({
+                                title: 'Peringatan!',
+                                text: "Data Realisasi Investasi Sudah Ada!",
+                                icon: 'warning',
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                // buttons: false,
+                            });
+                            // table.ajax.reload();
+                        } 
+                        
+                        if(data.result == true){
                             Swal.fire({
                                 title: 'Berhasil',
                                 icon: 'success',

@@ -29,7 +29,7 @@
 								<!-- begin section-container -->
 								<div class="section-container">
 									<div class="ratio ratio-16x9">
-										<iframe src="https://www.google.com/maps?q={{$profil->lat}},{{$profil->long}}&hl=es;17z%3D14&amp&output=embed" allowfullscreen></iframe>
+									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63445.18254076497!2d108.24963314863285!3d-6.352095400000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6eb9fb02f14699%3A0x781fea9bad873574!2sMal%20Pelayanan%20Publik%20(MPP)%20Kabupaten%20Indramayu!5e0!3m2!1sen!2sid!4v1728357205999!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 									</div>
 								</div>
 								<!-- end section-container -->
@@ -41,9 +41,23 @@
 								<div class="section-container">
 									<h4 class="section-title m-b-20"><span>CONTACT US</span></h4>
 									<p class="m-b-30">
-									Jl. RA Kartini No.1, Margadadi, Kec. Indramayu, Kabupaten Indramayu, Jawa Barat 45211, Indonesia
+									{{$profil->alamat}}
 									</p>
-
+									<p class="m-b-30">
+										No Hp :
+									{{$profil->no_hp}}
+									</p>
+									<p class="m-b-30">
+										No FAX :
+									{{$profil->fax}}
+									</p>
+									<h4 class="section-title"><span>Follow Us</span></h4>
+						<ul class="sidebar-social-list">
+							<li><a href="{{$profil->facebook}}"><i class="fab fa-facebook"></i></a></li>
+							<li><a href="{{$profil->twitter}}"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="{{$profil->email}}"><i class="fab fa-google-plus"></i></a></li>
+							<li><a href="{{$profil->ig}}"><i class="fab fa-instagram"></i></a></li>
+						</ul>
 								</div>
 							</div>
                         </div>

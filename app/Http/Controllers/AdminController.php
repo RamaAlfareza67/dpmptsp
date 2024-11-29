@@ -658,10 +658,85 @@ class AdminController extends Controller
         return response()->json($r);
     }
 
+    public function kategori_informasi_publik()
+    {
+        if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
+            $data['module'] = 'INFORMASI_PUBLIK';
+            return view('admin.kategori_informasi', compact('data'));
+        } else {
+            return abort('404');
+        }
+    }
+
+    public function kategori_informasi_publik_(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('kategori_informasi')->where('deleted', '!=', 1)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete_jenis " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_kategori_informasi_publik(Request $request)
+    {
+        $data['nama'] = $request->nama;
+        $data['deleted'] = 0;
+        $data['created_date'] = date('Y-m-d h:i:s');
+        $data['created_by'] = auth()->user()->id;
+        $datas = DB::table('kategori_informasi')->insert($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function update_kategori_informasi_publik(Request $request)
+    {
+        $data['nama'] = $request->nama;
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        $datas = DB::table('kategori_informasi')->where('id', $request->hidden_id)->update($data);
+
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
+        return response()->json($r);
+    }
+
+    public function delete_kategori_informasi_publik(Request $request)
+    {
+        $data = DB::table('kategori_informasi')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
     public function informasi_publik()
     {
         if (Auth::user()->roles == 'SUPER_ADMIN' || Auth::user()->roles == 'ADMIN_CMS') {
             $data['module'] = 'INFORMASI_PUBLIK';
+            $data['kategori'] = DB::table('kategori_informasi')->where('deleted', 0)->get();
             return view('admin.informasi_publik', compact('data'));
         } else {
             return abort('404');
@@ -671,11 +746,18 @@ class AdminController extends Controller
     public function informasi_publik_(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('informasi_publik')->where('deleted', '!=', 1)->get();
+            $data = DB::table('informasi_publik');
+            $data->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori');
+            $data->select('informasi_publik.*', 'kategori_informasi.nama as kategori');
+            if ($request->jenis <> ''){
+                $data->where('kategori_informasi.id', $request->jenis);
+            }
+
+            $data->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-file="' . $field->file . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-kategori="' . $field->kategori . '" data-file="' . $field->file . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
                     return $actionBtn;
                 })
@@ -698,6 +780,7 @@ class AdminController extends Controller
     {
         $data['nama'] = $request->nama;
         $data['deskripsi'] = $request->deskripsi;
+        $data['kategori'] = $request->kategori;
         if ($request->file('file')) {
             $file = $request->file('file');
             $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
@@ -732,6 +815,7 @@ class AdminController extends Controller
 
         $data['nama'] = $request->nama;
         $data['deskripsi'] = $request->deskripsi;
+        $data['kategori'] = $request->kategori;
         if ($request->file('file')) {
             $file = $request->file('file');
             $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
@@ -1499,7 +1583,7 @@ class AdminController extends Controller
                     return $hasil_rupiah;
                 })
                 ->addColumn('jenis', function ($field) {
-                    $d = ($field->jenis == 'realisasi') ? '<span class="badge bg-success">Realisasi</span>' : '<span class="badge bg-primary">Proyek</span>';
+                    $d = ($field->jenis == 'realisasi') ? '<span class="badge bg-success">PMDN</span>' : '<span class="badge bg-primary">PMA</span>';
                     return $d;
                 })
                 ->rawColumns(['action', 'jumlah', 'jenis'])
@@ -1521,40 +1605,50 @@ class AdminController extends Controller
 
     public function create_investasi(Request $request)
     {
-        $data['tahun'] = $request->tahun;
-        $data['triwulan'] = $request->triwulan;
-        $data['jumlah'] = $request->jumlah;
-        $data['jenis'] = $request->jenis;
-        // dd($data);
-        $data['created_date'] = date('Y-m-d h:i:s');
-        $data['created_by'] = auth()->user()->id;
+        $cek = DB::table('investasi')->where('tahun', $request->tahun)->where('triwulan', $request->triwulan)->where('jenis', $request->jenis)->first();
+        if (empty($cek)) {
+            $data['tahun'] = $request->tahun;
+            $data['triwulan'] = $request->triwulan;
+            $data['jumlah'] = $request->jumlah;
+            $data['jenis'] = $request->jenis;
+            // dd($data);
+            $data['created_date'] = date('Y-m-d h:i:s');
+            $data['created_by'] = auth()->user()->id;
 
-        $datas = DB::table('investasi')->insert($data);
+            $datas = DB::table('investasi')->insert($data);
 
-        $r['result'] = true;
-        if (!$datas) {
-            $r['result'] = false;
+            $r['result'] = true;
+            if (!$datas) {
+                $r['result'] = false;
+            }
+        } else {
+            $r['result'] = "ada";
         }
         return response()->json($r);
     }
 
     public function update_investasi(Request $request)
     {
-        $data['tahun'] = $request->tahun;
-        $data['triwulan'] = $request->triwulan;
-        $data['jumlah'] = $request->jumlah;
-        $data['jenis'] = $request->jenis;
+        // $cek = DB::table('investasi')->where('tahun', $request->tahun)->where('triwulan', $request->triwulan)->where('jenis', $request->jenis)->first();
+        // if (empty($cek)) {
+        //     $data['tahun'] = $request->tahun;
+        //     $data['triwulan'] = $request->triwulan;
+            $data['jumlah'] = $request->jumlah;
+            $data['jenis'] = $request->jenis;
 
-        $data['edited_date'] = date('Y-m-d h:i:s');
-        $data['edited_by'] = auth()->user()->id;
-        // dd($data);
+            $data['edited_date'] = date('Y-m-d h:i:s');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data);
 
-        $datas = DB::table('investasi')->where('id', $request->hidden_id)->update($data);
+            $datas = DB::table('investasi')->where('id', $request->hidden_id)->update($data);
 
-        $r['result'] = true;
-        if (!$datas) {
-            $r['result'] = false;
-        }
+            $r['result'] = true;
+            if (!$datas) {
+                $r['result'] = false;
+            }
+        // } else {
+        //     $r['result'] = "ada";
+        // }
         return response()->json($r);
     }
 

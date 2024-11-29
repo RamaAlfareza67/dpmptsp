@@ -5,10 +5,10 @@
 <!-- begin #page-title -->
 <!-- ***** Main Banner Area Start ***** -->
 <div class="main-banner" id="top">
-        <video autoplay muted loop id="bg-video">
+        <!-- <video autoplay muted loop id="bg-video">
             <source src="../assets/video/dpmptsp.mp4" type="video/mp4" />
-        </video>
-
+        </video> -->
+        <img src="../assets/img/1.png" id="bg-video">	
         <div class="video-overlay header-text">
             <div class="caption">
                 <h6>Selamat Datang di Website</h6>
@@ -19,11 +19,30 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 <!-- BEGIN section -->
+<!-- BEGIN section -->
+<!-- <div class="section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 pe-lg-4 mb-5 mb-lg-0">
+                <div class="display-6 ">Our Platform</div>
+                <div class="section-title">Stunning cross-platform template</div>
+                <div class="section-desc">
+                    Our suite of developer-friendly products and services help you build, secure, and deliver enterprise-grade apps in less time — for any platform.
+                </div>
+                <a href="#" class="section-btn"><i class="fa fa-arrow-right"></i> Learn More</a>
+            </div>
+            <div class="col-lg-6 ps-lg-4">
+                <div class="section-media">
+                    <img src="../assets/img/mpp.png" alt="" class="mw-100">	
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  -->
 
-<!-- END section -->
 
 <!-- BEGIN section -->
-<div class="section">
+<div class="section ">
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN section-title -->
@@ -50,6 +69,17 @@
                     </div>        
                 </div>
                 <hr>
+            </div>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row" >
+                            <div id="investasi_tahun"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-xl-6 col-md-6"> 
@@ -78,13 +108,13 @@
     <!-- END container -->
 </div>
 
-<div class="section">
+<div class="section  bg-light-200">
     <!-- BEGIN container -->
     <div class="container">
         <!-- BEGIN section-title -->
         <div class="pt-lg-5 pb-lg-3 text-center">
             <div class="display-6 fw-bolder mb-3 d-flex align-items-center justify-content-center">
-               Garfik Perijinan
+               Grafik Perijinan
             </div>
             <p class="fs-18px mb-5">Update Seputar Data Perijinan per tahun</p>  
             <div class="row">
@@ -108,7 +138,7 @@
                                 </select>
                             </div>          
                             <div class="col-md-2" style="align-self: flex-end;">
-                                <button class="btn btn-primary" id="filter" style="width:70px; color:white;"> Filter</button>
+                                <button class="btn btn-primary" id="filter_perizinan" style="width:70px; color:white;"> Filter</button>
                                 <button class="btn btn-warning" id="reset" style="width:70px; color:white;"> Reset</button>
                             </div>
                         </div>
@@ -268,6 +298,9 @@
             ?>
                 <p class="fs-18px mb-5">Kosong</p>
             <?php } ?>
+            <div class="text-center">
+                    <a href="/informasi_publik" class="btn bg-red  fw-bold rounded-pill" style="color:aliceblue;">Informasi Publik Lainnya</a>
+                </div>
             <!-- END col-4 -->
             
         </div>
@@ -380,6 +413,20 @@ function get_proyek(tahun, jenis){
     })
 } 
 
+function get_investasi_tahun(){
+    $.ajax({
+        url: "/grafik_investasi_tahun",
+        method: "POST",
+        data: {
+
+        },
+        success:function(res){
+            // console.log(res.data)
+            grafik_investasi_tahun(res.kategori, res.data);
+        }
+    })
+}
+
 function grafik_realisasi(datas){
     // console.log(datas);
     if(datas.length == 0){
@@ -396,7 +443,7 @@ function grafik_realisasi(datas){
             }
         },
         title: {
-            text: 'Grafik Realisasi Investasi',
+            text: 'Grafik Realisasi Investasi PMDN',
             align: 'left'
         },
         // subtitle: {
@@ -454,7 +501,7 @@ function grafik_proyek(datas){
             }
         },
         title: {
-            text: 'Grafik Proyek / Perusahaan Investasi',
+            text: 'Grafik Realisasi Investasi PMA',
             align: 'left'
         },
         // subtitle: {
@@ -497,24 +544,42 @@ function grafik_proyek(datas){
         colors: ['#6AF9C4'],
     });
 }
-$(document).ready(function() {
-    
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+
+function grafik_investasi_tahun(kategori, data){
+    Highcharts.chart('investasi_tahun', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Grafik Pertumbuhan Investasi Pertahun',
+            align: 'left'
+        },
+        
+        xAxis: {
+            categories: kategori,
+            crosshair: true,
+        },
+
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+            {
+                name: "PMDN",
+                data: data[0]
+            },
+            {
+                name: "PMA",
+                data: data[1]
+            },
+        ]
     });
 
-    tahun = $("#tahun_filter").val();
-    get_realisasi(tahun , 'realisasi');
-    get_proyek(tahun, 'proyek');
-    
-    $(document).on('click', '#filter', function(){
-        tahun = $("#tahun_filter").val();
-        get_realisasi(tahun , 'realisasi');
-        get_proyek(tahun, 'proyek');
-    })
-})
+}
+
 function get_perizinan(tahun, kategori){
     $.ajax({
         url: "/grafik_perizinan_publik",
@@ -547,7 +612,7 @@ function grafik_perizinan(datas){
             }
         },
         title: {
-            text: 'Grafik Perizinan',
+            text: 'Grafik Izin Terbit',
             align: 'left'
         },
         // subtitle: {
@@ -590,6 +655,7 @@ function grafik_perizinan(datas){
     });
 }
 
+
 $(document).ready(function() {
     
     $.ajaxSetup({
@@ -598,16 +664,28 @@ $(document).ready(function() {
         }
     });
 
-    tahun = $("#tahun_perijinan_filter").val();
-    kategori = $("#kategori_filter").val();
-    get_perizinan(tahun , kategori);
+    tahun = $("#tahun_filter").val();
+    get_realisasi(tahun , 'realisasi');
+    get_proyek(tahun, 'proyek');
+    get_investasi_tahun();
     
     $(document).on('click', '#filter', function(){
-        tahun = $("#tahun_perijinan_filter").val();
+        tahun = $("#tahun_filter").val();
+        get_realisasi(tahun , 'realisasi');
+        get_proyek(tahun, 'proyek');
+    })
+
+    tahun_perizinan = $("#tahun_perijinan_filter").val();
+    kategori = $("#kategori_filter").val();
+    get_perizinan(tahun_perizinan , kategori);
+    
+    $(document).on('click', '#filter_perizinan', function(){
+        tahun_perizinan = $("#tahun_perijinan_filter").val();
         kategori = $("#kategori_filter").val();
-        get_perizinan(tahun , kategori);
+        get_perizinan(tahun_perizinan , kategori);
     })
 })
+
 </script>
 @endsection
 	

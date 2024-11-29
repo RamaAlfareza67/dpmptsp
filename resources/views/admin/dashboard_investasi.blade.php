@@ -48,7 +48,7 @@
         <div class="col-xl-6 col-md-6"> 
             <div class="panel">
                 <div class="panel-heading bg-blue-700 text-white">
-                    <h4 class="panel-title">Grafik Realisasi Investasi</h4>
+                    <h4 class="panel-title">Grafik Realisasi Investasi PMDN</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -64,7 +64,7 @@
         <div class="col-xl-6 col-md-6"> 
             <div class="panel">
                 <div class="panel-heading bg-blue-700 text-white">
-                    <h4 class="panel-title">Grafik Proyek / Perusahaan Investasi</h4>
+                    <h4 class="panel-title">Grafik Realisasi Investasi PMA</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -129,7 +129,7 @@ function grafik_realisasi(datas){
             }
         },
         title: {
-            text: 'Grafik Realisasi Investasi',
+            text: 'Grafik Realisasi Investasi PMDN',
             align: 'left'
         },
         // subtitle: {
@@ -187,7 +187,7 @@ function grafik_proyek(datas){
             }
         },
         title: {
-            text: 'Grafik Proyek / Perusahaan Investasi',
+            text: 'Grafik Realisasi Investasi PMA',
             align: 'left'
         },
         // subtitle: {

@@ -32,7 +32,7 @@ class DpmptspMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from Fajar Maulana')
+        return $this->subject('Mail from DMPTSP Indramayu')
             ->view('emails.mail_template');
     }
 }

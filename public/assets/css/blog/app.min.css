@@ -4676,7 +4676,7 @@ fieldset:disabled .btn {
   --bs-navbar-color: rgba(0, 0, 0, 0.55);
   --bs-navbar-hover-color: rgba(0, 0, 0, 0.7);
   --bs-navbar-disabled-color: rgba(0, 0, 0, 0.3);
-  --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
+  --bs-navbar-active-color: var(--bs-red);
   --bs-navbar-brand-padding-y: 0.40625rem;
   --bs-navbar-brand-margin-end: 1rem;
   --bs-navbar-brand-font-size: 1rem;
@@ -14576,7 +14576,7 @@ body {
     font-size: 0.8125rem;
   }
 }
-.header .nav.navbar-nav > li > a:focus,
+.header .nav.navbar-nav > li > a:active,
 .header .nav.navbar-nav > li > a:hover {
   color: #ff5b57;
 }
@@ -22338,6 +22338,7 @@ body {
     position: absolute;
     right: 0;
     left: 0;
+    height: 100%;
     top: 100%;
     background: rgba(0, 0, 0, 0.75);
     transition: all 0.2s linear;

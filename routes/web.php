@@ -22,15 +22,23 @@ Route::get('/berita/detail/{id}', [Home::class, 'berita_detail']);
 Route::get('/struktur_organisasi', [Home::class, 'struktur_organisasi']);
 Route::get('/visi_misi', [Home::class, 'visi_misi']);
 Route::get('/layanan_dinas', [Home::class, 'layanan_dinas']);
+Route::get('/informasi_publik', [Home::class, 'informasi_publik']);
 Route::get('/kontak', [Home::class, 'kontak']);
 // Route::get('/berita_detail', [Home::class, 'berita_detail']);
 Route::get('/pengaduan', [Home::class, 'pengaduan']);
-Route::get('/wbs', [Home::class, 'wbs']);
+Route::get('/detail_pengaduan', [Home::class, 'detail_pengaduan']);
+// Route::get('/wbs', [Home::class, 'wbs']);
 Route::post('/create_pengaduan', [Home::class, 'create_pengaduan']);
 Route::post('/create_wbs', [Home::class, 'create_wbs']);
 Route::post('/grafik_realisasi_investasi_publik', [Home::class, 'grafik_realisasi_investasi_publik']);
+Route::post('/grafik_investasi_tahun', [Home::class, 'grafik_investasi_tahun']);
 Route::post('/grafik_perizinan_publik', [Home::class, 'grafik_perizinan_publik']);
 
+Route::get('/load_more_pengaduan', [Home::class, 'load_more_pengaduan']);
+Route::post('/pengaduan_filter', [Home::class, 'pengaduan_filter']);
+
+Route::get('/load_more_informasi', [Home::class, 'load_more_informasi']);
+Route::post('/informasi_filter', [Home::class, 'informasi_filter']);
 
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
@@ -121,4 +129,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/create_kategori_perizinan', [AdminController::class, 'create_kategori_perizinan'])->middleware('user_access');
     Route::post('/user/update_kategori_perizinan', [AdminController::class, 'update_kategori_perizinan'])->middleware('user_access');
     Route::post('/user/delete_kategori_perizinan', [AdminController::class, 'delete_kategori_perizinan'])->middleware('user_access');
+
+    Route::get('/user/kategori_informasi_publik', [AdminController::class, 'kategori_informasi_publik'])->middleware('user_access');
+    Route::post('/user/kategori_informasi_publik_', [AdminController::class, 'kategori_informasi_publik_'])->middleware('user_access');
+    Route::post('/user/create_kategori_informasi_publik', [AdminController::class, 'create_kategori_informasi_publik'])->middleware('user_access');
+    Route::post('/user/update_kategori_informasi_publik', [AdminController::class, 'update_kategori_informasi_publik'])->middleware('user_access');
+    Route::post('/user/delete_kategori_informasi_publik', [AdminController::class, 'delete_kategori_informasi_publik'])->middleware('user_access');
 });

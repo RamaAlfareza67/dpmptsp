@@ -1,18 +1,18 @@
 @extends('layout.layout_admin.index')
 @section('title')
-    Informasi Publik
+    Kategori Informasi Publik
 @endsection
 @section('content')
 <div id="content" class="app-content">
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Informasi Publik</li>
+        <li class="breadcrumb-item"><a href="/user/perizinan">Informasi Publik</a></li>
+        <li class="breadcrumb-item active">Kategori Perizinan</li>
     </ol>
-    {{-- <h1 class="page-header">Data Artikel</h1> --}}
     <div class="panel">
         <div class="panel-heading bg-blue-700 text-white">
-            <h4 class="panel-title">Data Informasi Publik</h4>
+            <h4 class="panel-title">Data Kategori Informasi Publik</h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -24,11 +24,8 @@
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th>Cover</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>file</th>
-                            <th width="10%">Aksi</th>
+                            <th>Kategori</th>
+                            <th width="5%">Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -39,7 +36,7 @@
 
 
 <div class="modal  fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title judul-modal" id="Modal"></h5>
@@ -50,8 +47,6 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
                                 <form id="add-form">
                                 <!--  -->
                                 <input type="hidden" name="hidden_status" id="hidden_status"  value="add">
@@ -59,50 +54,13 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Nama</label>
+                                            <label>Nama Kategori</label>
                                             <input type="text" id="nama" name="nama" class="form-control" >
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Deskripsi</label>
-                                            <textarea name="deskripsi" id="deskripsi" class="form-control summernote" rows="3"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Kategori</label>
-                                            <select name="kategori" id="kategori" class="form-control">
-                                                <option value="">- Pilih Kategori -</option>
-                                                @foreach ($data['kategori'] as $val)
-                                                    <option value="{{$val->id}}">{{$val->nama}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Cover</label>
-                                            <input type="file" name="cover" id="cover"  accept="image/*" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>File</label>
-                                            <input type="file" name="file" id="file"  accept="file/*" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                                
                     </div>
                 </div>
             </div>
@@ -136,7 +94,7 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/user/informasi_publik_',
+                url: '/user/kategori_informasi_publik_',
                 method: 'POST',
                 data: function(d){
 
@@ -145,10 +103,7 @@ $(document).ready(function() {
           
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-                {data: 'cover', name: 'cover'},
                 {data: 'nama', name: 'nama'},
-                {data: 'deskripsi', name: 'deskripsi'},
-                {data: 'file', name: 'file'},   
                 {
                     data: 'action', 
                     name: 'action', 
@@ -158,12 +113,7 @@ $(document).ready(function() {
             ],
             columnDefs: [
                 {
-                    targets: [3],
-                    className: 'text-wrap width-200'
-                    
-                },
-                {
-                    targets: [1,5],
+                    targets: [0,2],
                     className: 'text-center'
                     
                 },
@@ -174,20 +124,13 @@ $(document).ready(function() {
                     action: function(e, dt, node, config) {
                         $('#add-form')[0].reset();
                         $('#Modal').modal('show');
-                        $('.judul-modal').text('Tambah Informasi Publik');
+                        $('.judul-modal').text('Tambah Kategori Informasi Publik');
                         $('#hidden_status').val('add');
                     }
                 }, 
                 {
-                    text: '<i class="far fa-edit"></i> Kategori Informasi Publik',
-                    className: 'btn btn-info',
-                    action: function(e, dt, node, config) {
-                        window.location.href = '/user/kategori_informasi_publik';
-                    }
-                },
-                {
                     extend: 'excel',
-                    title: 'Informasi Publik',
+                    title: 'Kategori Informasi Publik',
                     className: 'btn',
                     text: '<i class="far fa-file-code"></i> Excel',
                     titleAttr: 'Excel',
@@ -202,14 +145,11 @@ $(document).ready(function() {
         $(document).on('click', '.edit', function() {
             $('#add-form')[0].reset();
             $('#Modal').modal('show');
-            $('.judul-modal').text('Edit Informasi Publik');
+            $('.judul-modal').text('Edit Kategori Informasi Publik');
             $('#hidden_status').val('edit');
             $('#hidden_id').val($(this).data('id'));
             $('#nama').val($(this).data('nama'));
-            $('#deskripsi').val($(this).data('deskripsi'));
-            // $(".summernote").summernote('code', $(this).data('isi'));
-            // $('#file').val($(this).data('file'));
-            // $('#status').val($(this).data('status'));
+           
 
         });
 
@@ -226,7 +166,7 @@ $(document).ready(function() {
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/user/delete_informasi_publik",
+                        url: "/user/delete_kategori_informasi_publik",
                         type: "POST",
                         data: {
                             id: id
@@ -258,34 +198,16 @@ $(document).ready(function() {
                 nama: {
                     required: true
                 },
-                deskripsi: {
-                    required: true
-                },
-                cover: {
-                    required: function() {
-                        if ($('#hidden_status').val() == 'edit') {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    },
-                },
-                file: {
-                    required: function() {
-                        if ($('#hidden_status').val() == 'edit') {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    },
-                },
+                // deskripsi: {
+                //     required: true
+                // },
             },
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/user/create_informasi_publik';
+                    url = '/user/create_kategori_informasi_publik';
                 } else {
-                    url = '/user/update_informasi_publik';
+                    url = '/user/update_kategori_informasi_publik';
                 }
 
                 var form_data = new FormData(document.getElementById("add-form"));
@@ -306,6 +228,7 @@ $(document).ready(function() {
                                 showCancelButton: false,
                                 showConfirmButton: false,
                                 buttons: false,
+                                timer: 2000,
                                 didOpen: () => {
                                     Swal.showLoading()
                                 }
@@ -315,7 +238,7 @@ $(document).ready(function() {
                         if (data.result != true) {
                             Swal.fire({
                                 title: 'Gagal',
-                                text: "Gagal Tambah / Edit Informasi Publik",
+                                text: "Gagal Tambah / Edit Kategori Informasi Publik",
                                 icon: 'error',
                                 showCancelButton: false,
                                 showConfirmButton: true,
