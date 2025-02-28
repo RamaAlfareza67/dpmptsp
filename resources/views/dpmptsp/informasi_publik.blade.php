@@ -162,7 +162,7 @@
 
        $(document).on('click', '#load_more_button',function() {
            // var kecamatan = $('#kecamatan').val();
-           var kategori = $('#kategori').val();
+           var kategori = $('#jenis_kategori').val();
            $.ajax({
                url: "/load_more_informasi",
                method: "get",

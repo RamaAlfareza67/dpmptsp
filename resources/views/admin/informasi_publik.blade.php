@@ -27,6 +27,7 @@
                             <th>Cover</th>
                             <th>Nama</th>
                             <th>Deskripsi</th>
+                            <th>Kategori</th>
                             <th>file</th>
                             <th width="10%">Aksi</th>
                         </tr>
@@ -148,6 +149,7 @@ $(document).ready(function() {
                 {data: 'cover', name: 'cover'},
                 {data: 'nama', name: 'nama'},
                 {data: 'deskripsi', name: 'deskripsi'},
+                {data: 'kategori', name: 'kategori'},
                 {data: 'file', name: 'file'},   
                 {
                     data: 'action', 
@@ -207,6 +209,7 @@ $(document).ready(function() {
             $('#hidden_id').val($(this).data('id'));
             $('#nama').val($(this).data('nama'));
             $('#deskripsi').val($(this).data('deskripsi'));
+            $('#kategori').val($(this).data('kategori'));
             // $(".summernote").summernote('code', $(this).data('isi'));
             // $('#file').val($(this).data('file'));
             // $('#status').val($(this).data('status'));

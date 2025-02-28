@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class Home extends Controller
 {
-    public function home(){
-    // {   $data['module'] = 'BERANDA';
+    public function home()
+    {
+        // {   $data['module'] = 'BERANDA';
         $data['berita'] = DB::table('artikel')->where('status', 'PUBLISH')->where('deleted', '!=', 1)->orderBy('created_date', 'desc')->take(6)->get();
         $data['informasi_publik'] = DB::table('informasi_publik')->where('deleted', '!=', 1)->take(8)->get();
         $data['tahun'] = DB::table('investasi')->select('tahun')->where('deleted', 0)->groupBy('tahun')->orderBy('tahun', 'desc')->get();
@@ -32,20 +33,20 @@ class Home extends Controller
 
     public function grafik_investasi_tahun(Request $request)
     {
-        $data = DB::table('investasi')->select(DB::raw("tahun, jenis, sum(jumlah) as total"))->groupBy('tahun','jenis')->orderBy('tahun', 'asc')->get();
+        $data = DB::table('investasi')->select(DB::raw("tahun, jenis, sum(jumlah) as total"))->groupBy('tahun', 'jenis')->orderBy('tahun', 'asc')->get();
         $pmdn = [];
         $pma = [];
         $tahun = [];
         $th = "";
         foreach ($data as $val) {
-            if($val->tahun != $th){
+            if ($val->tahun != $th) {
                 $tahun[] = $val->tahun;
             }
-            
-            if($val->jenis == "realisasi"){
+
+            if ($val->jenis == "realisasi") {
                 $pmdn[] = $val->total;
             }
-            if($val->jenis == "proyek"){
+            if ($val->jenis == "proyek") {
                 $pma[] = $val->total;
             }
             $th = $val->tahun;
@@ -71,7 +72,7 @@ class Home extends Controller
         $r['data'] = $arr;
         return response()->json($r)->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
-    
+
 
     public function berita()
     {
@@ -83,22 +84,23 @@ class Home extends Controller
     public function informasi_publik()
     {
         // $data['module'] = 'PROFIL';
-        $data['informasi_publik'] =  DB::table('informasi_publik')->select('informasi_publik.*','kategori_informasi.nama as kategori')
-        ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')->paginate(8);
+        $data['informasi_publik'] =  DB::table('informasi_publik')->select('informasi_publik.*', 'kategori_informasi.nama as kategori')
+            ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')->where('informasi_publik.deleted', 0)->orderBy('informasi_publik.id', 'DESC')->paginate(8);
         $data['kategori'] = DB::table('kategori_informasi')->get();
         return view('dpmptsp/informasi_publik', compact('data'));
     }
 
     public function informasi_filter(Request $request)
     {
-        $data =  DB::table('informasi_publik')->select('informasi_publik.*','kategori_informasi.nama as kategori')
-        ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')
-        ->where(function ($query) use ($request) {
-            if ($request->kategori  <> '') {
-                $query->where('kategori_informasi.id', '=', $request->kategori);
-            }
-        })
-        ->orderBy('informasi_publik.id', 'DESC');
+        $data =  DB::table('informasi_publik')->select('informasi_publik.*', 'kategori_informasi.nama as kategori')
+            ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')
+            ->where(function ($query) use ($request) {
+                if ($request->kategori  <> '') {
+                    $query->where('kategori_informasi.id', '=', $request->kategori);
+                }
+                $query->where('informasi_publik.deleted', 0);
+            })
+            ->orderBy('informasi_publik.id', 'DESC');
         // $data->get();
 
         // dd($data);
@@ -110,11 +112,11 @@ class Home extends Controller
                                         <div class="card-body p-4">
                                             <div class="work">
                                                 <div class="image">
-                                                    <a href="'.$val->file.'" target="_blank"><img src="'.$val->cover.'" alt="Work 1" /></a>
+                                                    <a href="' . $val->file . '" target="_blank"><img src="' . $val->cover . '" alt="Work 1" /></a>
                                                 </div>
                                                 <div class="desc">
-                                                    <span class="desc-title">'.$val->nama.'</span>
-                                                    <span class="desc-text">'.$val->deskripsi.'</span>
+                                                    <span class="desc-title">' . $val->nama . '</span>
+                                                    <span class="desc-text">' . $val->deskripsi . '</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,13 +137,14 @@ class Home extends Controller
     {
         // $data['module'] = '';
         $start = $request->input('start');
-        $data =  DB::table('informasi_publik')->select('informasi_publik.*','kategori_informasi.nama as kategori')
-        ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')
-        ->where(function ($query) use ($request) {
-            if ($request->jenis  <> '') {
-                $query->where('kategori_informasi.id', '=', $request->kategori);
-            }
-        })
+        $data =  DB::table('informasi_publik')->select('informasi_publik.*', 'kategori_informasi.nama as kategori')
+            ->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori')
+            ->where(function ($query) use ($request) {
+                if ($request->kategori  <> '') {
+                    $query->where('kategori_informasi.id', '=', $request->kategori);
+                }
+                $query->where('informasi_publik.deleted', 0);
+            })
             ->orderBy('informasi_publik.id', 'DESC')
             ->offset($start)
             ->limit(8)
@@ -183,7 +186,7 @@ class Home extends Controller
     public function kontak()
     {
         // $data['module'] = 'KONTAK_KAMI';
-        $data['profil']= DB::table('profil')->first();
+        $data['profil'] = DB::table('profil')->first();
         return view('dpmptsp/kontak');
     }
 
@@ -224,11 +227,11 @@ class Home extends Controller
     {
         // $data['module'] = '';
         $start = $request->input('start');
-        $data = DB::table('pengaduan')->select('pengaduan.*','jenis_pengaduan.jenis as jp', 'tanggapan.tanggapan', 'users.name as petugas')
+        $data = DB::table('pengaduan')->select('pengaduan.*', 'jenis_pengaduan.jenis as jp', 'tanggapan.tanggapan', 'users.name as petugas')
             ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
             ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
             ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
-            ->where('status','=', 'DIJAWAB')
+            ->where('status', '=', 'DIJAWAB')
             ->where(function ($query) use ($request) {
                 if ($request->jenis_pengaduan  <> '') {
                     $query->where('jenis_pengaduan.id', '=', $request->jenis_pengaduan);
@@ -253,17 +256,17 @@ class Home extends Controller
 
     public function pengaduan_filter(Request $request)
     {
-        $data =  DB::table('pengaduan')->select('pengaduan.*','jenis_pengaduan.jenis as jp', 'tanggapan.tanggapan', 'users.name as petugas')
-        ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
-        ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
-        ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
-        ->where('status','=', 'DIJAWAB')
-        ->where(function ($query) use ($request) {
-            if ($request->jenis  <> '') {
-                $query->where('jenis_pengaduan.id', '=', $request->jenis);
-            }
-        })
-        ->orderBy('pengaduan.id', 'DESC');
+        $data =  DB::table('pengaduan')->select('pengaduan.*', 'jenis_pengaduan.jenis as jp', 'tanggapan.tanggapan', 'users.name as petugas')
+            ->leftJoin('jenis_pengaduan', 'jenis_pengaduan.id', '=', 'pengaduan.jenis_pengaduan')
+            ->leftJoin('tanggapan', 'tanggapan.pengaduan_id', '=', 'pengaduan.id')
+            ->leftJoin('users', 'users.id', '=', 'tanggapan.petugas_id')
+            ->where('status', '=', 'DIJAWAB')
+            ->where(function ($query) use ($request) {
+                if ($request->jenis  <> '') {
+                    $query->where('jenis_pengaduan.id', '=', $request->jenis);
+                }
+            })
+            ->orderBy('pengaduan.id', 'DESC');
         // $data->get();
 
         // dd($data);
@@ -279,15 +282,15 @@ class Home extends Controller
                                     </div>
                                     <div class="info-container">
                                         <div class="info">
-                                            <p>Jenis Pengaduan : '.$val->jp.'</p>
-                                            <h5 class="title"><a href="detail.html">Pengaduan Dari : '.$val->nama.'</a></h4>
-                                            <p>"'.$val->isi.'"</p>
-                                            <h5 class="title"><a href="detail.html">Jawaban : '.$val->petugas.'</a></h4>
-                                            <p>"'.$val->tanggapan.'"</p>   
+                                            <p>Jenis Pengaduan : ' . $val->jp . '</p>
+                                            <h5 class="title"><a href="detail.html">Pengaduan Dari : ' . $val->nama . '</a></h4>
+                                            <p>"' . $val->isi . '"</p>
+                                            <h5 class="title"><a href="detail.html">Jawaban : ' . $val->petugas . '</a></h4>
+                                            <p>"' . $val->tanggapan . '"</p>   
                                         </div>
                                         <div class="date-replies">
                                             <div class="time">
-                                            '.$val->created_date.'
+                                            ' . $val->created_date . '
                                             </div> 
                                         </div>
                                     </div>
@@ -306,7 +309,7 @@ class Home extends Controller
         return response()->json($r);
     }
 
-   
+
 
     public function wbs()
     {

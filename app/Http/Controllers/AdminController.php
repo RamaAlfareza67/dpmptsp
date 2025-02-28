@@ -748,16 +748,17 @@ class AdminController extends Controller
         if ($request->ajax()) {
             $data = DB::table('informasi_publik');
             $data->leftJoin('kategori_informasi', 'kategori_informasi.id', '=', 'informasi_publik.kategori');
-            $data->select('informasi_publik.*', 'kategori_informasi.nama as kategori');
-            if ($request->jenis <> ''){
+            $data->select('informasi_publik.*', 'kategori_informasi.nama as kategori', 'kategori_informasi.id as id_kategori');
+            if ($request->jenis <> '') {
                 $data->where('kategori_informasi.id', $request->jenis);
             }
+            $data->where('informasi_publik.deleted', 0);
 
             $data->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-kategori="' . $field->kategori . '" data-file="' . $field->file . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-kategori="' . $field->id_kategori . '" data-file="' . $field->file . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a></div>';
                     return $actionBtn;
                 })
@@ -1633,19 +1634,19 @@ class AdminController extends Controller
         // if (empty($cek)) {
         //     $data['tahun'] = $request->tahun;
         //     $data['triwulan'] = $request->triwulan;
-            $data['jumlah'] = $request->jumlah;
-            $data['jenis'] = $request->jenis;
+        $data['jumlah'] = $request->jumlah;
+        $data['jenis'] = $request->jenis;
 
-            $data['edited_date'] = date('Y-m-d h:i:s');
-            $data['edited_by'] = auth()->user()->id;
-            // dd($data);
+        $data['edited_date'] = date('Y-m-d h:i:s');
+        $data['edited_by'] = auth()->user()->id;
+        // dd($data);
 
-            $datas = DB::table('investasi')->where('id', $request->hidden_id)->update($data);
+        $datas = DB::table('investasi')->where('id', $request->hidden_id)->update($data);
 
-            $r['result'] = true;
-            if (!$datas) {
-                $r['result'] = false;
-            }
+        $r['result'] = true;
+        if (!$datas) {
+            $r['result'] = false;
+        }
         // } else {
         //     $r['result'] = "ada";
         // }
