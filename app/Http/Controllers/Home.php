@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class Home extends Controller
 {
@@ -320,22 +322,57 @@ class Home extends Controller
 
     public function create_pengaduan(Request $request)
     {
-        $data['nik'] = $request->nik;
-        $data['nama'] = $request->nama;
-        $data['alamat'] = $request->alamat;
-        $data['kecamatan'] = $request->kecamatan;
-        $data['kelurahan'] = $request->kelurahan;
-        $data['email'] = $request->email;
-        $data['no_hp'] = $request->no_hp;
-        $data['isi'] = $request->isi;
-        $data['jenis_pengaduan'] = $request->jenis_pengaduan;
+        $manager = new ImageManager(new Driver());
+        $request->validate([
+            'nik'             => 'required|string',
+            'nama'            => 'required|string',
+            'alamat'          => 'required|string',
+            'kecamatan'       => 'required|string',
+            'kelurahan'       => 'required|string',
+            'email'           => 'required|email',
+            'no_hp'           => 'required|string',
+            'isi'             => 'required|string',
+            'jenis_pengaduan' => 'required|string',
+            'file'            => 'nullable|file|max:2048|mimes:jpg,jpeg,png,pdf'
+            // batasi max 2MB, hanya gambar & PDF
+        ]);
 
-        if ($request->file('file')) {
+        $data = $request->only([
+            'nik',
+            'nama',
+            'alamat',
+            'kecamatan',
+            'kelurahan',
+            'email',
+            'no_hp',
+            'isi',
+            'jenis_pengaduan'
+        ]);
+
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
+
+            // Validasi ekstra MIME dari server
+            $mime = $file->getMimeType();
+            $allowedMimes = ['image/jpeg', 'image/png', 'application/pdf'];
+            if (!in_array($mime, $allowedMimes)) {
+                return response()->json(['result' => false, 'message' => 'Tipe file tidak diizinkan'], 400);
+            }
+
             $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
-            $file->move('uploads/pengaduan', $fileName);
-            $file_path = 'uploads/pengaduan/' . $fileName;
-            $data['file'] = $file_path;
+            $path = 'uploads/pengaduan/' . $fileName;
+
+            if (str_starts_with($mime, 'image/')) {
+                // Re-encode gambar untuk buang metadata EXIF
+                $manager->read($file) // ← di v3 pakai read(), bukan make()
+                    ->toJpeg(90)           // bisa toJpeg() atau toPng()
+                    ->save($path);
+            } else {
+                // PDF simpan langsung
+                $file->move('uploads/pengaduan', $fileName);
+            }
+
+            $data['file'] = $path;
         }
 
         $data['status'] = 'MENUNGGU';
@@ -351,31 +388,71 @@ class Home extends Controller
 
     public function create_wbs(Request $request)
     {
-        // dd($request);
-        $data['nik'] = $request->nik;
-        $data['nama'] = $request->nama;
-        $data['alamat'] = $request->alamat;
-        $data['kecamatan'] = $request->kecamatan;
-        $data['kelurahan'] = $request->kelurahan;
-        $data['email'] = $request->email;
-        $data['no_hp'] = $request->no_hp;
+        $manager = new ImageManager(new Driver());
+        $request->validate([
+            'nik'             => 'required|string',
+            'nama'            => 'required|string',
+            'alamat'          => 'required|string',
+            'kecamatan'       => 'required|string',
+            'kelurahan'       => 'required|string',
+            'email'           => 'required|email',
+            'no_hp'           => 'required|string',
 
+            'nama_terlapor'   => 'required|string',
+            'lokasi_kejadian' => 'required|string',
+            'kecamatan_'      => 'required|string',
+            'kelurahan_'      => 'required|string',
+            'tgl_kejadian'    => 'required|date',
+            'waktu_kejadian'  => 'required',
+            'isi'             => 'required|string',
+            'jenis_pengaduan' => 'required|string',
 
-        $data['nama_terlapor'] = $request->nama_terlapor;
-        $data['lokasi_kejadian'] = $request->lokasi_kejadian;
-        $data['kecamatan_'] = $request->kecamatan_;
-        $data['kelurahan_'] = $request->kelurahan_;
-        $data['tgl_kejadian'] = $request->tgl_kejadian;
-        $data['waktu_kejadian'] = $request->waktu_kejadian;
-        $data['isi'] = $request->isi;
-        $data['jenis_pengaduan'] = $request->jenis_pengaduan;
+            // File opsional, tapi jika ada wajib tipe tertentu & max size
+            'file'            => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+        ]);
 
-        if ($request->file('file')) {
+        $data = $request->only([
+            'nik',
+            'nama',
+            'alamat',
+            'kecamatan',
+            'kelurahan',
+            'email',
+            'no_hp',
+            'nama_terlapor',
+            'lokasi_kejadian',
+            'kecamatan_',
+            'kelurahan_',
+            'tgl_kejadian',
+            'waktu_kejadian',
+            'isi',
+            'jenis_pengaduan'
+        ]);
+
+        if ($request->hasFile('file')) {
             $file = $request->file('file');
+
+            // Validasi ekstra MIME dari server
+            $mime = $file->getMimeType();
+            $allowedMimes = ['image/jpeg', 'image/png', 'application/pdf'];
+            if (!in_array($mime, $allowedMimes)) {
+                return response()->json(['result' => false, 'message' => 'Tipe file tidak diizinkan'], 400);
+            }
+
             $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
-            $file->move('uploads/pengaduan/wbs', $fileName);
-            $file_path = 'uploads/pengaduan/wbs/' . $fileName;
-            $data['file'] = $file_path;
+            $path = 'uploads/pengaduan/wbs/' . $fileName;
+
+            if (str_starts_with($mime, 'image/')) {
+                // Re-encode gambar untuk buang metadata EXIF
+                $manager->read($file) // ← di v3 pakai read(), bukan make()
+                    ->toJpeg(90)           // bisa toJpeg() atau toPng()
+                    ->save($path);
+            } else {
+                // PDF simpan langsung
+                $file->move('uploads/pengaduan', $fileName);
+            }
+
+            $data['file'] = $path;
         }
 
         $data['status'] = 'MENUNGGU';

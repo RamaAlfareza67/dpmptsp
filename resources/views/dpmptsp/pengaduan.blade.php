@@ -45,6 +45,7 @@
                                             @endforeach
                                         </select>
                                         <input type="file" name="file" id="file"  class="form-control mb-3"> 
+                                        <span style="color:red;">Note: </span><span>Max size 2MB & Hanya format .jpeg, .png, .pdf</span>
                                     </div>
                                     <div class="col-lg-12 mb-lg-2">
                                         <textarea name="isi" id="isi" rows="5" class="form-control mb-3" placeholder="Pesan"></textarea> 
